@@ -1,5 +1,5 @@
 class Letadlo:
-    def __init__(self, hrac_x, hrac_y, šířka, výška, zivot, uhel):
+    def __init__(self, hrac_x, hrac_y, šířka, výška, zivoty, uhel):
         self.sirka = šířka
         self.vyska = výška
         self.x = hrac_x if hrac_x is not None else šířka * 1 / 4
@@ -16,9 +16,10 @@ class Letadlo:
             self.y -= 10
             
     def znic_se(self):
-        if self.zivoty == 0:
-            if self.uhel < 50:
-                self.uhel -=1
-            
+        if self.uhel > -50:
+            self.uhel -=1
+            self.y += 10
+        
+        
                 
         

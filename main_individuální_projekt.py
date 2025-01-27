@@ -10,10 +10,10 @@ rozdil_pozadi = 1920
 výška, šířka = 1080, 1920
 hrac_x = šířka * 1 / 9
 hrac_y = výška / 2
-zivot = 5
+zivoty = 5
 uhel=0
 # Vytvoření instance třídy Letadlo
-letadlo = Letadlo(hrac_x, hrac_y, šířka, výška,zivot,uhel)
+letadlo = Letadlo(hrac_x, hrac_y, šířka, výška,zivoty,uhel)
 
 obrazovka = pygame.display.set_mode((šířka, výška))
 pygame.display.set_caption("zkouška")
@@ -35,14 +35,22 @@ while True:
         
     if keys[pygame.K_w]:
         letadlo.pohyb_nahoru()
+    if keys[pygame.K_m]:
+        letadlo.zivoty -=1 
+        
+        
+    if letadlo.zivoty <= 0:
+        letadlo.znic_se()
+    
+
     
     obrazovka.fill(pozadi_barva)
     obrazovka.blit(Pohyblive_pozadi, (umisteni_pozadi1, výška - 100))  # vyobrazení pozadí
     obrazovka.blit(Pohyblive_pozadi, (umisteni_pozadi2, výška - 100))
     
     otočená_stíhačka = pygame.transform.rotate(stihacka, letadlo.uhel)
-    
-    obrazovka.blit(stihacka, (letadlo.x, letadlo.y))
+    rect = otočená_stíhačka.get_rect(center=(letadlo.x, letadlo.y))
+    obrazovka.blit(otočená_stíhačka, rect.topleft)
     
     pygame.display.flip()
     clock.tick(60)

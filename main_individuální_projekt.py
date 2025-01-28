@@ -44,7 +44,7 @@ nepritel = Nepritel(rychlost_pozadi,poloha_x,poloha_y,šířka, výška,vystrel)
 
 obrazovka = pygame.display.set_mode((šířka,výška))
 pygame.display.set_caption("zkouška")
-pozadi_barva = (0, 255, 255)
+pozadi_barva = (100, 100, 255)
 
 while True:
     nepritel.nabíjení()

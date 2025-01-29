@@ -23,7 +23,7 @@ class Letadlo:
                 self.uhel -=1
         else:
             self.smrt = True
-            
+     
 
                 
-        
+    

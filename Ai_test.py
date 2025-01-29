@@ -1,86 +1,46 @@
 import pygame
-import sys
-from letadlo import Letadlo
-from nepritel import Nepritel
 
-# Inicializace Pygame
 pygame.init()
-
+screen = pygame.display.set_mode((800, 600))
 clock = pygame.time.Clock()
-stihacka = pygame.image.load("stíhačka_do_hry_kanon.png")
-Pohyblive_pozadi = pygame.image.load("Pozadí_pohyblivé.png")
-kanon13 = pygame.image.load("kanon_1l3.png")
 
-pohyb_pozadí = 0
-rozdil_pozadi = 1920
-výška, šířka = 1080, 1920
-hrac_x = šířka * 1 / 9
-hrac_y = výška / 2
-zivoty = 5
-uhel = 0
-smrt = False
+# Načti obrázek
+image = pygame.image.load('stíhačka_do_hry_kanon.png').convert_alpha()
+image_rect = image.get_rect()
 
-rychlost_pozadi = 10
-vystrel = 1
+# Nastav bod pivotu (pravý horní roh na obrazovce)
+pivot_pos = (400, 300)  # Můžeš změnit na požadované souřadnice
 
-# Vytvoření instance třídy Letadlo
-letadlo = Letadlo(hrac_x, hrac_y, šířka, výška, zivoty, uhel, smrt)
+angle = 0  # Počáteční úhel rotace
 
-# Vytvoření seznamu nepřátel
-nepratele = []
+running = True
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
 
-# Přidání několika nepřátel do seznamu
-for i in range(5):
-    poloha_x = šířka + i * 200  # Rozmístění nepřátel
-    poloha_y = 210 + i * 100
-    nepratele.append(Nepritel(rychlost_pozadi, poloha_x, poloha_y, šířka, výška, vystrel))
+    angle += 1  # Můžeš upravit rychlost rotace
 
-obrazovka = pygame.display.set_mode((šířka, výška))
-pygame.display.set_caption("zkouška")
-pozadi_barva = (0, 255, 255)
+    # Vypočítej ofset od středu obrázku k pravému hornímu rohu
+    image_center = pygame.math.Vector2(image_rect.center)
+    pivot = pygame.math.Vector2(image_rect.topright)
+    offset = pivot - image_center
 
-while True:
-    if letadlo.smrt == False:
-        for nepritel in nepratele:
-            nepritel.pohyb_kanonu()
+    # Otoč ofset
+    rotated_offset = offset.rotate(-angle)
 
-    pohyb_pozadí -= 50
-    umisteni_pozadi1 = pohyb_pozadí % rozdil_pozadi  # počítání a přemístění pohyblivého pozadí
-    umisteni_pozadi2 = (pohyb_pozadí % rozdil_pozadi) - rozdil_pozadi
+    # Otoč obrázek
+    rotated_image = pygame.transform.rotate(image, angle)
+    rotated_rect = rotated_image.get_rect()
 
-    for udalost in pygame.event.get():
-        if udalost.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
+    # Nastav novou pozici obrázku
+    new_center = pygame.math.Vector2(pivot_pos) - rotated_offset
+    rotated_rect.center = new_center
 
-    keys = pygame.key.get_pressed()
-    if keys[pygame.K_s]:
-        letadlo.pohyb_dolu()
-
-    if keys[pygame.K_w]:
-        letadlo.pohyb_nahoru()
-
-    if keys[pygame.K_m]:
-        letadlo.zivoty -= 1
-
-    if letadlo.zivoty <= 0:
-        letadlo.znic_se()
-
-    obrazovka.fill(pozadi_barva)
-    obrazovka.blit(Pohyblive_pozadi, (umisteni_pozadi1, výška - 100))  # vyobrazení pozadí
-    obrazovka.blit(Pohyblive_pozadi, (umisteni_pozadi2, výška - 100))
-
-    # Zobrazení nepřátel
-    for nepritel in nepratele:
-        obrazovka.blit(kanon13, (nepritel.poloha_x, nepritel.poloha_y))
-
-    otočená_stíhačka = pygame.transform.rotate(stihacka, letadlo.uhel)
-    rect = otočená_stíhačka.get_rect(center=(letadlo.x, letadlo.y))
-    obrazovka.blit(otočená_stíhačka, rect.topleft)
-
+    # Vykresli vše
+    screen.fill((30, 30, 30))
+    screen.blit(rotated_image, rotated_rect)
     pygame.display.flip()
     clock.tick(60)
 
 pygame.quit()
-sys.exit()
-w

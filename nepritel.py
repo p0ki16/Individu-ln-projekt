@@ -23,7 +23,9 @@ class Nepritel:
             self.vystrel = 2
         elif self.poloha_x > self.sirka * 1 / 5:
             self.vystrel = 3
-        elif self.poloha_x-10 < self.sirka * 1 / 5 and self.poloha_x+10 > self.sirka * 1 / 5:
+        elif self.poloha_x-100 < self.sirka * 1 / 5 and self.poloha_x+50 > self.sirka * 1 / 5:
             self.vystrel = 4
+        elif self.poloha_x + 200 > 0:
+            self.vystrel = 5
         else:
             self.vystrel = 0

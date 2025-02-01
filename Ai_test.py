@@ -1,38 +1,56 @@
 import pygame
-pygame.init()
+import random
+import math
 
+class Square:
+    def __init__(self, x, y, image_path, speed, angle):
+        self.x = x
+        self.y = y
+        self.image = pygame.image.load(image_path).convert_alpha()
+        self.rect = self.image.get_rect()
+        self.speed = speed
+        self.angle = angle
+
+    def move(self):
+        self.x += self.speed * math.cos(math.radians(self.angle))
+        self.y += self.speed * math.sin(math.radians(self.angle))
+        self.rect.topleft = (self.x, self.y)
+
+    def draw(self, surface,image):
+        surface.blit(image, self.rect)
+
+# Inicializace Pygame
+pygame.init()
 screen = pygame.display.set_mode((800, 600))
+pygame.display.set_caption("Samostatně se pohybující obrázky")
 clock = pygame.time.Clock()
 
-image = pygame.Surface((100, 50), pygame.SRCALPHA)  # Vytvoříme jednoduchý obdélník
-image.fill((255, 0, 0))
-original_rect = image.get_rect()
+# Vytvoření čtverců s obrázky
+squares = []
+image_paths = ['kanon_stíhačka.png', 'strela.png', 'kanon_2l3.png']  # Nahraď vlastními cestami k obrázkům
+kanon43 = pygame.image.load("kanon_4l3.png")
+for _ in range(10):  # Počet obrázků
+    x = random.randint(0, 750)
+    y = random.randint(0, 550)
+    image_path = random.choice(image_paths)
+    speed = random.uniform(1, 5)
+    angle = random.uniform(0, 360)
+    square = Square(x, y, image_path, speed, angle)
+    squares.append(square)
 
-pivot_pos = (400, 300)  # Umístíme pravý horní roh do středu obrazovky
-angle = 0
-
+# Hlavní smyčka
 running = True
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-    angle += 1  # Nebo použij vstup z klávesnice pro úpravu úhlu
 
-    # Výpočet ofsetu
-    image_center = pygame.math.Vector2(original_rect.center)
-    pivot = pygame.math.Vector2(original_rect.topright)
-    offset = pivot - image_center
+    screen.fill((0, 0, 0))
 
-    rotated_offset = offset.rotate(-angle)
+    for square in squares:
+        square.move()
+        square.draw(screen,kanon43)
 
-    rotated_image = pygame.transform.rotate(image, angle)
-    rotated_rect = rotated_image.get_rect()
-
-    new_center = pygame.math.Vector2(pivot_pos) - rotated_offset
-    rotated_rect.center = new_center
-
-    screen.fill((30, 30, 30))
-    screen.blit(rotated_image, rotated_rect)
     pygame.display.flip()
     clock.tick(60)
 

@@ -10,9 +10,9 @@ from nepritel import Nepritel
 
 pygame.init()
 clock = pygame.time.Clock()
+firerate = 0
 
-
-
+test=0
 
 # Inicializace proměnných
 angle_kanon = 180
@@ -30,7 +30,7 @@ speed_strela = 5
 rychlost_pozadi = 10
 poloha_x = šířka
 poloha_y = výška - 210
-
+zivoty_nepritel = 5
 vystreleni = []
 
 # Inicializace Pygame
@@ -50,10 +50,11 @@ kanon33 = pygame.image.load("kanon_3l3.png")
 kanon43 = pygame.image.load("kanon_4l3.png")
 strela_image = pygame.image.load("strela.png")
 vybuch_image = pygame.image.load("výbuch_strely.png")
+beam3l3 = pygame.image.load("beam.png")
 
 # Vytvoření instancí tříd
 letadlo = Letadlo(hrac_x, hrac_y, šířka, výška, zivoty, uhel, smrt, 0, 0, vystrel, angle_kanon)
-nepritel = Nepritel(rychlost_pozadi, poloha_x, poloha_y, šířka, výška, vystrel)
+nepritel = Nepritel(rychlost_pozadi, poloha_x, poloha_y, šířka, výška, vystrel,zivoty_nepritel,obrazovka)
 
 while True:
     for i in range(vystrel):
@@ -63,7 +64,7 @@ while True:
         strela = Strela(strela_x, strela_y, letadlo.angle_kanon)
         vystreleni.append(strela)
         
-    nepritel.nabíjení()
+    
     
     if letadlo.smrt == False:
         nepritel.pohyb_kanonu()
@@ -80,12 +81,18 @@ while True:
     keys = pygame.key.get_pressed()
     if keys[pygame.K_DOWN]:
         letadlo.pohyb_dolu()
+        
     vystrel =0
-    if keys[pygame.K_SPACE]:
+    if firerate > 0: #delay mezi střelami
+        firerate -= 1
+        
+    if keys[pygame.K_SPACE] and  firerate == 0:
+        firerate = 20
         vystrel = 1
     
     if keys[pygame.K_UP]:
         letadlo.pohyb_nahoru()
+        
     if keys[pygame.K_RIGHT] or keys[pygame.K_w]:
         if not letadlo.angle_kanon > 180:
             letadlo.angle_kanon += 1
@@ -114,21 +121,12 @@ while True:
     rotated_rect.center = new_center
 
     obrazovka.fill(pozadi_barva)
+    
     obrazovka.blit(Pohyblive_pozadi, (umisteni_pozadi1, výška - 100))
     obrazovka.blit(Pohyblive_pozadi, (umisteni_pozadi2, výška - 100))
-
-    if nepritel.vystrel == 1:
-        obrazovka.blit(kanon13, (nepritel.poloha_x, nepritel.poloha_y))
-    elif nepritel.vystrel == 2:
-        obrazovka.blit(kanon23, (nepritel.poloha_x, nepritel.poloha_y))
-    elif nepritel.vystrel == 3:
-        obrazovka.blit(kanon33, (nepritel.poloha_x, nepritel.poloha_y))
-    elif nepritel.vystrel == 4 or nepritel.vystrel == 5:
-        obrazovka.blit(kanon43, (nepritel.poloha_x, nepritel.poloha_y))
-    else:
-        obrazovka.blit(kanon43, (nepritel.poloha_x, nepritel.poloha_y))
-        nepritel.poloha_x += random.randint(šířka + 500, šířka + 1000)
-
+    
+    nepritel.nabíjení(obrazovka,kanon13,kanon23,kanon33,kanon43,beam3l3)
+    
     for strela in vystreleni:
         strela.move()
         strela.draw(obrazovka, strela_image,vybuch_image)

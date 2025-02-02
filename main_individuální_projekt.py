@@ -13,8 +13,7 @@ clock = pygame.time.Clock()
 
 
 
-test1 =0
-test2 =0
+
 # Inicializace proměnných
 angle_kanon = 180
 pohyb_pozadí = 0
@@ -50,6 +49,7 @@ kanon23 = pygame.image.load("kanon_2l3.png")
 kanon33 = pygame.image.load("kanon_3l3.png")
 kanon43 = pygame.image.load("kanon_4l3.png")
 strela_image = pygame.image.load("strela.png")
+vybuch_image = pygame.image.load("výbuch_strely.png")
 
 # Vytvoření instancí tříd
 letadlo = Letadlo(hrac_x, hrac_y, šířka, výška, zivoty, uhel, smrt, 0, 0, vystrel, angle_kanon)
@@ -82,19 +82,8 @@ while True:
         letadlo.pohyb_dolu()
     vystrel =0
     if keys[pygame.K_SPACE]:
-
         vystrel = 1
-    if keys[pygame.K_g]:
-        test1 -=1
-    if keys[pygame.K_h]:
-        test1 +=1
-    print(f"{test1} x")
-    if keys[pygame.K_t]:
-        test2 -=1
-    if keys[pygame.K_z]:
-        test2 +=1
-    print(f"{test2} y")
-        
+    
     if keys[pygame.K_UP]:
         letadlo.pohyb_nahoru()
     if keys[pygame.K_RIGHT] or keys[pygame.K_w]:
@@ -142,7 +131,7 @@ while True:
 
     for strela in vystreleni:
         strela.move()
-        strela.draw(obrazovka, strela_image)
+        strela.draw(obrazovka, strela_image,vybuch_image)
 
     otočená_stíhačka = pygame.transform.rotate(stihacka, letadlo.uhel)
     obrazovka.blit(rotated_image, rotated_rect)

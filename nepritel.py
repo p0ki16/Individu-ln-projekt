@@ -2,14 +2,16 @@ import random
 from strela import Strela
 class Nepritel:
     
-    def __init__(self, rychlost_pozadi, poloha_x, poloha_y, šířka, výška, vystrel,zivoty_self,surface):
+    def __init__(self, rychlost_pozadi, poloha_x, poloha_y, šířka, výška, vystrel,zivoty_self,surface,zivoty):
         self.rychlost_pozadi = rychlost_pozadi
         self.sirka = šířka
         self.vyska = výška
         self.poloha_y = poloha_y
         self.poloha_x = poloha_x  # Oprava: Použití správné proměnné
         self.vystrel = vystrel
-        self.zivoty_self = zivoty_self 
+        self.zivoty_self = zivoty_self
+        self.test = 500
+        self.zivoty = zivoty 
 
     def pohyb_kanonu(self):
         self.poloha_x -= self.rychlost_pozadi
@@ -35,8 +37,10 @@ class Nepritel:
             surface.blit(kanon33, (self.poloha_x, self.poloha_y))
             
         elif self.poloha_x-100 < self.sirka * 1 / 5 and self.poloha_x+200 > self.sirka * 1 / 5:
-            surface.blit(beam3l3, (self.poloha_x, self.poloha_y-1000))
+            self.test += 100
+            surface.blit(beam3l3, (self.poloha_x, self.poloha_y-self.test))
             surface.blit(kanon43, (self.poloha_x, self.poloha_y))
+            self.zivoty-=1
             
             
             
@@ -46,7 +50,7 @@ class Nepritel:
         else:
             surface.blit(kanon43, (self.poloha_x, self.poloha_y))
             self.respawn()
+            self.test = 0
             
-    def beam_on(self,surface,beam1l3,beam2l3,beam3l3):
-         surface.blit(beam3l3, (self.poloha_x, self.poloha_y))
+    
         

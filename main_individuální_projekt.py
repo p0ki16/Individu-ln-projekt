@@ -21,7 +21,7 @@ rozdil_pozadi = 1920
 výška, šířka = 1080, 1920
 hrac_x = šířka * 1 / 5
 hrac_y = výška / 2
-zivoty = 5
+zivoty = 1
 uhel = 0
 smrt = False
 
@@ -54,7 +54,7 @@ beam3l3 = pygame.image.load("beam.png")
 
 # Vytvoření instancí tříd
 letadlo = Letadlo(hrac_x, hrac_y, šířka, výška, zivoty, uhel, smrt, 0, 0, vystrel, angle_kanon)
-nepritel = Nepritel(rychlost_pozadi, poloha_x, poloha_y, šířka, výška, vystrel,zivoty_nepritel,obrazovka)
+nepritel = Nepritel(rychlost_pozadi, poloha_x, poloha_y, šířka, výška, vystrel,zivoty_nepritel,obrazovka,zivoty)
 
 while True:
     for i in range(vystrel):
@@ -64,46 +64,47 @@ while True:
         strela = Strela(strela_x, strela_y, letadlo.angle_kanon)
         vystreleni.append(strela)
         
+    for udalost in pygame.event.get():
+            if udalost.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
     
-    
-    if letadlo.smrt == False:
+        
+    if letadlo.smrt == False:     #okontrola jestli letadlo žije
         nepritel.pohyb_kanonu()
-        pohyb_pozadí -= nepritel.rychlost_pozadi
+        pohyb_pozadí -= nepritel.rychlost_pozadi 
+
+        if nepritel.zivoty < 0:
+            letadlo.znic_se()
+       
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_DOWN]:
+            letadlo.pohyb_dolu()
+            
+        vystrel =0
+        if firerate > 0: #delay mezi střelami
+            firerate -= 1
+            
+        if keys[pygame.K_SPACE] and  firerate == 0:
+            firerate = 20
+            vystrel = 1
+        
+        if keys[pygame.K_UP]:
+            letadlo.pohyb_nahoru()
+            
+        if keys[pygame.K_RIGHT] or keys[pygame.K_w]:
+            if not letadlo.angle_kanon > 180:
+                letadlo.angle_kanon += 1
+                
+        if keys[pygame.K_LEFT] or keys[pygame.K_s]:
+            if not letadlo.angle_kanon < 60:
+                letadlo.angle_kanon -= 1
+                
+        if letadlo.zivoty <= 0:
+            letadlo.znic_se()
         
     umisteni_pozadi1 = pohyb_pozadí % rozdil_pozadi
     umisteni_pozadi2 = (pohyb_pozadí % rozdil_pozadi) - rozdil_pozadi
-    
-    for udalost in pygame.event.get():
-        if udalost.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
-            
-    keys = pygame.key.get_pressed()
-    if keys[pygame.K_DOWN]:
-        letadlo.pohyb_dolu()
-        
-    vystrel =0
-    if firerate > 0: #delay mezi střelami
-        firerate -= 1
-        
-    if keys[pygame.K_SPACE] and  firerate == 0:
-        firerate = 20
-        vystrel = 1
-    
-    if keys[pygame.K_UP]:
-        letadlo.pohyb_nahoru()
-        
-    if keys[pygame.K_RIGHT] or keys[pygame.K_w]:
-        if not letadlo.angle_kanon > 180:
-            letadlo.angle_kanon += 1
-            
-    if keys[pygame.K_LEFT] or keys[pygame.K_s]:
-        if not letadlo.angle_kanon < 60:
-            letadlo.angle_kanon -= 1
-            
-    if letadlo.zivoty <= 0:
-        letadlo.znic_se()
-
     # Vypočítej ofset od středu obrázku k pravému hornímu rohu
     image_center = pygame.math.Vector2(kanon_rect.center)
     pivot = pygame.math.Vector2(kanon_rect.midright)

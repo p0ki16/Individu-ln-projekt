@@ -11,11 +11,12 @@ class Letadlo:
         self.smrt = False
 
     def pohyb_dolu(self):
-        if self.y < self.vyska - 50:
+        if self.smrt == False and  self.y < self.vyska - 50:
+       
             self.y += 10
 
     def pohyb_nahoru(self):
-        if self.y > 0:
+        if self.smrt == False and self.y > 0:
             self.y -= 10
             
     def znic_se(self):

@@ -10,9 +10,11 @@ from nepritel import Nepritel
 
 pygame.init()
 clock = pygame.time.Clock()
+font = pygame.font.SysFont('Arial', 48)
+
+
 firerate = 0
 
-test=0
 
 # Inicializace proměnných
 angle_kanon = 180
@@ -21,8 +23,11 @@ rozdil_pozadi = 1920
 výška, šířka = 1080, 1920
 hrac_x = šířka * 1 / 5
 hrac_y = výška / 2
+
 zivoty = 1
+zivoty_nepritel = 10
 uhel = 0
+
 smrt = False
 
 vystrel = 0
@@ -30,7 +35,7 @@ speed_strela = 5
 rychlost_pozadi = 10
 poloha_x = šířka
 poloha_y = výška - 210
-zivoty_nepritel = 5
+
 vystreleni = []
 
 # Inicializace Pygame
@@ -48,20 +53,23 @@ kanon13 = pygame.image.load("kanon_1l3.png")
 kanon23 = pygame.image.load("kanon_2l3.png")
 kanon33 = pygame.image.load("kanon_3l3.png")
 kanon43 = pygame.image.load("kanon_4l3.png")
+kanon_destroyed = pygame.image.load("kanon_destroyed.png")
 strela_image = pygame.image.load("strela.png")
 vybuch_image = pygame.image.load("výbuch_strely.png")
 beam3l3 = pygame.image.load("beam.png")
+vybuch = pygame.image.load("výbuch.png")
+
 
 # Vytvoření instancí tříd
 letadlo = Letadlo(hrac_x, hrac_y, šířka, výška, zivoty, uhel, smrt, 0, 0, vystrel, angle_kanon)
-nepritel = Nepritel(rychlost_pozadi, poloha_x, poloha_y, šířka, výška, vystrel,zivoty_nepritel,obrazovka,zivoty)
+nepritel = Nepritel(rychlost_pozadi, poloha_x, poloha_y, šířka, výška, vystrel, zivoty_nepritel, obrazovka, zivoty)
 
 while True:
     for i in range(vystrel):
         strela_x = letadlo.x + 17
         strela_y = letadlo.y + 17
-        
-        strela = Strela(strela_x, strela_y, letadlo.angle_kanon)
+        zasazeni = False
+        strela = Strela(strela_x, strela_y, letadlo.angle_kanon, zasazeni)
         vystreleni.append(strela)
         
     for udalost in pygame.event.get():
@@ -69,24 +77,23 @@ while True:
                 pygame.quit()
                 sys.exit()
     
-        
-    if letadlo.smrt == False:     #okontrola jestli letadlo žije
-        nepritel.pohyb_kanonu()
-        pohyb_pozadí -= nepritel.rychlost_pozadi 
-
-        if nepritel.zivoty < 0:
+    if nepritel.zivoty <= 0:
             letadlo.znic_se()
+    else:       
+    
+        
+        
        
         keys = pygame.key.get_pressed()
         if keys[pygame.K_DOWN]:
             letadlo.pohyb_dolu()
             
-        vystrel =0
-        if firerate > 0: #delay mezi střelami
+        vystrel = 0
+        if firerate > 0:  # Delay mezi střelami
             firerate -= 1
             
-        if keys[pygame.K_SPACE] and  firerate == 0:
-            firerate = 20
+        if keys[pygame.K_SPACE] and firerate == 0:
+            firerate = 10  # Nastavení hodnoty delay
             vystrel = 1
         
         if keys[pygame.K_UP]:
@@ -99,12 +106,14 @@ while True:
         if keys[pygame.K_LEFT] or keys[pygame.K_s]:
             if not letadlo.angle_kanon < 60:
                 letadlo.angle_kanon -= 1
-                
-        if letadlo.zivoty <= 0:
-            letadlo.znic_se()
-        
+    if letadlo.smrt == False:  # Kontrola jestli letadlo žije
+        nepritel.pohyb_kanonu()
+        pohyb_pozadí -= nepritel.rychlost_pozadi             
+    
+
     umisteni_pozadi1 = pohyb_pozadí % rozdil_pozadi
     umisteni_pozadi2 = (pohyb_pozadí % rozdil_pozadi) - rozdil_pozadi
+
     # Vypočítej ofset od středu obrázku k pravému hornímu rohu
     image_center = pygame.math.Vector2(kanon_rect.center)
     pivot = pygame.math.Vector2(kanon_rect.midright)
@@ -122,15 +131,21 @@ while True:
     rotated_rect.center = new_center
 
     obrazovka.fill(pozadi_barva)
-    
     obrazovka.blit(Pohyblive_pozadi, (umisteni_pozadi1, výška - 100))
     obrazovka.blit(Pohyblive_pozadi, (umisteni_pozadi2, výška - 100))
     
-    nepritel.nabíjení(obrazovka,kanon13,kanon23,kanon33,kanon43,beam3l3)
-    
+    nepritel.nabíjení(obrazovka, kanon13, kanon23, kanon33, kanon43, beam3l3,kanon_destroyed)
+   
     for strela in vystreleni:
+        if strela.zasazeni == False :
+            strela.zasah(nepritel)
         strela.move()
-        strela.draw(obrazovka, strela_image,vybuch_image)
+        strela.draw(obrazovka, strela_image, vybuch_image,vybuch)
+            
+            
+        
+            
+        # Kontrola hodnoty zivoty nepritel
 
     otočená_stíhačka = pygame.transform.rotate(stihacka, letadlo.uhel)
     obrazovka.blit(rotated_image, rotated_rect)

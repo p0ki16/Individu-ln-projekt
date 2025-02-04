@@ -66,13 +66,16 @@ vybuch = pygame.image.load("výbuch.png")
 Lobby_image = pygame.image.load("Lobby.png")
 
 button_play = pygame.image.load("button_play.png")  
-pozice_play = button_play.get_rect(topright=(200, 150))
+pozice_play = button_play.get_rect(topleft=(600, 100))
 
 button_levels = pygame.image.load("button_levels.png")  
-pozice_levels = button_levels.get_rect(topleft=(200, 250))
+pozice_levels = button_levels.get_rect(topleft=(600, 200))
 
 button_infinity = pygame.image.load("button_infinity.png")  
-pozice_infinity = button_infinity.get_rect(topleft=(200, 350))
+pozice_infinity = button_infinity.get_rect(topleft=(600, 300))
+
+button_shop = pygame.image.load("button_shop.png")  
+pozice_shop= button_shop.get_rect(topleft=(600, 400))
 
 Lobby=True
 Infinite_mode=True 
@@ -95,17 +98,26 @@ while True:
                     Lobby = False
                     Infinite_mode = True
                     print("Přechod na Infinite Mode!")
-
+        umisteni_pozadi1 = pohyb_pozadí % rozdil_pozadi
+        umisteni_pozadi2 = (pohyb_pozadí % rozdil_pozadi) - rozdil_pozadi
+        
+         # Vypočítej ofset od středu obrázku k pravému hornímu rohu
+        
+        
+        
+        
+        
+        # Poté vyplníme pozadí
+        obrazovka.fill(pozadi_barva)
+        obrazovka.blit(Pohyblive_pozadi, (umisteni_pozadi1, výška - 100))
+        obrazovka.blit(Pohyblive_pozadi, (umisteni_pozadi2, výška - 100))
+        
+        # Vykreslíme ostatní obrázky (např. pozadí Lobby)
+        obrazovka.blit(Lobby_image, (-20, 0))
         # Nejprve vykreslíme tlačítka
         obrazovka.blit(button_play, pozice_play)
         obrazovka.blit(button_levels, pozice_levels)
         obrazovka.blit(button_infinity, pozice_infinity)
-        
-        # Poté vyplníme pozadí
-        obrazovka.fill(pozadi_barva)
-        
-        # Vykreslíme ostatní obrázky (např. pozadí Lobby)
-        obrazovka.blit(Lobby_image, (-20, 0))
 
         # Aktualizace obrazovky
         pygame.display.flip()
@@ -137,7 +149,8 @@ while True:
             keys = pygame.key.get_pressed()
             if keys[pygame.K_DOWN]:
                 letadlo.pohyb_dolu()
-                
+        
+            letadlo.pohyb_jiným_směrem()
             vystrel = 0
             if firerate > 0:  # Delay mezi střelami
                 firerate -= 1
@@ -159,11 +172,11 @@ while True:
         if letadlo.smrt == False:  # Kontrola jestli letadlo žije
             nepritel.pohyb_kanonu()
             pohyb_pozadí -= nepritel.rychlost_pozadi             
-        
+            
 
         umisteni_pozadi1 = pohyb_pozadí % rozdil_pozadi
         umisteni_pozadi2 = (pohyb_pozadí % rozdil_pozadi) - rozdil_pozadi
-
+        print(letadlo.uhel)
         # Vypočítej ofset od středu obrázku k pravému hornímu rohu
         image_center = pygame.math.Vector2(kanon_rect.center)
         pivot = pygame.math.Vector2(kanon_rect.midright)
@@ -195,7 +208,7 @@ while True:
                 
             
                 
-            # Kontrola hodnoty zivoty nepritel
+        
 
         otočená_stíhačka = pygame.transform.rotate(stihacka, letadlo.uhel)
         obrazovka.blit(rotated_image, rotated_rect)

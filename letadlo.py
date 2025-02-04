@@ -26,6 +26,7 @@ class Letadlo:
             self.y -= 25 * abs(math.sin(math.radians(self.uhel)))
         else:
             self.y += 25 * abs(math.sin(math.radians(self.uhel)))
+            
         if self.uhel < 0:
             self.uhel =360
         if self.uhel > 360:

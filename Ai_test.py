@@ -1,28 +1,33 @@
 import pygame
+import sys
 
-# Inicializace Pygame a nastavení okna
+# Inicializace Pygame
 pygame.init()
-screen = pygame.display.set_mode((800, 600))
-pygame.display.set_caption("Pygame Text Example")
-clock = pygame.time.Clock()
 
-# Inicializace fontu
-font = pygame.font.SysFont('Arial', 48)
+# Nastavení velikosti okna
+screen = pygame.display.set_mode((600, 800))
+pygame.display.set_caption("Tlačítko s obrázkem")
 
-# Vykreslení textu
-text_surface = font.render('Hello, Pygame!', True, (255, 255, 255))  # Bílé písmo
-text_rect = text_surface.get_rect(center=(400, 300))  # Umístění textu na střed obrazovky
+# Načtení obrázku tlačítka
+button_image = pygame.image.load("button_levels.png")  
+button_rect = button_image.get_rect(center=(200, 150))  # Umístění obrázku na střed obrazovky
 
 # Hlavní smyčka
-running = True
-while running:
+while True:
+    screen.fill((255, 255, 255))  # Vyplníme pozadí bílou barvou
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            running = False
-    
-    screen.fill((0, 0, 0))  # Vymaže obrazovku černou barvou
-    screen.blit(text_surface, text_rect)  # Vykreslí text
-    pygame.display.flip()
-    clock.tick(60)
+            pygame.quit()
+            sys.exit()
+        
+        # Zjištění, zda bylo tlačítko kliknuto
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if button_rect.collidepoint(event.pos):  # Kontrola, zda kliknutí bylo na obrázku tlačítka
+                print("Tlačítko bylo kliknuto!")
 
-pygame.quit()
+    # Vykreslení tlačítka jako obrázku
+    screen.blit(button_image, button_rect)
+
+    # Aktualizace okna
+    pygame.display.flip()

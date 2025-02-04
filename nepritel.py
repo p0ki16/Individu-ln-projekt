@@ -39,13 +39,17 @@ class Nepritel:
             elif self.poloha_x > self.sirka * 1 / 5:
                 surface.blit(kanon33, (self.poloha_x, self.poloha_y))
                 
-            elif self.poloha_x-100 < self.sirka * 1 / 5 and self.poloha_x+200 > self.sirka * 1 / 5:
+            elif self.poloha_x-100 < self.sirka * 1 / 5 and self.poloha_x+400 > self.sirka * 1 / 5:
                 self.test += 100
                 surface.blit(beam3l3, (self.poloha_x, self.poloha_y-self.test))
                 surface.blit(kanon43, (self.poloha_x, self.poloha_y))
                 if self.odecti1 == False:
                     self.zivoty-=1
                 self.odecti1=True
+            elif self.poloha_x < 0:
+                 self.respawn()
+                 self.test = 0
+                 self.odecti1=False
                     
                 
                 
@@ -53,6 +57,7 @@ class Nepritel:
         elif self.poloha_x + 200 > 0:
                 if self.zivoty_self <=0:
                     surface.blit(kanon_destroyed, (self.poloha_x, self.poloha_y))
+                    
                 else:
                     surface.blit(kanon43, (self.poloha_x, self.poloha_y))
                 

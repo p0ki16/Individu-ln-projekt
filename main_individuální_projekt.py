@@ -24,15 +24,15 @@ výška, šířka = 1080, 1920
 hrac_x = šířka * 1 / 5
 hrac_y = výška / 2
 
-zivoty = 1
+zivoty = 9
 zivoty_nepritel = 10
-uhel = 0
+uhel = 1
 
 smrt = False
 
 vystrel = 0
 speed_strela = 5
-rychlost_pozadi = 10
+rychlost_pozadi = 6
 poloha_x = šířka
 poloha_y = výška - 210
 
@@ -47,7 +47,7 @@ pozadi_barva = (100, 100, 255)
 kanon = pygame.image.load('kanon_stíhačka.png').convert_alpha()
 kanon_rect = kanon.get_rect()
 
-stihacka = pygame.image.load("stíhačka_do_hry_kanon.png")
+stihacka = pygame.image.load("stíhačka_kanon_moderní.png")
 Pohyblive_pozadi = pygame.image.load("Pozadí_pohyblivé.png")
 
 kanon13 = pygame.image.load("kanon_1l3.png")
@@ -131,7 +131,7 @@ while True:
             strela_x = letadlo.x + 17
             strela_y = letadlo.y + 17
             zasazeni = False
-            strela = Strela(strela_x, strela_y, letadlo.angle_kanon, zasazeni)
+            strela = Strela(strela_x, strela_y, letadlo.uhel, zasazeni)
             vystreleni.append(strela)
             
         for udalost in pygame.event.get():
@@ -161,37 +161,22 @@ while True:
             
             if keys[pygame.K_UP]:
                 letadlo.pohyb_nahoru()
-                
-            if keys[pygame.K_RIGHT] or keys[pygame.K_w]:
-                if not letadlo.angle_kanon > 180:
-                    letadlo.angle_kanon += 1
-                    
-            if keys[pygame.K_LEFT] or keys[pygame.K_s]:
-                if not letadlo.angle_kanon < 60:
-                    letadlo.angle_kanon -= 1
+            
+            
         if letadlo.smrt == False:  # Kontrola jestli letadlo žije
             nepritel.pohyb_kanonu()
-            pohyb_pozadí -= nepritel.rychlost_pozadi             
             
-
+        nepritel.rychlost_pozadi =6   
+        if 270>letadlo.uhel and letadlo.uhel  < 90:   
+            nepritel.rychlost_pozadi =-nepritel.rychlost_pozadi * math.sin(math.radians(letadlo.uhel-90))
+        else:
+            nepritel.rychlost_pozadi =-nepritel.rychlost_pozadi * math.sin(math.radians(letadlo.uhel-90))
+            
+        print(    letadlo.uhel)
+        pohyb_pozadí -= nepritel.rychlost_pozadi
         umisteni_pozadi1 = pohyb_pozadí % rozdil_pozadi
         umisteni_pozadi2 = (pohyb_pozadí % rozdil_pozadi) - rozdil_pozadi
-        print(letadlo.uhel)
-        # Vypočítej ofset od středu obrázku k pravému hornímu rohu
-        image_center = pygame.math.Vector2(kanon_rect.center)
-        pivot = pygame.math.Vector2(kanon_rect.midright)
-        offset = pivot - image_center
-
-        # Otoč ofset
-        rotated_offset = offset.rotate(-letadlo.angle_kanon)
-
-        # Otoč obrázek
-        rotated_image = pygame.transform.rotate(kanon, letadlo.angle_kanon)
-        rotated_rect = rotated_image.get_rect()
-
-        # Nastav novou pozici obrázku
-        new_center = pygame.math.Vector2(letadlo.x + 30, letadlo.y + 20) - rotated_offset
-        rotated_rect.center = new_center
+       
 
         obrazovka.fill(pozadi_barva)
         obrazovka.blit(Pohyblive_pozadi, (umisteni_pozadi1, výška - 100))
@@ -202,7 +187,7 @@ while True:
         for strela in vystreleni:
             if strela.zasazeni == False :
                 strela.zasah(nepritel)
-            strela.move()
+            strela.move(rychlost_pozadi)
             strela.draw(obrazovka, strela_image, vybuch_image,vybuch)
                 
                 
@@ -211,7 +196,7 @@ while True:
         
 
         otočená_stíhačka = pygame.transform.rotate(stihacka, letadlo.uhel)
-        obrazovka.blit(rotated_image, rotated_rect)
+        
 
         rect = otočená_stíhačka.get_rect(center=(letadlo.x, letadlo.y))
         obrazovka.blit(otočená_stíhačka, rect.topleft)

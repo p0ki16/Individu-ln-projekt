@@ -27,9 +27,11 @@ class Letadlo:
         else:
             self.y += 25 * abs(math.sin(math.radians(self.uhel)))
         if self.uhel < 0:
-            self.uhel =360  
-        if self.uhel >360:
+            self.uhel =360
+        if self.uhel > 360:
             self.uhel =0
+        
+        
             
     def znic_se(self):
         if self.y <self.vyska-20:

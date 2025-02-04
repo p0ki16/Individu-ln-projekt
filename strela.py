@@ -9,19 +9,19 @@ class Strela:
         self.zasazeni =zasazeni
         self.spawn = 20  # Přidání atributu spawn jako atribut instance
         
-    def move(self):
+    def move(self,pohyb_země):
         if self.strela_y > 1080 - 20:  # 20 ke velikost výbuchu
             self.strela_y = 1080
             self.spawn -= 1  # Použití atributu instance
-            self.strela_x -=10
+            self.strela_x -=pohyb_země
             
         elif self.zasazeni ==True:
             self.spawn -= 1  # Použití atributu instance
-            self.strela_x -=10
+            self.strela_x -=pohyb_země
             
         else:
-            self.strela_x -= 20 * math.cos(math.radians(self.angle_kanon))
-            self.strela_y += 20 * math.sin(math.radians(self.angle_kanon))
+            self.strela_x -= 20 * math.cos(math.radians(self.angle_kanon+180))
+            self.strela_y += 20 * math.sin(math.radians(self.angle_kanon+180))
             self.spawn = 20  # Použití atributu instance
     
     def draw(self, surface, image_strela, image_vybuch,vybuch):

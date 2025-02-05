@@ -13,6 +13,10 @@ clock = pygame.time.Clock()
 font = pygame.font.SysFont('Arial', 48)
 
 
+text_color = (0, 0, 0)
+
+
+
 firerate = 0
 
 
@@ -24,8 +28,8 @@ výška, šířka = 1080, 1920
 hrac_x = šířka * 1 / 5
 hrac_y = výška / 2
 
-zivoty = 9
-zivoty_nepritel = 10
+zivoty = 8
+zivoty_nepritel = 20
 uhel = 1
 
 smrt = False
@@ -38,6 +42,8 @@ poloha_y = výška - 210
 firerate_rakety =0
 vystreleni = []
 raketa_vystrel =[]
+pocet_raket=12
+skore=0
 
 # Inicializace Pygame
 obrazovka = pygame.display.set_mode((šířka, výška))
@@ -70,14 +76,13 @@ Lobby_image = pygame.image.load("Lobby.png")
 button_play = pygame.image.load("button_play.png")  
 pozice_play = button_play.get_rect(topleft=(600, 100))
 
-button_levels = pygame.image.load("button_levels.png")  
-pozice_levels = button_levels.get_rect(topleft=(600, 200))
+button_shop = pygame.image.load("button_shop.png")  
+pozice_shop= button_shop.get_rect(topleft=(600, 200))
 
 button_infinity = pygame.image.load("button_infinity.png")  
 pozice_infinity = button_infinity.get_rect(topleft=(600, 300))
 
-button_shop = pygame.image.load("button_shop.png")  
-pozice_shop= button_shop.get_rect(topleft=(600, 400))
+
 
 Lobby=True
 Infinite_mode=True 
@@ -91,15 +96,20 @@ while True:
             if udalost.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+                
             if udalost.type == pygame.MOUSEBUTTONDOWN:
                 if pozice_play.collidepoint(udalost.pos):  # Kontrola, zda kliknutí bylo na obrázku tlačítka
-                    print("Tlačítko 'Play' bylo kliknuto!")
-                if pozice_levels.collidepoint(udalost.pos):  # Kontrola, zda kliknutí bylo na obrázku tlačítka
-                    print("Tlačítko 'Levels' bylo kliknuto!")
+                    Lobby = False
+                    play=True
+                    
+                if pozice_shop.collidepoint(udalost.pos):  # Kontrola, zda kliknutí bylo na obrázku tlačítka
+                    Lobby = False
+                    Shop = True
+                    
                 if pozice_infinity.collidepoint(udalost.pos):  # Kontrola, zda kliknutí bylo na obrázku tlačítka
                     Lobby = False
                     Infinite_mode = True
-                    print("Přechod na Infinite Mode!")
+                    
         umisteni_pozadi1 = pohyb_pozadí % rozdil_pozadi
         umisteni_pozadi2 = (pohyb_pozadí % rozdil_pozadi) - rozdil_pozadi
         
@@ -118,7 +128,7 @@ while True:
         obrazovka.blit(Lobby_image, (-20, 0))
         # Nejprve vykreslíme tlačítka
         obrazovka.blit(button_play, pozice_play)
-        obrazovka.blit(button_levels, pozice_levels)
+        obrazovka.blit(button_shop, pozice_shop)
         obrazovka.blit(button_infinity, pozice_infinity)
 
         # Aktualizace obrazovky
@@ -126,9 +136,24 @@ while True:
         
         # Nastavení FPS
         clock.tick(60)
+    while Shop:
+        
+        for udalost in pygame.event.get():
+            if udalost.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if udalost.type == pygame.MOUSEBUTTONDOWN:
+        
+        
+        
 
         
     while Infinite_mode:
+        text = f" skóre: {skore} počet raket :{pocet_raket} životy:{nepritel.zivoty} "
+        text_surface = font.render(text, True, text_color)
+        text_rect = text_surface.get_rect(center=(500, 50))
+        
+        
         for i in range(vystrel):
             strela_x = letadlo.x + 17
             strela_y = letadlo.y + 17
@@ -148,6 +173,9 @@ while True:
                 if udalost.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
+        if letadlo.y > 1080:
+            nepritel.zivoty=0
+          
         
         if nepritel.zivoty <= 0:
                 letadlo.znic_se()
@@ -173,28 +201,33 @@ while True:
                 firerate = 10  # Nastavení hodnoty delay
                 vystrel = 1
                 
-            raketa_vystrelena = 0   
-            if keys[pygame.K_LALT] and firerate_rakety == 0:
+            raketa_vystrelena = 0
+            
+            if keys[pygame.K_LALT] and firerate_rakety == 0 and pocet_raket>0:
                 firerate_rakety = 100  # Nastavení hodnoty delay
                 raketa_vystrelena = 1
+                pocet_raket-=1
             
             if keys[pygame.K_UP]:
                 letadlo.pohyb_nahoru()
+            nepritel.rychlost_pozadi =6   #počítání pohybu pod úhlem
+            
+            if 270>letadlo.uhel and letadlo.uhel  < 90:   
+                nepritel.rychlost_pozadi =-nepritel.rychlost_pozadi * math.sin(math.radians(letadlo.uhel-90))#90je zde k pootočení osy 
+            else:
+                nepritel.rychlost_pozadi =-nepritel.rychlost_pozadi * math.sin(math.radians(letadlo.uhel-90))
+            
+        
+        
             
             
         if letadlo.smrt == False:  # Kontrola jestli letadlo žije
             nepritel.pohyb_kanonu()
-            
-        nepritel.rychlost_pozadi =6   #počítání pohybu pod úhlem
-        if 270>letadlo.uhel and letadlo.uhel  < 90:   
-            nepritel.rychlost_pozadi =-nepritel.rychlost_pozadi * math.sin(math.radians(letadlo.uhel-90))#90je zde k pootočení osy 
-        else:
-            nepritel.rychlost_pozadi =-nepritel.rychlost_pozadi * math.sin(math.radians(letadlo.uhel-90))
+            pohyb_pozadí -= nepritel.rychlost_pozadi
+            umisteni_pozadi1 = pohyb_pozadí % rozdil_pozadi
+            umisteni_pozadi2 = (pohyb_pozadí % rozdil_pozadi) - rozdil_pozadi
             
         
-        pohyb_pozadí -= nepritel.rychlost_pozadi
-        umisteni_pozadi1 = pohyb_pozadí % rozdil_pozadi
-        umisteni_pozadi2 = (pohyb_pozadí % rozdil_pozadi) - rozdil_pozadi
        
 
         obrazovka.fill(pozadi_barva)
@@ -212,8 +245,14 @@ while True:
         for raketa in raketa_vystrel:
             if raketa.zasazeni == False:
                 raketa.zasah(nepritel)
-            raketa.navádění(nepritel,obrazovka,Raketa_image,výška)
+            raketa.navádění(nepritel,obrazovka,Raketa_image,výška,nepritel.rychlost_pozadi)
+            raketa.draw(obrazovka, Raketa_image, vybuch_image,vybuch)
             
+        if nepritel.zivoty_self > 0:
+            pricteni =True
+        if nepritel.zivoty_self < 0 and pricteni ==True:
+            skore+=1000
+            pricteni =False
     
                 
             
@@ -225,6 +264,7 @@ while True:
 
         rect = otočená_stíhačka.get_rect(center=(letadlo.x, letadlo.y))
         obrazovka.blit(otočená_stíhačka, rect.topleft)
+        obrazovka.blit(text_surface, text_rect)
 
         pygame.display.flip()
         clock.tick(60)

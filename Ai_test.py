@@ -1,25 +1,37 @@
 import pygame
 import sys
-import math
-test = 10000
+
 # Inicializace Pygame
 pygame.init()
 
 # Nastavení rozměrů okna
 size = (800, 600)
 screen = pygame.display.set_mode(size)
-pygame.display.set_caption("Kulička následující kurzor")
+pygame.display.set_caption("Více tlačítek v Pygame")
 
 # Barvy
 background_color = (255, 255, 255)  # Bílá
-ball_color = (0, 0, 255)  # Modrá
+button_color = (0, 0, 255)  # Modrá
 
-# Parametry kuličky
-ball_radius = 15
-ball_pos = [400, 300]  # Počáteční pozice kuličky
+class Button:
+    def __init__(self, x, y, width, height):
+        self.rect = pygame.Rect(x, y, width, height)
+    
+    def draw(self, screen):
+        pygame.draw.rect(screen, button_color, self.rect)
+    
+    def is_clicked(self, event):
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if self.rect.collidepoint(event.pos):
+                return True
+        return False
 
-# Rychlost kuličky
-ball_speed = 0.05
+# Vytvoření tlačítek
+buttons = [
+    Button(100, 100, 200, 50),
+    Button(100, 200, 200, 50),
+    Button(100, 300, 200, 50),
+]
 
 # Hlavní smyčka hry
 while True:
@@ -27,38 +39,16 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
-    
-    # Získání pozice kurzoru myši
-    if test>0:
-        mouse_x, mouse_y = pygame.mouse.get_pos()
-        test-=1
-    else:
-        mouse_y=650
-        
-    
-    # Výpočet rozdílu v pozicích
-    dx = mouse_x - ball_pos[0]
-    dy = mouse_y - ball_pos[1]
-    
-    # Výpočet vzdálenosti mezi kuličkou a kurzorem
-    distance = math.sqrt(dx**2 + dy**2)
-    
-    # Normování směrového vektoru
-    if distance != 0:
-        dx /= distance
-        dy /= distance
-    
-    # Aktualizace pozice kuličky
-    ball_pos[0] += dx * ball_speed
-    ball_pos[1] += dy * ball_speed
-    
+        for button in buttons:
+            if button.is_clicked(event):
+                print(f"Tlačítko {buttons.index(button) + 1} bylo kliknuto")
+
     # Vyplnění pozadí
     screen.fill(background_color)
     
-    # Kreslení kuličky na aktuální pozici
-    pygame.draw.circle(screen, ball_color, (int(ball_pos[0]), int(ball_pos[1])), ball_radius)
+    # Vykreslení tlačítek
+    for button in buttons:
+        button.draw(screen)
     
     # Aktualizace okna
     pygame.display.flip()
-
-

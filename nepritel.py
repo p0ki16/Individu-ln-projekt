@@ -19,7 +19,7 @@ class Nepritel:
         
     def respawn(self):
         self.poloha_x += random.randint(self.sirka + 500, self.sirka + 1000)
-        self.zivoty_self = 10
+        self.zivoty_self = 25
     
     def nabíjení(self,surface,kanon13,kanon23,kanon33,kanon43,beam3l3,kanon_destroyed):
         if self.zivoty_self >0:

@@ -4,7 +4,7 @@ import sys
 import random
 import math
 
-from strela import Strela
+from strela import Strela,Raketa
 from letadlo import Letadlo
 from nepritel import Nepritel
 
@@ -29,14 +29,15 @@ zivoty_nepritel = 10
 uhel = 1
 
 smrt = False
-
+raketa_vystrelena =0
 vystrel = 0
 speed_strela = 5
-rychlost_pozadi = 6
+rychlost_pozadi = 10
 poloha_x = šířka
 poloha_y = výška - 210
-
+firerate_rakety =0
 vystreleni = []
+raketa_vystrel =[]
 
 # Inicializace Pygame
 obrazovka = pygame.display.set_mode((šířka, výška))
@@ -46,6 +47,7 @@ pozadi_barva = (100, 100, 255)
 # Načtení obrázků
 kanon = pygame.image.load('kanon_stíhačka.png').convert_alpha()
 kanon_rect = kanon.get_rect()
+Raketa_image = pygame.image.load('Raketa.png')
 
 stihacka = pygame.image.load("stíhačka_kanon_moderní.png")
 Pohyblive_pozadi = pygame.image.load("Pozadí_pohyblivé.png")
@@ -134,6 +136,14 @@ while True:
             strela = Strela(strela_x, strela_y, letadlo.uhel, zasazeni)
             vystreleni.append(strela)
             
+        for j in range(raketa_vystrelena):
+            Raketa_x = letadlo.x
+            Raketa_y = letadlo.y
+            zasazeni = False
+            raketa = Raketa(Raketa_x, Raketa_y, zasazeni)
+            raketa_vystrel.append(raketa)
+            
+            
         for udalost in pygame.event.get():
                 if udalost.type == pygame.QUIT:
                     pygame.quit()
@@ -151,13 +161,22 @@ while True:
                 letadlo.pohyb_dolu()
         
             letadlo.pohyb_jiným_směrem()
-            vystrel = 0
+            
             if firerate > 0:  # Delay mezi střelami
                 firerate -= 1
                 
+            if firerate_rakety > 0:  # Delay mezi raketami
+                firerate_rakety -= 1
+                
+            vystrel = 0    
             if keys[pygame.K_SPACE] and firerate == 0:
                 firerate = 10  # Nastavení hodnoty delay
                 vystrel = 1
+                
+            raketa_vystrelena = 0   
+            if keys[pygame.K_LALT] and firerate_rakety == 0:
+                firerate_rakety = 100  # Nastavení hodnoty delay
+                raketa_vystrelena = 1
             
             if keys[pygame.K_UP]:
                 letadlo.pohyb_nahoru()
@@ -166,13 +185,13 @@ while True:
         if letadlo.smrt == False:  # Kontrola jestli letadlo žije
             nepritel.pohyb_kanonu()
             
-        nepritel.rychlost_pozadi =6   
+        nepritel.rychlost_pozadi =6   #počítání pohybu pod úhlem
         if 270>letadlo.uhel and letadlo.uhel  < 90:   
-            nepritel.rychlost_pozadi =-nepritel.rychlost_pozadi * math.sin(math.radians(letadlo.uhel-90))
+            nepritel.rychlost_pozadi =-nepritel.rychlost_pozadi * math.sin(math.radians(letadlo.uhel-90))#90je zde k pootočení osy 
         else:
             nepritel.rychlost_pozadi =-nepritel.rychlost_pozadi * math.sin(math.radians(letadlo.uhel-90))
             
-        print(    letadlo.uhel)
+        
         pohyb_pozadí -= nepritel.rychlost_pozadi
         umisteni_pozadi1 = pohyb_pozadí % rozdil_pozadi
         umisteni_pozadi2 = (pohyb_pozadí % rozdil_pozadi) - rozdil_pozadi
@@ -182,14 +201,20 @@ while True:
         obrazovka.blit(Pohyblive_pozadi, (umisteni_pozadi1, výška - 100))
         obrazovka.blit(Pohyblive_pozadi, (umisteni_pozadi2, výška - 100))
         
-        nepritel.nabíjení(obrazovka, kanon13, kanon23, kanon33, kanon43, beam3l3,kanon_destroyed)
+        nepritel.nabíjení(obrazovka, kanon13, kanon23, kanon33 , kanon43, beam3l3,kanon_destroyed)
        
         for strela in vystreleni:
             if strela.zasazeni == False :
                 strela.zasah(nepritel)
-            strela.move(rychlost_pozadi)
+            strela.move( nepritel.rychlost_pozadi)
             strela.draw(obrazovka, strela_image, vybuch_image,vybuch)
-                
+            
+        for raketa in raketa_vystrel:
+            if raketa.zasazeni == False:
+                raketa.zasah(nepritel)
+            raketa.navádění(nepritel,obrazovka,Raketa_image,výška)
+            
+    
                 
             
                 

@@ -7,6 +7,8 @@ import math
 from strela import Strela,Raketa
 from letadlo import Letadlo
 from nepritel import Nepritel
+    
+
 
 pygame.init()
 clock = pygame.time.Clock()
@@ -136,13 +138,8 @@ while True:
         
         # Nastavení FPS
         clock.tick(60)
-    while Shop:
-        
-        for udalost in pygame.event.get():
-            if udalost.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            if udalost.type == pygame.MOUSEBUTTONDOWN:
+    
+            
         
         
         

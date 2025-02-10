@@ -44,8 +44,9 @@ class Nepritel:
                 surface.blit(beam3l3, (self.poloha_x, self.poloha_y-self.test))
                 surface.blit(kanon43, (self.poloha_x, self.poloha_y))
                 if self.odecti1 == False:
-                    self.zivoty-=1
+                    self.zivoty -= 1
                 self.odecti1=True
+                
             elif self.poloha_x < 0:
                  self.respawn()
                  self.test = 0

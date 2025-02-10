@@ -10,7 +10,7 @@ from nepritel import Nepritel
     
 
 
-pygame.init()
+pygame.font.init()
 clock = pygame.time.Clock()
 font = pygame.font.SysFont('Arial', 48)
 
@@ -46,6 +46,7 @@ vystreleni = []
 raketa_vystrel =[]
 pocet_raket=12
 skore=0
+
 
 # Inicializace Pygame
 obrazovka = pygame.display.set_mode((šířka, výška))
@@ -84,29 +85,37 @@ pozice_shop= button_shop.get_rect(topleft=(600, 200))
 button_infinity = pygame.image.load("button_infinity.png")  
 pozice_infinity = button_infinity.get_rect(topleft=(600, 300))
 
+shop_image = pygame.image.load("Shop.png")
 
 
-Lobby=True
-Infinite_mode=True 
+
+Lobby = True
+Infinite_mode = False 
+shop = False 
+
 
 # Vytvoření instancí tříd
 letadlo = Letadlo(hrac_x, hrac_y, šířka, výška, zivoty, uhel, smrt, 0, 0, vystrel, angle_kanon)
 nepritel = Nepritel(rychlost_pozadi, poloha_x, poloha_y, šířka, výška, vystrel, zivoty_nepritel, obrazovka, zivoty)
 while True:
+    
     while Lobby:
+        
         for udalost in pygame.event.get():
+            
             if udalost.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
                 
             if udalost.type == pygame.MOUSEBUTTONDOWN:
+                
                 if pozice_play.collidepoint(udalost.pos):  # Kontrola, zda kliknutí bylo na obrázku tlačítka
                     Lobby = False
                     play=True
                     
                 if pozice_shop.collidepoint(udalost.pos):  # Kontrola, zda kliknutí bylo na obrázku tlačítka
                     Lobby = False
-                    Shop = True
+                    shop = True
                     
                 if pozice_infinity.collidepoint(udalost.pos):  # Kontrola, zda kliknutí bylo na obrázku tlačítka
                     Lobby = False
@@ -138,6 +147,20 @@ while True:
         
         # Nastavení FPS
         clock.tick(60)
+        
+    while shop:
+        
+        for udalost in pygame.event.get():
+    
+            if udalost.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+        
+        obrazovka.blit(shop_image, (0,0))
+        pygame.display.flip()
+        
+        # Nastavení FPS
+        clock.tick(60)
     
             
         
@@ -146,6 +169,7 @@ while True:
 
         
     while Infinite_mode:
+        
         text = f" skóre: {skore} počet raket :{pocet_raket} životy:{nepritel.zivoty} "
         text_surface = font.render(text, True, text_color)
         text_rect = text_surface.get_rect(center=(500, 50))
@@ -234,12 +258,15 @@ while True:
         nepritel.nabíjení(obrazovka, kanon13, kanon23, kanon33 , kanon43, beam3l3,kanon_destroyed)
        
         for strela in vystreleni:
+            
             if strela.zasazeni == False :
+                
                 strela.zasah(nepritel)
             strela.move( nepritel.rychlost_pozadi)
             strela.draw(obrazovka, strela_image, vybuch_image,vybuch)
             
         for raketa in raketa_vystrel:
+            
             if raketa.zasazeni == False:
                 raketa.zasah(nepritel)
             raketa.navádění(nepritel,obrazovka,Raketa_image,výška,nepritel.rychlost_pozadi)
@@ -247,6 +274,7 @@ while True:
             
         if nepritel.zivoty_self > 0:
             pricteni =True
+            
         if nepritel.zivoty_self < 0 and pricteni ==True:
             skore+=1000
             pricteni =False

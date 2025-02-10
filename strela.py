@@ -20,8 +20,8 @@ class Strela:
             self.strela_x -= pohyb_země
             
         else:
-            self.strela_x -= 20 * math.cos(math.radians(self.angle_kanon + 180)) 
-            self.strela_y += 20 * math.sin(math.radians(self.angle_kanon + 180))
+            self.strela_x -= 20 * math.sin(math.radians(self.angle_kanon - 90)) 
+            self.strela_y -= 20 * math.cos(math.radians(self.angle_kanon - 90))
             self.spawn = 20  # Použití atributu instance
     
     def draw(self, surface, image_strela, image_vybuch, vybuch):
@@ -76,14 +76,16 @@ class Raketa:
             self.angle = (1 - 0.05) * self.angle + 0.05 * target_angle
             
             # Výpočet nové pozice rakety pomocí sin a cos s konstantní rychlostí
-            self.raketa_x += math.cos(self.angle) * 5
+            self.raketa_x += math.cos(self.angle) * 7
             self.raketa_y += math.sin(self.angle) * 7
+            self.raketa_x-= pohyb_země
+            self.raketa_x+=7 # aby raketa necouvala a to + 7  je něco jako šance s ekterou má raketa trefit cíl
 
     def navádění(self, nepritel, screen, raketa, výška, pohyb_země):
         self.move(pohyb_země,nepritel,výška)
         
                 
-    def draw(self, surface, image_strela, image_vybuch, vybuch):
+    def draw(self, surface, image_strela, image_vybuch, vybuch,pohyb_země):
         if self.spawn > 0:  # Použití atributu instance
             if self.raketa_y > 1080 - 20:
                 surface.blit(image_vybuch, (self.raketa_x, self.raketa_y - 40))
@@ -92,7 +94,7 @@ class Raketa:
                 surface.blit(vybuch, (self.raketa_x, self.raketa_y))
                 
             else:
-                surface.blit(image_strela, (self.raketa_x, self.raketa_y))
+                surface.blit(image_strela, (self.raketa_x , self.raketa_y))
             
                   
     def zasah(self, nepritel):

@@ -41,6 +41,11 @@ class Letadlo:
                 self.uhel -=1
         else:
             self.smrt = True
+            
+    def neutíkej(self):
+        if self.y < -500:
+            self.uhel = 360-self.uhel
+            
     
      
 

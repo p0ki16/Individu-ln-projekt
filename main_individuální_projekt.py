@@ -219,7 +219,7 @@ while True:
                 
             vystrel = 0    
             if keys[pygame.K_SPACE] and firerate == 0:
-                firerate = 10  # Nastavení hodnoty delay
+                firerate = 0  # Nastavení hodnoty delay
                 vystrel = 1
                 
             raketa_vystrelena = 0
@@ -234,9 +234,11 @@ while True:
             nepritel.rychlost_pozadi =6   #počítání pohybu pod úhlem
             
             if 270>letadlo.uhel and letadlo.uhel  < 90:   
-                nepritel.rychlost_pozadi =-nepritel.rychlost_pozadi * math.sin(math.radians(letadlo.uhel-90))#90je zde k pootočení osy 
+                nepritel.rychlost_pozadi =-nepritel.rychlost_pozadi * math.sin(math.radians(letadlo.uhel-90))#90je zde k pootočení osy
+                
             else:
                 nepritel.rychlost_pozadi =-nepritel.rychlost_pozadi * math.sin(math.radians(letadlo.uhel-90))
+                
             
         
         
@@ -247,6 +249,7 @@ while True:
             pohyb_pozadí -= nepritel.rychlost_pozadi
             umisteni_pozadi1 = pohyb_pozadí % rozdil_pozadi
             umisteni_pozadi2 = (pohyb_pozadí % rozdil_pozadi) - rozdil_pozadi
+        
             
         
        
@@ -262,7 +265,7 @@ while True:
             if strela.zasazeni == False :
                 
                 strela.zasah(nepritel)
-            strela.move( nepritel.rychlost_pozadi)
+            strela.move( pohyb_pozadí)
             strela.draw(obrazovka, strela_image, vybuch_image,vybuch)
             
         for raketa in raketa_vystrel:
@@ -270,7 +273,7 @@ while True:
             if raketa.zasazeni == False:
                 raketa.zasah(nepritel)
             raketa.navádění(nepritel,obrazovka,Raketa_image,výška,nepritel.rychlost_pozadi)
-            raketa.draw(obrazovka, Raketa_image, vybuch_image,vybuch)
+            raketa.draw(obrazovka, Raketa_image, vybuch_image,vybuch, nepritel.rychlost_pozadi)
             
         if nepritel.zivoty_self > 0:
             pricteni =True
@@ -290,7 +293,8 @@ while True:
         rect = otočená_stíhačka.get_rect(center=(letadlo.x, letadlo.y))
         obrazovka.blit(otočená_stíhačka, rect.topleft)
         obrazovka.blit(text_surface, text_rect)
-
+        print(letadlo.y)
+        letadlo.neutíkej()
         pygame.display.flip()
         clock.tick(60)
 

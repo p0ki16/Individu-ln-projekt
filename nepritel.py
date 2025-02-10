@@ -47,10 +47,12 @@ class Nepritel:
                     self.zivoty -= 1
                 self.odecti1=True
                 
-            elif self.poloha_x < 0:
-                 self.respawn()
+            elif self.poloha_x < 0 and self.poloha_x > -100:
                  self.test = 0
                  self.odecti1=False
+            elif self.poloha_x < -200: 
+                 self.respawn()
+                
                     
                 
                 

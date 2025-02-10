@@ -219,7 +219,7 @@ while True:
                 
             vystrel = 0    
             if keys[pygame.K_SPACE] and firerate == 0:
-                firerate = 0  # Nastavení hodnoty delay
+                firerate = 10  # Nastavení hodnoty delay
                 vystrel = 1
                 
             raketa_vystrelena = 0
@@ -265,7 +265,7 @@ while True:
             if strela.zasazeni == False :
                 
                 strela.zasah(nepritel)
-            strela.move( pohyb_pozadí)
+            strela.move( nepritel.rychlost_pozadi)
             strela.draw(obrazovka, strela_image, vybuch_image,vybuch)
             
         for raketa in raketa_vystrel:

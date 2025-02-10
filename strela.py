@@ -38,6 +38,7 @@ class Strela:
     def zasah(self, nepritel):
         if nepritel.poloha_x < self.strela_x < nepritel.poloha_x + 150 and \
            nepritel.poloha_y < self.strela_y < nepritel.poloha_y + 200:  # hitbox
+            
             nepritel.zivoty_self -= 1
             self.zasazeni = True
 

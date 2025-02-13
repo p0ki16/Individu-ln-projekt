@@ -1,34 +1,25 @@
 import pygame
 class Shop:
-    def __init__(self,thing,cost,image,button_x,button_y):
-        self.active =False
-        self.bought= False
-        self.cost =cost
-        self.image =image
-        self.button_placement=button_play.get_rect(topleft=(button_x,button_y))
-        self.thing =thing#1-letadlo|2raketa|3upgrdes
+    def __init__(self,main_buttony,image):
         
-    def draw(self, screen):
-        screen.blit(image,self.button_placement)
+        self.main_buttony = main_buttony
+        self.image=image
+    def draw_shop(self,screen):
+        screen.blit(self.image,(0,0))
+        screen.blit(self.main_buttony["letadla"],self.main_buttony["pozice_letadla"])
+        screen.blit(self.main_buttony["rakety"],self.main_buttony["pozice_rakety"])
+        screen.blit(self.main_buttony["upgrady"],self.main_buttony["pozice_upgrady"])
         
-    def choose (self,event):
-        if event.type == pygame.MOUSEBUTTONDOWN and self.button_placement.collidepoint(event.pos) and self.active ==False:
-            self.active = True
+    def choose(self,event):
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            
+            if self.main_buttony["pozice_letadla"].collidepoint(event.pos):
+                print(":)")
+                
+            if self.main_buttony["pozice_rakety"].collidepoint(event.pos):
+               print(":(") 
+            if self.main_buttony["pozice_upgrady"].collidepoint(event.pos):
+                print(":-)")
             
                     
       
-    
-        
-    def buy(self,event,money):
-        
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            if self.button_placement.collidepoint(event.pos):
-                
-                
-        
-    def draw(self, screen):
-        screen.blit(image,self.button_placement)
-        
-        
-        
-    

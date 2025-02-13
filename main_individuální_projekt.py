@@ -7,7 +7,7 @@ import math
 from strela import Strela,Raketa
 from letadlo import Letadlo
 from nepritel import Nepritel
-    
+from Shop import Shop    
 
 
 pygame.font.init()
@@ -30,7 +30,7 @@ výška, šířka = 1080, 1920
 hrac_x = šířka * 1 / 5
 hrac_y = výška / 2
 
-zivoty = 8
+zivoty = 1
 zivoty_nepritel = 20
 uhel = 1
 
@@ -87,6 +87,14 @@ pozice_infinity = button_infinity.get_rect(topleft=(600, 300))
 
 shop_image = pygame.image.load("Shop.png")
 
+main_buttony = {
+    "letadla":button_play,
+    "rakety": button_shop,
+    "upgrady":button_infinity,
+    "pozice_letadla":pozice_play,
+    "pozice_rakety":pozice_shop,
+    "pozice_upgrady":pozice_infinity,
+    }
 
 
 Lobby = True
@@ -97,6 +105,7 @@ shop = False
 # Vytvoření instancí tříd
 letadlo = Letadlo(hrac_x, hrac_y, šířka, výška, zivoty, uhel, smrt, 0, 0, vystrel, angle_kanon)
 nepritel = Nepritel(rychlost_pozadi, poloha_x, poloha_y, šířka, výška, vystrel, zivoty_nepritel, obrazovka, zivoty)
+Obchod = Shop(main_buttony,shop_image)
 while True:
     
     while Lobby:
@@ -155,8 +164,11 @@ while True:
             if udalost.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+        Obchod.choose(udalost)
+        Obchod.draw_shop(obrazovka)
         
-        obrazovka.blit(shop_image, (0,0))
+        
+        
         pygame.display.flip()
         
         # Nastavení FPS
@@ -293,7 +305,7 @@ while True:
         rect = otočená_stíhačka.get_rect(center=(letadlo.x, letadlo.y))
         obrazovka.blit(otočená_stíhačka, rect.topleft)
         obrazovka.blit(text_surface, text_rect)
-        print(letadlo.y)
+        
         letadlo.neutíkej()
         pygame.display.flip()
         clock.tick(60)

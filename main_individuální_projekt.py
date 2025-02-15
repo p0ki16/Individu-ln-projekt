@@ -111,6 +111,7 @@ fockerfox_button=pygame.image.load("Button_Fockerfox.png")
 pozice1 =  fockerfox_button.get_rect(topleft=(300, 900))
 
 myg = pygame.image.load("MYG-15.png")
+myg13 = pygame.image.load("myg13.png")
 myg23=pygame.image.load("myg23.png")
 myg33=pygame.image.load("myg33.png")
 myg_button=pygame.image.load("Button_Myg.png")
@@ -125,7 +126,7 @@ pozice3 =  fbutton.get_rect(topleft=(300, 700))
 
 
 fockerfox_animace=[fockerfox13,fockerfox23,fockerfox33]
-myg_animace=[myg,myg23,myg33]
+myg_animace=[myg13 ,myg23,myg33]
 f_animace=[f13,f23,f33]
 
 main_buttony = {
@@ -373,7 +374,7 @@ while True:
             
                 
         
-        Obchod.animace(fockerfox_animace,myg_animace,f_animace)
+        Obchod.animace(fockerfox_animace,f_animace,myg_animace)
         otočená_stíhačka = pygame.transform.rotate(Obchod.letadlo, letadlo.uhel)
             
 

@@ -90,9 +90,11 @@ class Shop:
         screen.blit(back_button,self.pozice_back)
         
         if event.type == pygame.MOUSEBUTTONDOWN:
+            
             if self.pozice_back.collidepoint(event.pos):
                 self.shop=False
                 self.lobby=True
+                
             else:
                 self.shop = True
                 self.lobby = False

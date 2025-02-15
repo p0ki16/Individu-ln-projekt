@@ -17,7 +17,8 @@ class Shop:
                 print(":)")
                 
             if self.main_buttony["pozice_rakety"].collidepoint(event.pos):
-               print(":(") 
+               print(":(")
+               
             if self.main_buttony["pozice_upgrady"].collidepoint(event.pos):
                 print(":-)")
             

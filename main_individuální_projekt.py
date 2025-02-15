@@ -58,7 +58,7 @@ kanon = pygame.image.load('kanon_stíhačka.png').convert_alpha()
 kanon_rect = kanon.get_rect()
 Raketa_image = pygame.image.load('Raketa.png')
 
-stihacka = pygame.image.load("stíhačka_kanon_moderní.png")
+stihacka = pygame.image.load("Fockerfox.png")
 Pohyblive_pozadi = pygame.image.load("Pozadí_pohyblivé.png")
 
 kanon13 = pygame.image.load("kanon_1l3.png")
@@ -85,16 +85,28 @@ pozice_shop= button_shop.get_rect(topleft=(600, 200))
 button_infinity = pygame.image.load("button_infinity.png")  
 pozice_infinity = button_infinity.get_rect(topleft=(600, 300))
 
+button_rockets = pygame.image.load("Shop_Button_Rockets.png")  
+pozice_rockets = button_play.get_rect(topleft=(1250, 50))
+
+button_planes = pygame.image.load("Shop_Button_planes.png")  
+pozice_planes= button_shop.get_rect(topleft=(1250, 200))
+
+button_upgrades = pygame.image.load("Shop_Button_upgrades.png")  
+pozice_upgrades = button_infinity.get_rect(topleft=(1250, 350))
+
 shop_image = pygame.image.load("Shop.png")
 
 main_buttony = {
-    "letadla":button_play,
-    "rakety": button_shop,
-    "upgrady":button_infinity,
-    "pozice_letadla":pozice_play,
-    "pozice_rakety":pozice_shop,
-    "pozice_upgrady":pozice_infinity,
+    "letadla":button_planes,
+    "rakety": button_rockets,
+    "upgrady":button_upgrades,
+    "pozice_letadla":pozice_planes,
+    "pozice_rakety":pozice_rockets,
+    "pozice_upgrady":pozice_upgrades,
     }
+
+
+
 
 
 Lobby = True
@@ -300,7 +312,7 @@ while True:
         
 
         otočená_stíhačka = pygame.transform.rotate(stihacka, letadlo.uhel)
-        
+            
 
         rect = otočená_stíhačka.get_rect(center=(letadlo.x, letadlo.y))
         obrazovka.blit(otočená_stíhačka, rect.topleft)

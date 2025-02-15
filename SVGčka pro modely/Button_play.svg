@@ -26,9 +26,9 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
-     inkscape:zoom="1.4142136"
-     inkscape:cx="100.76272"
-     inkscape:cy="53.386562"
+     inkscape:zoom="2.0000001"
+     inkscape:cx="120.25"
+     inkscape:cy="17.75"
      inkscape:window-width="1920"
      inkscape:window-height="1009"
      inkscape:window-x="-8"
@@ -98,6 +98,11 @@
        height="18.571747"
        x="1.085295"
        y="1.085295" />
+    <path
+       id="path4"
+       style="fill:#ffffff;fill-rule:evenodd;stroke:#000000;stroke-width:1.46235;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;paint-order:stroke fill markers"
+       d="m 8.1492236,2.6471372 0.3674448,0.00913 C 5.4769062,2.4799099 3.2521274,5.3647539 3.268887,8.4508845 v 0.01137 c 0.010775,3.1033845 2.2230093,5.6277375 4.9940091,5.7692385 l 0.7348896,0.0557 h 6.8183733 v 3.842766 L 20.380377,13.621901 15.816159,8.9916879 V 12.184431 H 9.0044734 c -2.3848781,-0.07578 -3.79112,-1.91533 -3.777714,-3.8256827 -1.063e-4,0.00982 -0.00109,0.019587 -0.00108,0.02938 v -0.051409 c 7.94e-5,0.00736 9.39e-4,0.014677 0.00108,0.022029 0.053053,-0.9620788 0.5479202,-3.3486399 2.9224642,-3.4444514 v 0.025371 H 15.38947 V 2.6471372 Z"
+       sodipodi:nodetypes="ccccccccccccccccccccc" />
     <rect
        style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:3.156;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;paint-order:stroke markers fill"
        id="rect2"
@@ -105,11 +110,6 @@
        height="13.844562"
        x="94.373993"
        y="3.4488873" />
-    <path
-       id="path6"
-       style="fill:#ffffff;fill-rule:evenodd;stroke:#000000;stroke-width:2.782;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;paint-order:stroke markers fill"
-       d="M 6.0556209,3.0622339 V 17.680112 l 9.0053671,-7.211487 z"
-       sodipodi:nodetypes="cccc" />
     <text
        xml:space="preserve"
        style="font-size:22.8425px;line-height:0px;font-family:'Segoe Print';-inkscape-font-specification:'Segoe Print';text-align:center;letter-spacing:0.0453282px;word-spacing:0.065474px;text-anchor:middle;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:2.85532;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;paint-order:stroke markers fill"
@@ -121,19 +121,7 @@
          id="tspan8"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Franklin Gothic Demi';-inkscape-font-specification:'Franklin Gothic Demi';fill:#ececec;stroke:#000000;stroke-width:2.85532"
          x="50.919193"
-         y="18.149246">PLAY</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:22.8425px;line-height:0px;font-family:'Segoe Print';-inkscape-font-specification:'Segoe Print';text-align:center;letter-spacing:0.0453282px;word-spacing:0.065474px;text-anchor:middle;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:2.85532;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;paint-order:stroke markers fill"
-       x="50.896534"
-       y="18.149248"
-       id="text1"
-       transform="scale(0.99327967,1.0067658)"><tspan
-         sodipodi:role="line"
-         id="tspan1"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Franklin Gothic Demi';-inkscape-font-specification:'Franklin Gothic Demi';fill:#ececec;stroke:#000000;stroke-width:2.85532"
-         x="50.919197"
-         y="18.149248">PLAY</tspan></text>
+         y="18.149246">BACK</tspan></text>
     <text
        xml:space="preserve"
        transform="scale(0.26458333)"

@@ -45,6 +45,7 @@ class Letadlo:
     def neutíkej(self):
         if self.y < -500:
             self.uhel = 360-self.uhel
+    
             
     
      

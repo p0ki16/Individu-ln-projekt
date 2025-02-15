@@ -52,13 +52,17 @@ skore=0
 obrazovka = pygame.display.set_mode((šířka, výška))
 pygame.display.set_caption("zkouška")
 pozadi_barva = (100, 100, 255)
+loading_screen = pygame.image.load("loading_screen.png")
+obrazovka.blit(loading_screen,(0,0))
+
+pygame.display.flip()
+
 
 # Načtení obrázků
-kanon = pygame.image.load('kanon_stíhačka.png').convert_alpha()
-kanon_rect = kanon.get_rect()
+
 Raketa_image = pygame.image.load('Raketa.png')
 
-stihacka = pygame.image.load("Fockerfox.png")
+
 Pohyblive_pozadi = pygame.image.load("Pozadí_pohyblivé.png")
 
 kanon13 = pygame.image.load("kanon_1l3.png")
@@ -76,6 +80,9 @@ vybuch = pygame.image.load("výbuch.png")
 
 Lobby_image = pygame.image.load("Lobby.png")
 
+Button_leave = pygame.image.load("Button_back.png")
+
+
 button_play = pygame.image.load("button_play.png")  
 pozice_play = button_play.get_rect(topleft=(600, 100))
 
@@ -86,24 +93,68 @@ button_infinity = pygame.image.load("button_infinity.png")
 pozice_infinity = button_infinity.get_rect(topleft=(600, 300))
 
 button_rockets = pygame.image.load("Shop_Button_Rockets.png")  
-pozice_rockets = button_play.get_rect(topleft=(1250, 50))
+pozice_rockets = button_rockets.get_rect(topleft=(1250, 50))
 
 button_planes = pygame.image.load("Shop_Button_planes.png")  
-pozice_planes= button_shop.get_rect(topleft=(1250, 200))
+pozice_planes= button_planes.get_rect(topleft=(1250, 200))
 
 button_upgrades = pygame.image.load("Shop_Button_upgrades.png")  
-pozice_upgrades = button_infinity.get_rect(topleft=(1250, 350))
+pozice_upgrades = button_upgrades.get_rect(topleft=(1250, 350))
 
 shop_image = pygame.image.load("Shop.png")
 
+fockerfox = pygame.image.load("Fockerfox.png")
+fockerfox13=pygame.image.load("Fockerfox13.png")
+fockerfox23=pygame.image.load("Fockerfox23.png")
+fockerfox33=pygame.image.load("Fockerfox33.png")
+fockerfox_button=pygame.image.load("Button_Fockerfox.png")
+pozice1 =  fockerfox_button.get_rect(topleft=(300, 900))
+
+myg = pygame.image.load("MYG-15.png")
+myg23=pygame.image.load("myg23.png")
+myg33=pygame.image.load("myg33.png")
+myg_button=pygame.image.load("Button_Myg.png")
+pozice2 =  myg_button.get_rect(topleft=(300, 800))
+
+f=pygame.image.load("E-23.png")
+f13=pygame.image.load("f13.png")
+f23=pygame.image.load("f23.png")
+f33=pygame.image.load("f33.png")
+fbutton = pygame.image.load("Button_F23.png")
+pozice3 =  fbutton.get_rect(topleft=(300, 700))
+
+
+fockerfox_animace=[fockerfox13,fockerfox23,fockerfox33]
+myg_animace=[myg,myg23,myg33]
+f_animace=[f13,f23,f33]
+
 main_buttony = {
     "letadla":button_planes,
-    "rakety": button_rockets,
-    "upgrady":button_upgrades,
     "pozice_letadla":pozice_planes,
+    
+    "rakety": button_rockets,
     "pozice_rakety":pozice_rockets,
+    
+    "upgrady":button_upgrades,
     "pozice_upgrady":pozice_upgrades,
+    
+    "myg25":myg,
+    "fockerfox":fockerfox,
+    "F23": f,
+    
+    "myg_button":myg_button,
+    "f_button":fbutton,
+    "fockerfox_button":fockerfox_button,
+    
+    "pozice_modelů":(100,100),
+    
+    "pozice_buttonu1":pozice1,
+    "pozice_buttonu2":pozice2,
+    "pozice_buttonu3":pozice3,
+    
+
     }
+
 
 
 
@@ -176,8 +227,20 @@ while True:
             if udalost.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-        Obchod.choose(udalost)
+            
+            
+                
         Obchod.draw_shop(obrazovka)
+        Obchod.choose(udalost,obrazovka)
+        Obchod.opustit_shop(obrazovka,Button_leave,udalost)
+        
+        shop = Obchod.shop
+        Lobby = Obchod.lobby
+        
+        
+        
+        
+        
         
         
         
@@ -310,8 +373,8 @@ while True:
             
                 
         
-
-        otočená_stíhačka = pygame.transform.rotate(stihacka, letadlo.uhel)
+        Obchod.animace(fockerfox_animace,myg_animace,f_animace)
+        otočená_stíhačka = pygame.transform.rotate(Obchod.letadlo, letadlo.uhel)
             
 
         rect = otočená_stíhačka.get_rect(center=(letadlo.x, letadlo.y))
@@ -322,5 +385,4 @@ while True:
         pygame.display.flip()
         clock.tick(60)
 
-    pygame.quit()
-    sys.exit()
+        

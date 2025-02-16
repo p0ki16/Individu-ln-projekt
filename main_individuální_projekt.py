@@ -287,7 +287,7 @@ while True:
           
         
         if nepritel.zivoty <= 0:
-                letadlo.znic_se()
+                letadlo.znic_se(Lobby,Infinite_mode)
         else:       
         
             
@@ -337,6 +337,7 @@ while True:
             pohyb_pozadí -= nepritel.rychlost_pozadi
             umisteni_pozadi1 = pohyb_pozadí % rozdil_pozadi
             umisteni_pozadi2 = (pohyb_pozadí % rozdil_pozadi) - rozdil_pozadi
+            
         
             
         

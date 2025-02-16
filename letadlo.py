@@ -11,6 +11,7 @@ class Letadlo:
         self.DOWN = 0
         self.UP = 0
         self.smrt = False
+        self.delay = 50
 
     def pohyb_dolu(self):
         
@@ -34,13 +35,19 @@ class Letadlo:
         
         
             
-    def znic_se(self):
+    def znic_se(self,lobby,hra):
         if self.y <self.vyska-20:
             self.y += 10
             if self.uhel > -50:
                 self.uhel -=1
         else:
             self.smrt = True
+            self.delay-=1
+            if  self.delay<0:
+                Lobby = True
+                hra = False 
+                
+            
             
     def neutíkej(self):
         if self.y < -500:

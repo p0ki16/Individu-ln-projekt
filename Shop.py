@@ -13,7 +13,9 @@ class Shop:
         self.moznost = 1
         self.shop = True
         self.lobby = False
-        self.shown = 1
+        self.shown = 0
+        self.obrazky_letadel =[self.main_buttony["fockerfox"],self.main_buttony["myg25"],self.main_buttony["F23"]]
+        self.value_zmenena=False
         
         
     def draw_shop(self,screen):
@@ -29,18 +31,30 @@ class Shop:
         self.mouse_pos = pygame.mouse.get_pos()
         
         
-        if self.moznost == 1:
-            if self.main_buttony["pozice_buttonu1"].collidepoint(self.mouse_pos) or self.letadla == 0 :
-                screen.blit(self.main_buttony["F23"],self.main_buttony["pozice_modelů"])
+        if self.moznost == 1 :
+            if self.main_buttony["pozice_buttonu1"].collidepoint(self.mouse_pos) or self.letadla == 0 and self.value_zmenena==False :
+                self.value_zmenena=True
+                self.shown = 0 
                 
                 
-            if self.main_buttony["pozice_buttonu2"].collidepoint(self.mouse_pos) or self.letadla == 1 :
-                screen.blit(self.main_buttony["myg25"],self.main_buttony["pozice_modelů"])
-                
+            elif self.main_buttony["pozice_buttonu2"].collidepoint(self.mouse_pos) or self.letadla == 1 and self.value_zmenena==False :
+                self.value_zmenena=True
+                self.shown = 1
         
                     
-            if self.main_buttony["pozice_buttonu3"].collidepoint(self.mouse_pos) or self.letadla == 2:
-                screen.blit(self.main_buttony["fockerfox"],self.main_buttony["pozice_modelů"])
+            elif self.main_buttony["pozice_buttonu3"].collidepoint(self.mouse_pos) or self.letadla == 2 and self.value_zmenena==False:
+                self.value_zmenena=True
+                self.shown = 2
+                
+            if self.value_zmenena== False:
+                screen.blit(self.obrazky_letadel[self.shown],self.main_buttony["pozice_modelů"])
+            else:
+                screen.blit(self.obrazky_letadel[self.letadla],self.main_buttony["pozice_modelů"])
+                self.value_zmenena = False
+                
+            
+            
+                
         
             
         
@@ -58,13 +72,13 @@ class Shop:
                 
                 
             if self.main_buttony["pozice_buttonu1"].collidepoint(event.pos) and self.moznost == 1:                
-                self.letadla = 0
+                self.letadla = 2
                 
             if self.main_buttony["pozice_buttonu2"].collidepoint(event.pos) and self.moznost == 1:
                 self.letadla = 1            
                 
             if self.main_buttony["pozice_buttonu3"].collidepoint(event.pos) and self.moznost == 1:
-                self.letadla = 2
+                self.letadla = 0
                
                 
             if self.main_buttony["pozice_rakety"].collidepoint(event.pos):
@@ -87,14 +101,20 @@ class Shop:
                 
     def animace(self,fockerfox,f,myg):
         
-        self.list_animací = [f,myg,fockerfox]
+        self.list_animací = [fockerfox,myg,f]
         
-        self.zmena +=1
+        self.zmena -=3
         
-        if self.zmena==2:
-            self.zmena=0
+        if self.zmena>10:
+            self.animace1=0
+        else:
+            self.animace1=1
+        if self.zmena <0:
+            self.zmena =20
+         
             
-        self.letadlo = self.list_animací[self.letadla][self.zmena]
+            
+        self.letadlo = self.list_animací[self.letadla][self.animace1]
         
     def opustit_shop(self,screen,back_button,event):
         

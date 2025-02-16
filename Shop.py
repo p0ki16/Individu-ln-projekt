@@ -13,6 +13,7 @@ class Shop:
         self.moznost = 1
         self.shop = True
         self.lobby = False
+        self.shown = 1
         
         
     def draw_shop(self,screen):
@@ -27,15 +28,26 @@ class Shop:
         
         self.mouse_pos = pygame.mouse.get_pos()
         
-        if self.main_buttony["pozice_buttonu1"].collidepoint(self.mouse_pos) and self.moznost == 1:
-            screen.blit(self.main_buttony["F23"],self.main_buttony["pozice_modelů"])
-            
-        if self.main_buttony["pozice_buttonu2"].collidepoint(self.mouse_pos) and self.moznost == 1:
-                screen.blit(self.main_buttony["myg25"],self.main_buttony["pozice_modelů"])
         
-        if self.main_buttony["pozice_buttonu3"].collidepoint(self.mouse_pos) and self.moznost == 1:
+        if self.moznost == 1:
+            if self.main_buttony["pozice_buttonu1"].collidepoint(self.mouse_pos) or self.letadla == 0 :
+                screen.blit(self.main_buttony["F23"],self.main_buttony["pozice_modelů"])
+                
+                
+            if self.main_buttony["pozice_buttonu2"].collidepoint(self.mouse_pos) or self.letadla == 1 :
+                screen.blit(self.main_buttony["myg25"],self.main_buttony["pozice_modelů"])
+                
+        
+                    
+            if self.main_buttony["pozice_buttonu3"].collidepoint(self.mouse_pos) or self.letadla == 2:
                 screen.blit(self.main_buttony["fockerfox"],self.main_buttony["pozice_modelů"])
+        
             
+        
+            
+        
+        
+                
         if event.type == pygame.MOUSEBUTTONDOWN:
             
             if self.main_buttony["pozice_letadla"].collidepoint(event.pos):

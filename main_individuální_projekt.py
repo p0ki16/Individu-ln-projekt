@@ -147,8 +147,6 @@ main_buttony = {
     "f_button":fbutton,
     "fockerfox_button":fockerfox_button,
     
-    "pozice_modelů":(100,100),
-    
     "pozice_buttonu1":pozice1,
     "pozice_buttonu2":pozice2,
     "pozice_buttonu3":pozice3,

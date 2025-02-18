@@ -30,7 +30,7 @@ výška, šířka = 1080, 1920
 hrac_x = šířka * 1 / 5
 hrac_y = výška / 2
 
-zivoty = 1
+zivoty = 5
 zivoty_nepritel = 20
 uhel = 1
 
@@ -108,21 +108,21 @@ fockerfox13=pygame.image.load("Fockerfox13.png")
 fockerfox23=pygame.image.load("Fockerfox23.png")
 fockerfox33=pygame.image.load("Fockerfox33.png")
 fockerfox_button=pygame.image.load("Button_Fockerfox.png")
-pozice1 =  fockerfox_button.get_rect(topleft=(300, 900))
+pozice1 =  fockerfox_button.get_rect(topleft=(200, 870))
 
 myg = pygame.image.load("MYG-15.png")
 myg13 = pygame.image.load("myg13.png")
 myg23=pygame.image.load("myg23.png")
 myg33=pygame.image.load("myg33.png")
 myg_button=pygame.image.load("Button_Myg.png")
-pozice2 =  myg_button.get_rect(topleft=(300, 800))
+pozice2 =  myg_button.get_rect(topleft=(200, 750))
 
 f=pygame.image.load("E-23.png")
 f13=pygame.image.load("f13.png")
 f23=pygame.image.load("f23.png")
 f33=pygame.image.load("f33.png")
 fbutton = pygame.image.load("Button_F23.png")
-pozice3 =  fbutton.get_rect(topleft=(300, 700))
+pozice3 =  fbutton.get_rect(topleft=(200, 620))
 
 
 fockerfox_animace=[fockerfox13,fockerfox23,fockerfox33]
@@ -162,6 +162,7 @@ main_buttony = {
 Lobby = True
 Infinite_mode = False 
 shop = False 
+
 
 
 # Vytvoření instancí tříd
@@ -227,8 +228,8 @@ while True:
                 pygame.quit()
                 sys.exit()
             
-            
-                
+        white = (255,255,255)    
+        obrazovka.fill( white )        
         Obchod.draw_shop(obrazovka)
         Obchod.choose(udalost,obrazovka)
         Obchod.opustit_shop(obrazovka,Button_leave,udalost)
@@ -293,7 +294,7 @@ while True:
            
             keys = pygame.key.get_pressed()
             if keys[pygame.K_DOWN]:
-                letadlo.pohyb_dolu()
+                letadlo.pohyb_dolu(Obchod.obratnost)
         
             letadlo.pohyb_jiným_směrem()
             
@@ -305,7 +306,7 @@ while True:
                 
             vystrel = 0    
             if keys[pygame.K_SPACE] and firerate == 0:
-                firerate = 10  # Nastavení hodnoty delay
+                firerate = Obchod.firerate  # Nastavení hodnoty delay
                 vystrel = 1
                 
             raketa_vystrelena = 0
@@ -316,7 +317,7 @@ while True:
                 pocet_raket-=1
             
             if keys[pygame.K_UP]:
-                letadlo.pohyb_nahoru()
+                letadlo.pohyb_nahoru(Obchod.obratnost)
             nepritel.rychlost_pozadi =6   #počítání pohybu pod úhlem
             
             if 270>letadlo.uhel and letadlo.uhel  < 90:   

@@ -1,4 +1,6 @@
 import math
+
+
 class Letadlo:
     def __init__(self, hrac_x, hrac_y, šířka, výška, zivoty, uhel,smrt,strela_x,strela_y,vystrel,angle_kanon):
         self.sirka = šířka
@@ -12,15 +14,16 @@ class Letadlo:
         self.UP = 0
         self.smrt = False
         self.delay = 50
-
-    def pohyb_dolu(self):
         
-        self.uhel -=3
+
+    def pohyb_dolu(self,obratnost):
+        
+        self.uhel -=obratnost
         
             
-    def pohyb_nahoru(self):
+    def pohyb_nahoru(self,obratnost):
         
-        self.uhel +=3
+        self.uhel +=obratnost
         
     def pohyb_jiným_směrem(self):
         if self.uhel < 180:

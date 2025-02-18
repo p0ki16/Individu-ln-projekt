@@ -10,12 +10,15 @@ class Shop:
         self.chosen=1
         self.letadlo = 0
         self.zmena =0
-        self.moznost = 1
+        self.moznost = 0
         self.shop = True
         self.lobby = False
         self.rakety = 0
         self.obrazky_letadel =[self.main_buttony["fockerfox"],self.main_buttony["myg25"],self.main_buttony["F23"]]
         self.value_zmenena=False
+        self.obratnost = 3
+        self.firerate = 25
+        self.zivoty = 5
         
         
     def draw_shop(self,screen):
@@ -28,7 +31,7 @@ class Shop:
         
     def choose(self,event,screen):
         
-        screen.blit(self.obrazky_letadel[self.letadla],(100,100))
+        screen.blit(self.obrazky_letadel[self.chosen],(100,100))
         self.value_zmenena = False
                      
         if event.type == pygame.MOUSEBUTTONDOWN:
@@ -42,13 +45,23 @@ class Shop:
             if self.moznost == 1:
                 
                 if self.main_buttony["pozice_buttonu1"].collidepoint(event.pos) :                
-                    self.choseng = 2
+                    self.chosen = 2
+                    
+                    self.obratnost = 4
+                    self.firerate = 10
+                    self.zivoty = 7
                     
                 elif self.main_buttony["pozice_buttonu2"].collidepoint(event.pos):
-                    self.chosen = 1            
+                    self.chosen = 1
+                    self.obratnost = 3
+                    self.firerate = 15
+                    self.zivoty = 6
                     
                 elif  self.main_buttony["pozice_buttonu3"].collidepoint(event.pos) :
                     self.chosen = 0
+                    self.obratnost = 2.5
+                    self.firerate = 20
+                    self.zivoty = 5
                
                 
             if self.main_buttony["pozice_rakety"].collidepoint(event.pos):

@@ -108,21 +108,21 @@ fockerfox13=pygame.image.load("Fockerfox13.png")
 fockerfox23=pygame.image.load("Fockerfox23.png")
 fockerfox33=pygame.image.load("Fockerfox33.png")
 fockerfox_button=pygame.image.load("Button_Fockerfox.png")
-pozice1 =  fockerfox_button.get_rect(topleft=(200, 870))
+pozice1 =  fockerfox_button.get_rect(topleft=(200, 878))
 
 myg = pygame.image.load("MYG-15.png")
 myg13 = pygame.image.load("myg13.png")
 myg23=pygame.image.load("myg23.png")
 myg33=pygame.image.load("myg33.png")
 myg_button=pygame.image.load("Button_Myg.png")
-pozice2 =  myg_button.get_rect(topleft=(200, 750))
+pozice2 =  myg_button.get_rect(topleft=(200, 744))
 
 f=pygame.image.load("E-23.png")
 f13=pygame.image.load("f13.png")
 f23=pygame.image.load("f23.png")
 f33=pygame.image.load("f33.png")
 fbutton = pygame.image.load("Button_F23.png")
-pozice3 =  fbutton.get_rect(topleft=(200, 620))
+pozice3 =  fbutton.get_rect(topleft=(200, 615))
 
 
 fockerfox_animace=[fockerfox13,fockerfox23,fockerfox33]

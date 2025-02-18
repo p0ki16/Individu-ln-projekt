@@ -17,7 +17,7 @@ class Shop:
         self.obrazky_letadel =[self.main_buttony["fockerfox"],self.main_buttony["myg25"],self.main_buttony["F23"]]
         self.value_zmenena=False
         self.obratnost = 3
-        self.firerate = 25
+        self.firerate = 0
         self.zivoty = 5
         
         

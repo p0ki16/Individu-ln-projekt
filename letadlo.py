@@ -14,6 +14,7 @@ class Letadlo:
         self.UP = 0
         self.smrt = False
         self.delay = 100
+        self.pocet_raket =12
         
         
 
@@ -65,6 +66,7 @@ class Letadlo:
         self.smrt = False
         self.uhel =0
         nepritel.poloha_x=1920
+        self.pocet_raket =12
         
     
             

@@ -44,8 +44,11 @@ poloha_y = výška - 210
 firerate_rakety =0
 vystreleni = []
 raketa_vystrel =[]
-pocet_raket=12
+
+
 skore=0
+
+peníze = 0
 
 
 # Inicializace Pygame
@@ -283,7 +286,7 @@ while True:
         
     while Infinite_mode:
         
-        text = f" skóre: {skore} počet raket :{pocet_raket} životy:{nepritel.zivoty} "
+        text = f" skóre: {skore} počet raket :{letadlo.pocet_raket} životy:{nepritel.zivoty} "
         text_surface = font.render(text, True, text_color)
         text_rect = text_surface.get_rect(center=(500, 50))
         
@@ -337,10 +340,10 @@ while True:
                 
             raketa_vystrelena = 0
             
-            if keys[pygame.K_LALT] and firerate_rakety == 0 and pocet_raket>0:
+            if keys[pygame.K_LALT] and firerate_rakety == 0 and letadlo.pocet_raket>0:
                 firerate_rakety = 100  # Nastavení hodnoty delay
                 raketa_vystrelena = 1
-                pocet_raket-=1
+                letadlo.pocet_raket-=1
             
             if keys[pygame.K_UP]:
                 letadlo.pohyb_nahoru(Obchod.obratnost)
@@ -388,14 +391,14 @@ while True:
             if strela.zasazeni == False :
                 
                 strela.zasah(nepritel)
-            strela.move( nepritel.rychlost_pozadi)
+            strela.move( nepritel.rychlost_pozadi,Obchod.presnost)
             strela.draw(obrazovka, strela_image, vybuch_image,vybuch)
             
         for raketa in raketa_vystrel:
             
             if raketa.zasazeni == False:
                 raketa.zasah(nepritel)
-            raketa.navádění(nepritel,obrazovka,Obchod.animace(Raketa_image,raketa3,raketa2,2),výška,nepritel.rychlost_pozadi)
+            raketa.navádění(nepritel,obrazovka,Obchod.animace(Raketa_image,raketa3,raketa2,2),výška,nepritel.rychlost_pozadi,Obchod.presnost)
             raketa.draw(obrazovka, Obchod.animace(Raketa_image,raketa3,raketa2,2), vybuch_image,vybuch, nepritel.rychlost_pozadi)
             
         if nepritel.zivoty_self > 0:

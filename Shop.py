@@ -19,6 +19,8 @@ class Shop:
         self.obrazky_raket = [self.main_buttony["raketa1"],self.main_buttony["raketa2"],self.main_buttony["raketa3"]]
         self.value_zmenena=False
         self.obratnost = 1
+        self.presnost=6
+        
         
         self.firerate = 20
         self.zivoty = 5
@@ -81,12 +83,19 @@ class Shop:
                 
                 if self.main_buttony["pozice_buttonu1"].collidepoint(event.pos) :                
                     self.chosen_raketa = 2
+                    self.presnost=10
+                    
+                    
                     
                 elif self.main_buttony["pozice_buttonu2"].collidepoint(event.pos):
-                    self.chosen_raketa = 1            
+                    self.chosen_raketa = 1
+                    self.presnost=7
+                    
                     
                 elif  self.main_buttony["pozice_buttonu3"].collidepoint(event.pos) :
                     self.chosen_raketa = 0
+                    self.presnost=6
+                    
                 
                
             if self.main_buttony["pozice_upgrady"].collidepoint(event.pos):

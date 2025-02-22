@@ -51,7 +51,7 @@ class Raketa:
         self.angle = 0
         self.spawn = 20
     
-    def move(self, pohyb_země,nepritel,výška):
+    def move(self, pohyb_země,nepritel,výška,presnost):
         if self.raketa_y > 1080 - 20:  # 20 ke velikost výbuchu
             self.raketa_y = 1080
             self.spawn -= 1  # Použití atributu instance
@@ -77,13 +77,13 @@ class Raketa:
             self.angle = (1 - 0.05) * self.angle + 0.05 * target_angle
             
             # Výpočet nové pozice rakety pomocí sin a cos s konstantní rychlostí
-            self.raketa_x += math.cos(self.angle) * 7
-            self.raketa_y += math.sin(self.angle) * 7
+            self.raketa_x += math.cos(self.angle) * 6
+            self.raketa_y += math.sin(self.angle) * presnost
             self.raketa_x-= pohyb_země
             self.raketa_x+=7 # aby raketa necouvala a to + 7  je něco jako šance s ekterou má raketa trefit cíl
 
-    def navádění(self, nepritel, screen, raketa, výška, pohyb_země):
-        self.move(pohyb_země,nepritel,výška)
+    def navádění(self, nepritel, screen, raketa, výška, pohyb_země,presnost):
+        self.move(pohyb_země,nepritel,výška,presnost)
         
                 
     def draw(self, surface, image_strela, image_vybuch, vybuch,pohyb_země):

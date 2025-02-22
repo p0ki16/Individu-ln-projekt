@@ -13,7 +13,8 @@ class Letadlo:
         self.DOWN = 0
         self.UP = 0
         self.smrt = False
-        self.delay = 50
+        self.delay = 100
+        
         
 
     def pohyb_dolu(self,obratnost):
@@ -27,9 +28,9 @@ class Letadlo:
         
     def pohyb_jiným_směrem(self):
         if self.uhel < 180:
-            self.y -= 25 * abs(math.sin(math.radians(self.uhel)))
+            self.y -= 10 * abs(math.sin(math.radians(self.uhel)))
         else:
-            self.y += 25 * abs(math.sin(math.radians(self.uhel)))
+            self.y += 20 * abs(math.sin(math.radians(self.uhel)))
             
         if self.uhel < 0:
             self.uhel =360
@@ -41,20 +42,30 @@ class Letadlo:
     def znic_se(self,lobby,hra):
         if self.y <self.vyska-20:
             self.y += 10
+            
             if self.uhel > -50:
                 self.uhel -=1
         else:
             self.smrt = True
             self.delay-=1
-            if  self.delay<0:
-                Lobby = True
-                hra = False 
+            
+            if self.delay<0:
+                return True
                 
             
             
     def neutíkej(self):
         if self.y < -500:
             self.uhel = 360-self.uhel
+            
+    def reset(self,nepritel):
+        self.x = self.sirka * 1 / 4
+        self.y = self.vyska / 2
+        nepritel.zivoty = 5
+        self.smrt = False
+        self.uhel =0
+        nepritel.poloha_x=1920
+        
     
             
     

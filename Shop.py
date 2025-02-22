@@ -7,7 +7,7 @@ class Shop:
         self.option1 = self.main_buttony["f_button"]
         self.option2 = self.main_buttony["myg_button"]
         self.option3 = self.main_buttony["fockerfox_button"]
-        self.chosen=1
+        self.chosen=0
         self.letadlo = 0
         self.zmena =0
         self.moznost = 0
@@ -16,8 +16,9 @@ class Shop:
         self.rakety = 0
         self.obrazky_letadel =[self.main_buttony["fockerfox"],self.main_buttony["myg25"],self.main_buttony["F23"]]
         self.value_zmenena=False
-        self.obratnost = 3
-        self.firerate = 0
+        self.obratnost = 1
+        
+        self.firerate = 20
         self.zivoty = 5
         
         

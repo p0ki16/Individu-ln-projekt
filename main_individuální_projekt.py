@@ -164,8 +164,10 @@ Infinite_mode = False
 shop = False 
 
 
+x =100
 
-# Vytvoření instancí tříd
+y=100
+#y Vytvoření instancí tříd
 letadlo = Letadlo(hrac_x, hrac_y, šířka, výška, zivoty, uhel, smrt, 0, 0, vystrel, angle_kanon)
 nepritel = Nepritel(rychlost_pozadi, poloha_x, poloha_y, šířka, výška, vystrel, zivoty_nepritel, obrazovka, zivoty)
 Obchod = Shop(main_buttony,shop_image)
@@ -184,6 +186,8 @@ while True:
                 if pozice_play.collidepoint(udalost.pos):  # Kontrola, zda kliknutí bylo na obrázku tlačítka
                     Lobby = False
                     play=True
+                    letadlo.reset(nepritel)
+                   
                     
                 if pozice_shop.collidepoint(udalost.pos):  # Kontrola, zda kliknutí bylo na obrázku tlačítka
                     Lobby = False
@@ -192,9 +196,30 @@ while True:
                 if pozice_infinity.collidepoint(udalost.pos):  # Kontrola, zda kliknutí bylo na obrázku tlačítka
                     Lobby = False
                     Infinite_mode = True
+                    letadlo.reset(nepritel)
+            keys = pygame.key.get_pressed()        
+            if keys[pygame.K_KP8]:
+                
+                x-=1
+                print(x)
+            if keys[pygame.K_KP2]:
+                x+=1
+                print(x)
+            if keys[pygame.K_KP4]:
+                y-=1
+                print(y)
+            if keys[pygame.K_KP6]:
+                y+=1
+                print(y)
+            
                     
+        Obchod.animace(fockerfox_animace,f_animace,myg_animace)            
         umisteni_pozadi1 = pohyb_pozadí % rozdil_pozadi
         umisteni_pozadi2 = (pohyb_pozadí % rozdil_pozadi) - rozdil_pozadi
+        Obchod.letadlo
+        plane_lobby_pozice = 724,850
+        
+        
         
          # Vypočítej ofset od středu obrázku k pravému hornímu rohu
         
@@ -213,6 +238,7 @@ while True:
         obrazovka.blit(button_play, pozice_play)
         obrazovka.blit(button_shop, pozice_shop)
         obrazovka.blit(button_infinity, pozice_infinity)
+        obrazovka.blit(Obchod.letadlo, plane_lobby_pozice)
 
         # Aktualizace obrazovky
         pygame.display.flip()
@@ -236,6 +262,7 @@ while True:
         
         shop = Obchod.shop
         Lobby = Obchod.lobby
+        
         
         
         
@@ -285,9 +312,9 @@ while True:
             nepritel.zivoty=0
           
         
-        if nepritel.zivoty <= 0:
-                letadlo.znic_se(Lobby,Infinite_mode)
-        else:       
+        if nepritel.zivoty >= 1:
+                
+         
         
             
             
@@ -325,6 +352,11 @@ while True:
                 
             else:
                 nepritel.rychlost_pozadi =-nepritel.rychlost_pozadi * math.sin(math.radians(letadlo.uhel-90))
+        else:
+            letadlo.znic_se(Lobby,Infinite_mode)
+            if  letadlo.znic_se(Lobby,Infinite_mode):
+                Lobby = True
+                Infinite_mode = False 
                 
             
         
@@ -336,6 +368,10 @@ while True:
             pohyb_pozadí -= nepritel.rychlost_pozadi
             umisteni_pozadi1 = pohyb_pozadí % rozdil_pozadi
             umisteni_pozadi2 = (pohyb_pozadí % rozdil_pozadi) - rozdil_pozadi
+       
+            
+            
+            
             
         
             

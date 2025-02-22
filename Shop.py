@@ -18,8 +18,10 @@ class Shop:
         self.obrazky_letadel =[self.main_buttony["fockerfox"],self.main_buttony["myg25"],self.main_buttony["F23"]]
         self.obrazky_raket = [self.main_buttony["raketa1"],self.main_buttony["raketa2"],self.main_buttony["raketa3"]]
         self.value_zmenena=False
-        self.obratnost = 1
+        self.obratnost = 2.5
         self.presnost=6
+        self.peníze = 0
+        self.letadlo_owned =2
         
         
         self.firerate = 20
@@ -51,27 +53,33 @@ class Shop:
                 
             if self.moznost == 1:
                 
-                if self.main_buttony["pozice_buttonu1"].collidepoint(event.pos) :                
-                    self.chosen_letadlo = 2
+                if self.main_buttony["pozice_buttonu1"].collidepoint(event.pos):
+                    if self.peníze > 2000 or self.letadlo_owned >= self.chosen_letadlo:
+                        self.chosen_letadlo = 2
+                        
+                        self.obratnost = 4
+                        self.firerate = 10
+                        self.zivoty = 7
                     
-                    self.obratnost = 4
-                    self.firerate = 10
-                    self.zivoty = 7
+                if self.main_buttony["pozice_buttonu2"].collidepoint(event.pos)  :
+                    if self.peníze > 1000 or self.letadlo_owned >= self.chosen_letadlo:
+                        self.chosen_letadlo = 1
+                        
+                        self.obratnost = 3
+                        self.firerate = 15
+                        self.zivoty = 6
                     
-                elif self.main_buttony["pozice_buttonu2"].collidepoint(event.pos):
-                    self.chosen_letadlo = 1
+                if  self.main_buttony["pozice_buttonu3"].collidepoint(event.pos) :
                     
-                    self.obratnost = 3
-                    self.firerate = 15
-                    self.zivoty = 6
-                    
-                elif  self.main_buttony["pozice_buttonu3"].collidepoint(event.pos) :
                     self.chosen_letadlo = 0
                     
                     self.obratnost = 2.5
                     self.firerate = 20
                     self.zivoty = 5
-               
+                    
+            if self.letadlo_owned < self.chosen_letadlo: # funkce pro vlastnění letadlo čím nižší číslo tím více toho vlastním
+                self.letadlo_owned = self.chosen_letadlo
+                
                 
             if self.main_buttony["pozice_rakety"].collidepoint(event.pos):
                 self.option1 = self.main_buttony["f_button"]

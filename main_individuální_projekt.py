@@ -46,11 +46,6 @@ vystreleni = []
 raketa_vystrel =[]
 
 
-skore=0
-
-peníze = 0
-
-
 # Inicializace Pygame
 obrazovka = pygame.display.set_mode((šířka, výška))
 pygame.display.set_caption("zkouška")
@@ -187,8 +182,13 @@ letadlo = Letadlo(hrac_x, hrac_y, šířka, výška, zivoty, uhel, smrt, 0, 0, v
 nepritel = Nepritel(rychlost_pozadi, poloha_x, poloha_y, šířka, výška, vystrel, zivoty_nepritel, obrazovka, zivoty)
 Obchod = Shop(main_buttony,shop_image)
 while True:
+    gained_money=letadlo.skore/10
+    Obchod.peníze+=gained_money
     
     while Lobby:
+        text = f" money: {Obchod.peníze} "
+        text_surface = font.render(text, True, text_color)
+        text_rect = text_surface.get_rect(center=(500, 50))
         
         for udalost in pygame.event.get():
             
@@ -219,7 +219,8 @@ while True:
                    
         umisteni_pozadi1 = pohyb_pozadí % rozdil_pozadi
         umisteni_pozadi2 = (pohyb_pozadí % rozdil_pozadi) - rozdil_pozadi
-        plane_lobby_pozice = 724,850	
+        plane_lobby_pozice = 724,850
+        
         
         
         
@@ -241,6 +242,7 @@ while True:
         obrazovka.blit(button_shop, pozice_shop)
         obrazovka.blit(button_infinity, pozice_infinity)
         obrazovka.blit( Obchod.animace(fockerfox_animace,f_animace,myg_animace,1), plane_lobby_pozice)
+        obrazovka.blit(text_surface, text_rect)
 
         # Aktualizace obrazovky
         pygame.display.flip()
@@ -286,7 +288,7 @@ while True:
         
     while Infinite_mode:
         
-        text = f" skóre: {skore} počet raket :{letadlo.pocet_raket} životy:{nepritel.zivoty} "
+        text = f" skóre: {letadlo.skore} počet raket :{letadlo.pocet_raket} životy:{nepritel.zivoty} "
         text_surface = font.render(text, True, text_color)
         text_rect = text_surface.get_rect(center=(500, 50))
         
@@ -391,7 +393,7 @@ while True:
             if strela.zasazeni == False :
                 
                 strela.zasah(nepritel)
-            strela.move( nepritel.rychlost_pozadi,Obchod.presnost)
+            strela.move(nepritel.rychlost_pozadi)
             strela.draw(obrazovka, strela_image, vybuch_image,vybuch)
             
         for raketa in raketa_vystrel:
@@ -405,9 +407,8 @@ while True:
             pricteni =True
             
         if nepritel.zivoty_self < 0 and pricteni ==True:
-            skore+=1000
+            letadlo.skore+=1000
             pricteni =False
-    
                 
             
                 

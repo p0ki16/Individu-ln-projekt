@@ -20,8 +20,8 @@ class Shop:
         self.value_zmenena=False
         self.obratnost = 2.5
         self.presnost=6
-        self.peníze = 0
-        self.letadlo_owned =2
+        self.peníze = 1000
+        self.letadlo_owned =0
         
         
         self.firerate = 20
@@ -54,7 +54,7 @@ class Shop:
             if self.moznost == 1:
                 
                 if self.main_buttony["pozice_buttonu1"].collidepoint(event.pos):
-                    if self.peníze > 2000 or self.letadlo_owned >= self.chosen_letadlo:
+                    if self.peníze >= 2000 or self.letadlo_owned >= 2:
                         self.chosen_letadlo = 2
                         
                         self.obratnost = 4
@@ -62,7 +62,7 @@ class Shop:
                         self.zivoty = 7
                     
                 if self.main_buttony["pozice_buttonu2"].collidepoint(event.pos)  :
-                    if self.peníze > 1000 or self.letadlo_owned >= self.chosen_letadlo:
+                    if self.peníze >= 1000 or self.letadlo_owned >= 1:
                         self.chosen_letadlo = 1
                         
                         self.obratnost = 3
@@ -79,6 +79,7 @@ class Shop:
                     
             if self.letadlo_owned < self.chosen_letadlo: # funkce pro vlastnění letadlo čím nižší číslo tím více toho vlastním
                 self.letadlo_owned = self.chosen_letadlo
+                print(self.letadlo_owned)
                 
                 
             if self.main_buttony["pozice_rakety"].collidepoint(event.pos):

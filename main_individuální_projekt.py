@@ -1,7 +1,7 @@
 # Importy a inicializace
 import pygame
 import sys
-import random
+
 import math
 
 from strela import Strela,Raketa
@@ -124,6 +124,13 @@ f33=pygame.image.load("f33.png")
 fbutton = pygame.image.load("Button_F23.png")
 pozice3 =  fbutton.get_rect(topleft=(200, 615))
 
+raketa2 = pygame.image.load("Raketa2.png")
+raketa3 = pygame.image.load("Raketa3.png")
+
+raketa_shop1=pygame.image.load("Raketa_shop.png")
+raketa_shop2=pygame.image.load("Raketa2_shop.png")
+raketa_shop3=pygame.image.load("Raketa3_shop.png")
+
 
 fockerfox_animace=[fockerfox13,fockerfox23,fockerfox33]
 myg_animace=[myg13 ,myg23,myg33]
@@ -142,6 +149,10 @@ main_buttony = {
     "myg25":myg,
     "fockerfox":fockerfox,
     "F23": f,
+    
+    "raketa1":raketa_shop1,
+    "raketa2":raketa_shop2,
+    "raketa3":raketa_shop3,
     
     "myg_button":myg_button,
     "f_button":fbutton,
@@ -164,9 +175,7 @@ Infinite_mode = False
 shop = False 
 
 
-x =100
 
-y=100
 #y Vytvoření instancí tříd
 letadlo = Letadlo(hrac_x, hrac_y, šířka, výška, zivoty, uhel, smrt, 0, 0, vystrel, angle_kanon)
 nepritel = Nepritel(rychlost_pozadi, poloha_x, poloha_y, šířka, výška, vystrel, zivoty_nepritel, obrazovka, zivoty)
@@ -197,27 +206,13 @@ while True:
                     Lobby = False
                     Infinite_mode = True
                     letadlo.reset(nepritel)
-            keys = pygame.key.get_pressed()        
-            if keys[pygame.K_KP8]:
-                
-                x-=1
-                print(x)
-            if keys[pygame.K_KP2]:
-                x+=1
-                print(x)
-            if keys[pygame.K_KP4]:
-                y-=1
-                print(y)
-            if keys[pygame.K_KP6]:
-                y+=1
-                print(y)
+            
             
                     
         Obchod.animace(fockerfox_animace,f_animace,myg_animace)            
         umisteni_pozadi1 = pohyb_pozadí % rozdil_pozadi
         umisteni_pozadi2 = (pohyb_pozadí % rozdil_pozadi) - rozdil_pozadi
-        Obchod.letadlo
-        plane_lobby_pozice = 724,850
+        plane_lobby_pozice = 724,850	
         
         
         
@@ -412,9 +407,9 @@ while True:
         
         Obchod.animace(fockerfox_animace,f_animace,myg_animace)
         otočená_stíhačka = pygame.transform.rotate(Obchod.letadlo, letadlo.uhel)
-            
-
+        
         rect = otočená_stíhačka.get_rect(center=(letadlo.x, letadlo.y))
+        
         obrazovka.blit(otočená_stíhačka, rect.topleft)
         obrazovka.blit(text_surface, text_rect)
         

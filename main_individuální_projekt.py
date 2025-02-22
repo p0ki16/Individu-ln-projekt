@@ -132,6 +132,9 @@ raketa_shop2=pygame.image.load("Raketa2_shop.png")
 raketa_shop3=pygame.image.load("Raketa3_shop.png")
 
 
+
+
+
 fockerfox_animace=[fockerfox13,fockerfox23,fockerfox33]
 myg_animace=[myg13 ,myg23,myg33]
 f_animace=[f13,f23,f33]
@@ -208,8 +211,9 @@ while True:
                     letadlo.reset(nepritel)
             
             
-                    
-        Obchod.animace(fockerfox_animace,f_animace,myg_animace)            
+        
+        
+                   
         umisteni_pozadi1 = pohyb_pozadí % rozdil_pozadi
         umisteni_pozadi2 = (pohyb_pozadí % rozdil_pozadi) - rozdil_pozadi
         plane_lobby_pozice = 724,850	
@@ -233,7 +237,7 @@ while True:
         obrazovka.blit(button_play, pozice_play)
         obrazovka.blit(button_shop, pozice_shop)
         obrazovka.blit(button_infinity, pozice_infinity)
-        obrazovka.blit(Obchod.letadlo, plane_lobby_pozice)
+        obrazovka.blit( Obchod.animace(fockerfox_animace,f_animace,myg_animace,1), plane_lobby_pozice)
 
         # Aktualizace obrazovky
         pygame.display.flip()
@@ -391,8 +395,8 @@ while True:
             
             if raketa.zasazeni == False:
                 raketa.zasah(nepritel)
-            raketa.navádění(nepritel,obrazovka,Raketa_image,výška,nepritel.rychlost_pozadi)
-            raketa.draw(obrazovka, Raketa_image, vybuch_image,vybuch, nepritel.rychlost_pozadi)
+            raketa.navádění(nepritel,obrazovka,Obchod.animace(Raketa_image,raketa3,raketa2,2),výška,nepritel.rychlost_pozadi)
+            raketa.draw(obrazovka, Obchod.animace(Raketa_image,raketa3,raketa2,2), vybuch_image,vybuch, nepritel.rychlost_pozadi)
             
         if nepritel.zivoty_self > 0:
             pricteni =True
@@ -405,8 +409,8 @@ while True:
             
                 
         
-        Obchod.animace(fockerfox_animace,f_animace,myg_animace)
-        otočená_stíhačka = pygame.transform.rotate(Obchod.letadlo, letadlo.uhel)
+        
+        otočená_stíhačka = pygame.transform.rotate(Obchod.animace(fockerfox_animace,f_animace,myg_animace,1), letadlo.uhel)
         
         rect = otočená_stíhačka.get_rect(center=(letadlo.x, letadlo.y))
         

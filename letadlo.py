@@ -28,7 +28,7 @@ class Letadlo:
         
     def pohyb_jiným_směrem(self):
         if self.uhel < 180:
-            self.y -= 10 * abs(math.sin(math.radians(self.uhel)))
+            self.y -= 15 * abs(math.sin(math.radians(self.uhel)))
         else:
             self.y += 20 * abs(math.sin(math.radians(self.uhel)))
             

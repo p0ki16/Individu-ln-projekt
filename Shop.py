@@ -7,7 +7,8 @@ class Shop:
         self.option1 = self.main_buttony["f_button"]
         self.option2 = self.main_buttony["myg_button"]
         self.option3 = self.main_buttony["fockerfox_button"]
-        self.chosen=0
+        self.chosen_letadlo=0
+        self.chosen_raketa=0
         self.letadlo = 0
         self.zmena =0
         self.moznost = 0
@@ -33,9 +34,9 @@ class Shop:
         
     def choose(self,event,screen):
         if self.moznost == 1:
-            screen.blit(self.obrazky_letadel[self.chosen],(100,100))
+            screen.blit(self.obrazky_letadel[self.chosen_letadlo],(100,100))
         if self.moznost == 2:
-            screen.blit(self.obrazky_raket[self.chosen],(100,100))
+            screen.blit(self.obrazky_raket[self.chosen_raketa],(100,100))
         self.value_zmenena = False
                      
         if event.type == pygame.MOUSEBUTTONDOWN:
@@ -49,21 +50,21 @@ class Shop:
             if self.moznost == 1:
                 
                 if self.main_buttony["pozice_buttonu1"].collidepoint(event.pos) :                
-                    self.chosen = 2
+                    self.chosen_letadlo = 2
                     
                     self.obratnost = 4
                     self.firerate = 10
                     self.zivoty = 7
                     
                 elif self.main_buttony["pozice_buttonu2"].collidepoint(event.pos):
-                    self.chosen = 1
+                    self.chosen_letadlo = 1
                     
                     self.obratnost = 3
                     self.firerate = 15
                     self.zivoty = 6
                     
                 elif  self.main_buttony["pozice_buttonu3"].collidepoint(event.pos) :
-                    self.chosen = 0
+                    self.chosen_letadlo = 0
                     
                     self.obratnost = 2.5
                     self.firerate = 20
@@ -79,13 +80,13 @@ class Shop:
             if self.moznost == 2:
                 
                 if self.main_buttony["pozice_buttonu1"].collidepoint(event.pos) :                
-                    self.chosen = 2
+                    self.chosen_raketa = 2
                     
                 elif self.main_buttony["pozice_buttonu2"].collidepoint(event.pos):
-                    self.chosen = 1            
+                    self.chosen_raketa = 1            
                     
                 elif  self.main_buttony["pozice_buttonu3"].collidepoint(event.pos) :
-                    self.chosen = 0
+                    self.chosen_raketa = 0
                 
                
             if self.main_buttony["pozice_upgrady"].collidepoint(event.pos):
@@ -97,35 +98,40 @@ class Shop:
             if self.moznost == 3:
                 
                 if self.main_buttony["pozice_buttonu1"].collidepoint(event.pos) :                
-                    self.chosen = 2
+                    self.chosen_letadlo = 2
                     
                 elif self.main_buttony["pozice_buttonu2"].collidepoint(event.pos):
-                    self.chosen = 1            
+                    self.chosen_letadlo = 1            
                     
                 elif  self.main_buttony["pozice_buttonu3"].collidepoint(event.pos) :
-                    self.chosen = 0
+                    self.chosen_letadlo = 0
          
                 
         screen.blit(self.option1,self.main_buttony["pozice_buttonu1"])
         screen.blit(self.option2,self.main_buttony["pozice_buttonu2"])
         screen.blit(self.option3,self.main_buttony["pozice_buttonu3"])
                 
-    def animace(self,fockerfox,f,myg):
+    def animace(self,fockerfox,f,myg,wanted):
         
         self.list_animací = [fockerfox,myg,f]
         
-        self.zmena -=3
         
-        if self.zmena>10:
-            self.animace1=0
-        else:
-            self.animace1=1
-        if self.zmena <0:
-            self.zmena =20
          
             
-            
-        self.letadlo = self.list_animací[self.chosen][self.animace1]
+        if wanted == 1:
+            self.zmena -=3
+        
+            if self.zmena>10:
+                self.animace1=0
+            else:
+                self.animace1=1
+            if self.zmena <0:
+                self.zmena =20
+                
+            return  self.list_animací[self.chosen_letadlo][self.animace1]
+        
+        if wanted == 2:   
+            return  self.list_animací[self.chosen_raketa]
         
     def opustit_shop(self,screen,back_button,event):
         

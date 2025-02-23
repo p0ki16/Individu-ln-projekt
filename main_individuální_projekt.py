@@ -6,7 +6,7 @@ import math
 
 from strela import Strela,Raketa
 from letadlo import Letadlo
-from nepritel import Nepritel_zem
+from nepritel import Nepritel_zem,Nepritel_vzduch
 from Shop import Shop    
 
 

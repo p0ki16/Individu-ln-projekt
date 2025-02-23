@@ -75,14 +75,32 @@ class Nepritel_vzduch:
         self.poloha_x = poloha_x
         self.poloha_y = poloha_y + random.randint(5,0)
         self.zivoty = zivoty
-        self.vzhled12 = vzhled12
-        self.vzhled22 = vzhled22
+        self.vzhled_list = vzhled12,vzhled22
+        
+        self.pohyb =0.1
+        self.zmena=0
         
     def pohyb (self,pohyb_pozadí):
-        poloha_x -= pohyb_pozadí + 5.8
+        self.poloha_x -= pohyb_pozadí + 5.8
+        self.zmena += self.pohyb
+        self.poloha_y += self.pohyb
+        if self.zmena > 5 or self.zmena<0:
+            self.pohyb *= -1
+            
+    def animace(self):
+        self.zmena -=3
+        if self.zmena>10:
+            self.animace1=0
+        else:
+            self.animace1=1
+        if self.zmena <0:
+            self.zmena =20
+        return self.vzhled_list[self.animace1]
+        
+        
         
     def zjev_se(self,screen):
-        screen.blit(vzhled, (self.poloha_x, self.poloha_y))
+        screen.blit(self.animace, (self.poloha_x, self.poloha_y))
         
     
     

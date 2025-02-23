@@ -129,6 +129,10 @@ raketa_shop1=pygame.image.load("Raketa_shop.png")
 raketa_shop2=pygame.image.load("Raketa2_shop.png")
 raketa_shop3=pygame.image.load("Raketa3_shop.png")
 
+button_raketa1 =pygame.image.load("Button_shop_raketa1.png")
+button_raketa2 =pygame.image.load("Button_shop_raketa2.png")
+button_raketa3 =pygame.image.load("Button_shop_raketa3.png")
+
 
 
 
@@ -158,6 +162,11 @@ main_buttony = {
     "myg_button":myg_button,
     "f_button":fbutton,
     "fockerfox_button":fockerfox_button,
+    
+    "r_b_1":button_raketa1,
+    "r_b_2":button_raketa2,
+    "r_b_3":button_raketa3,
+
     
     "pozice_buttonu1":pozice1,
     "pozice_buttonu2":pozice2,
@@ -207,6 +216,7 @@ while True:
                 if pozice_shop.collidepoint(udalost.pos):  # Kontrola, zda kliknutí bylo na obrázku tlačítka
                     Lobby = False
                     shop = True
+                    letadlo.reset(nepritel)
                     
                 if pozice_infinity.collidepoint(udalost.pos):  # Kontrola, zda kliknutí bylo na obrázku tlačítka
                     Lobby = False

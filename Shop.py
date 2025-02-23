@@ -20,7 +20,7 @@ class Shop:
         self.value_zmenena=False
         self.obratnost = 2.5
         self.presnost=6
-        self.peníze = 10000
+        self.peníze = 0
         self.letadlo_owned =0
         self.raketa_owned =0
         
@@ -95,9 +95,9 @@ class Shop:
                
                 
             if self.main_buttony["pozice_rakety"].collidepoint(event.pos):
-                self.option1 = self.main_buttony["f_button"]
-                self.option2 = self.main_buttony["myg_button"]
-                self.option3 = self.main_buttony["fockerfox_button"]
+                self.option1 = self.main_buttony["r_b_3"]
+                self.option2 = self.main_buttony["r_b_2"]
+                self.option3 = self.main_buttony["r_b_1"]
                 self.moznost = 2
             
             if self.moznost == 2:

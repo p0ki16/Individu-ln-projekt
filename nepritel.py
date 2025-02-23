@@ -1,6 +1,6 @@
 import random
 from strela import Strela
-class Nepritel:
+class Nepritel_zem:
     
     def __init__(self, rychlost_pozadi, poloha_x, poloha_y, šířka, výška, vystrel,zivoty_self,surface,zivoty):
         self.rychlost_pozadi = rychlost_pozadi
@@ -69,6 +69,23 @@ class Nepritel:
             self.respawn()
             self.test = 0
             self.odecti1=False
-            
+class Nepritel_vzduch:
+    
+    def __init__(self,poloha_x,poloha_y,zivoty,vzhled12,vzhled22):
+        self.poloha_x = poloha_x
+        self.poloha_y = poloha_y + random.randint(5,0)
+        self.zivoty = zivoty
+        self.vzhled12 = vzhled12
+        self.vzhled22 = vzhled22
+        
+    def pohyb (self,pohyb_pozadí):
+        poloha_x -= pohyb_pozadí + 5.8
+        
+    def zjev_se(self,screen):
+        screen.blit(vzhled, (self.poloha_x, self.poloha_y))
+        
+    
     
         
+        
+    

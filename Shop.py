@@ -74,7 +74,7 @@ class Shop:
                         self.chosen_letadlo = 1
                         
                         self.obratnost = 3
-                        self.firerate = 15
+                        self.firerate = 16
                         self.zivoty = 6
                         
                     elif self.peníze >= 1000:

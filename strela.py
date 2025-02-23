@@ -2,12 +2,15 @@ import pygame
 import math
 
 class Strela:
+    
     def __init__ (self, strela_x, strela_y, angle_kanon, zasazeni):
         self.strela_x = strela_x
         self.strela_y = strela_y
         self.angle_kanon = angle_kanon
         self.zasazeni = zasazeni
         self.spawn = 20  # Přidání atributu spawn jako atribut instance
+        
+        
         
     def move(self, pohyb_země):
         if self.strela_y > 1080 - 20:  # 20 ke velikost výbuchu
@@ -23,6 +26,8 @@ class Strela:
             self.strela_x -= 20 * math.sin(math.radians(self.angle_kanon - 90)) 
             self.strela_y -= 20 * math.cos(math.radians(self.angle_kanon - 90))
             self.spawn = 20  # Použití atributu instance
+            
+            
     
     def draw(self, surface, image_strela, image_vybuch, vybuch):
         if self.spawn > 0:  # Použití atributu instance
@@ -35,12 +40,16 @@ class Strela:
             else:
                 surface.blit(image_strela, (self.strela_x, self.strela_y))
                 
+                
+                
     def zasah(self, nepritel):
         if nepritel.poloha_x < self.strela_x < nepritel.poloha_x + 150 and \
            nepritel.poloha_y < self.strela_y < nepritel.poloha_y + 200:  # hitbox
             
             nepritel.zivoty_self -= 1
             self.zasazeni = True
+            
+            
 
 class Raketa:
     def __init__ (self, raketa_x, raketa_y, zasazeni):
@@ -80,7 +89,7 @@ class Raketa:
             self.raketa_x += math.cos(self.angle) * 6
             self.raketa_y += math.sin(self.angle) * presnost
             self.raketa_x-= pohyb_země
-            self.raketa_x+=7 # aby raketa necouvala a to + 7  je něco jako šance s ekterou má raketa trefit cíl
+            self.raketa_x+=7 # aby raketa necouvala a to + 7  je něco jako šance  kterou má raketa trefit cíl
 
     def navádění(self, nepritel, screen, raketa, výška, pohyb_země,presnost):
         self.move(pohyb_země,nepritel,výška,presnost)
@@ -98,8 +107,8 @@ class Raketa:
                 surface.blit(image_strela, (self.raketa_x , self.raketa_y))
             
                   
-    def zasah(self, nepritel):
-        if nepritel.poloha_x < self.raketa_x < nepritel.poloha_x + 150 and \
-           nepritel.poloha_y < self.raketa_y < nepritel.poloha_y + 200:  # hitbox
+    def zasah(self, nepritel,rozmer_y,rozmer_x):
+        if nepritel.poloha_x < self.raketa_x < nepritel.poloha_x + rozmer_x and \
+           nepritel.poloha_y < self.raketa_y < nepritel.poloha_y + rozmer_y:  # hitbox
             nepritel.zivoty_self -= 10
             self.zasazeni = True

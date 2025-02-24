@@ -73,18 +73,19 @@ class Nepritel_vzduch:
     
     def __init__(self,poloha_x,poloha_y,zivoty,vzhled12,vzhled22):
         self.poloha_x = poloha_x
-        self.poloha_y = poloha_y + random.randint(5,0)
+        self.poloha_y = poloha_y + random.randint(0,5)
         self.zivoty = zivoty
         self.vzhled_list = vzhled12,vzhled22
         
         self.pohyb =0.1
         self.zmena=0
         
-    def pohyb (self,pohyb_pozadí):
-        self.poloha_x -= pohyb_pozadí + 5.8
+    def pohyb_letadla (self,pohyb_pozadí):
+        
         self.zmena += self.pohyb
         self.poloha_y += self.pohyb
-        if self.zmena > 5 or self.zmena<0:
+        
+        if self.zmena < 50 or self.zmena > 0:
             self.pohyb *= -1
             
     def animace(self):
@@ -100,7 +101,7 @@ class Nepritel_vzduch:
         
         
     def zjev_se(self,screen):
-        screen.blit(self.animace, (self.poloha_x, self.poloha_y))
+        screen.blit(self.animace(), (self.poloha_x, self.poloha_y))
         
     
     

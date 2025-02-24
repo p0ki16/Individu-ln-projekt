@@ -182,7 +182,8 @@ main_buttony = {
 
 
 
-
+bomber_x = 500
+bomber_y = 500
 Lobby = True
 Infinite_mode = False 
 shop = False 
@@ -193,6 +194,7 @@ play=False
 letadlo = Letadlo(hrac_x, hrac_y, šířka, výška, zivoty, uhel, smrt, 0, 0, vystrel, angle_kanon)
 nepritel = Nepritel_zem(rychlost_pozadi, poloha_x, poloha_y, šířka, výška, vystrel, zivoty_nepritel, obrazovka, zivoty)
 Obchod = Shop(main_buttony,shop_image)
+nepritel2 = Nepritel_vzduch(bomber_x,bomber_y,12,bomber11,bomber12) 
 while True:
     gained_money=letadlo.skore/10
     Obchod.peníze+=gained_money
@@ -262,6 +264,9 @@ while True:
         
         # Nastavení FPS
         clock.tick(60)
+        
+        
+        
     while play:
         text = f" skóre: {letadlo.skore} počet raket :{letadlo.pocet_raket} životy:{nepritel.zivoty} "
         text_surface = font.render(text, True, text_color)
@@ -290,8 +295,13 @@ while True:
         if letadlo.y > 1080:
             nepritel.zivoty=0
           
+       
+        
         
         if nepritel.zivoty >= 1:
+            
+       
+        
                 
          
         
@@ -386,7 +396,15 @@ while True:
             pricteni =False
                 
             
+            
+         #rjnrjrhgrejuohbr   
                 
+        nepritel2.pohyb_letadla(pohyb_pozadí)
+        nepritel2.zjev_se(obrazovka)
+        
+        
+        
+        
         
         
         otočená_stíhačka = pygame.transform.rotate(Obchod.animace(fockerfox_animace,f_animace,myg_animace,1), letadlo.uhel)

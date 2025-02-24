@@ -335,7 +335,7 @@ while True:
             letadlo.znic_se(Lobby,Infinite_mode)
             if  letadlo.znic_se(Lobby,Infinite_mode):
                 Lobby = True
-                Infinite_mode = False 
+                play = False 
                 
             
         

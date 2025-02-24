@@ -9,7 +9,7 @@ class Strela:
         self.angle_kanon = angle_kanon
         self.zasazeni = zasazeni
         self.spawn = 20  # Přidání atributu spawn jako atribut instance
-        
+        self.zasazeni_letadla = False
         
         
     def move(self, pohyb_země):
@@ -19,10 +19,14 @@ class Strela:
             self.strela_x -= pohyb_země
             
         elif self.zasazeni == True:
-            self.spawn -= 1  # Použití atributu instance
-            self.strela_x -= pohyb_země
+            self.spawn -= 1# Použití atributu instance
             
-        else:
+            if self.zasazeni_letadla == True:
+                self.strela_x += pohyb_země-5
+            else:
+                self.strela_x -= pohyb_země
+            
+        elif self.zasazeni == False:
             self.strela_x -= 20 * math.sin(math.radians(self.angle_kanon - 90)) 
             self.strela_y -= 20 * math.cos(math.radians(self.angle_kanon - 90))
             self.spawn = 20  # Použití atributu instance
@@ -42,12 +46,15 @@ class Strela:
                 
                 
                 
-    def zasah(self, nepritel):
-        if nepritel.poloha_x < self.strela_x < nepritel.poloha_x + 150 and \
-           nepritel.poloha_y < self.strela_y < nepritel.poloha_y + 200:  # hitbox
+    def zasah(self, nepritel,rozmer_y,rozmer_x,cojsem_trefil):#1-bomber 2-kanon
+        if nepritel.poloha_x < self.strela_x < nepritel.poloha_x + rozmer_x and \
+           nepritel.poloha_y < self.strela_y < nepritel.poloha_y + rozmer_y:  # hitbox
             
             nepritel.zivoty_self -= 1
             self.zasazeni = True
+            self.zasazeni_letadla = False
+            if cojsem_trefil ==1:
+                self.zasazeni_letadla = True
             
             
 
@@ -107,7 +114,7 @@ class Raketa:
                 surface.blit(image_strela, (self.raketa_x , self.raketa_y))
             
                   
-    def zasah(self, nepritel,rozmer_y,rozmer_x):
+    def zasah(self, nepritel,rozmer_y,rozmer_x,cojsem_trefil):
         if nepritel.poloha_x < self.raketa_x < nepritel.poloha_x + rozmer_x and \
            nepritel.poloha_y < self.raketa_y < nepritel.poloha_y + rozmer_y:  # hitbox
             nepritel.zivoty_self -= 10

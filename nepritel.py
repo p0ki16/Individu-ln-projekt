@@ -75,7 +75,7 @@ class Nepritel_vzduch:
     def __init__(self, polohax, polohay, zivoty, vzhled12, vzhled22):
         self.poloha_x = polohax
         self.poloha_y = polohay + random.randint(0, 5)
-        self.zivoty = zivoty
+        self.zivoty_self = zivoty
         self.vzhled_list = [vzhled12, vzhled22]
         
         self.pohyb1 = 0.1

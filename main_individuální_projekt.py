@@ -134,7 +134,7 @@ button_raketa2 =pygame.image.load("Button_shop_raketa2.png")
 button_raketa3 =pygame.image.load("Button_shop_raketa3.png")
 
 bomber11 =pygame.image.load("bomber12.png")
-bomber12 =pygame.image.load("bomber12.png")
+bomber12 =pygame.image.load("bomber22.png")
 
 
 
@@ -182,7 +182,9 @@ main_buttony = {
 
 
 
-
+nep_vz_x =500 
+nep_vz_y =500
+ 
 Lobby = True
 Infinite_mode = False 
 shop = False 
@@ -193,6 +195,7 @@ play=False
 letadlo = Letadlo(hrac_x, hrac_y, šířka, výška, zivoty, uhel, smrt, 0, 0, vystrel, angle_kanon)
 nepritel = Nepritel_zem(rychlost_pozadi, poloha_x, poloha_y, šířka, výška, vystrel, zivoty_nepritel, obrazovka, zivoty)
 Obchod = Shop(main_buttony,shop_image)
+vznepritel = Nepritel_vzduch(nep_vz_x,nep_vz_y,10,bomber11,bomber12)
 while True:
     gained_money=letadlo.skore/10
     Obchod.peníze+=gained_money
@@ -388,7 +391,8 @@ while True:
             
                 
         
-        
+        vznepritel.pohyb(nepritel.rychlost_pozadi)
+        vznepritel.zjev_se(obrazovka)
         otočená_stíhačka = pygame.transform.rotate(Obchod.animace(fockerfox_animace,f_animace,myg_animace,1), letadlo.uhel)
         
         rect = otočená_stíhačka.get_rect(center=(letadlo.x, letadlo.y))

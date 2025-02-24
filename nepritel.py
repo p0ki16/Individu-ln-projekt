@@ -69,38 +69,38 @@ class Nepritel_zem:
             self.respawn()
             self.test = 0
             self.odecti1=False
+            
 class Nepritel_vzduch:
     
-    def __init__(self,poloha_x,poloha_y,zivoty,vzhled12,vzhled22):
-        self.poloha_x = poloha_x
-        self.poloha_y = poloha_y + random.randint(5,0)
+    def __init__(self, polohax, polohay, zivoty, vzhled12, vzhled22):
+        self.poloha_x = polohax
+        self.poloha_y = polohay + random.randint(0, 5)
         self.zivoty = zivoty
-        self.vzhled_list = vzhled12,vzhled22
+        self.vzhled_list = [vzhled12, vzhled22]
         
-        self.pohyb =0.1
-        self.zmena=0
+        self.pohyb1 = 0.1
+        self.zmena = 0
+        self.pohupovani = 0
         
-    def pohyb (self,pohyb_pozadí):
-        self.poloha_x -= pohyb_pozadí + 5.8
-        self.zmena += self.pohyb
-        self.poloha_y += self.pohyb
-        if self.zmena > 5 or self.zmena<0:
-            self.pohyb *= -1
+    def pohyb(self,pohyb_pozadí):
+        self.poloha_x -= pohyb_pozadí - 5
+        self.pohupovani += self.pohyb1
+        self.poloha_y += self.pohyb1
+        if self.pohupovani > 10 or self.pohupovani < 0:
+            self.pohyb1 *= -1
             
     def animace(self):
-        self.zmena -=3
-        if self.zmena>10:
-            self.animace1=0
+        self.zmena -= 3
+        if self.zmena > 10:
+            self.animace1 = 0
         else:
-            self.animace1=1
-        if self.zmena <0:
-            self.zmena =20
+            self.animace1 = 1
+        if self.zmena < 0:
+            self.zmena = 20
         return self.vzhled_list[self.animace1]
         
-        
-        
-    def zjev_se(self,screen):
-        screen.blit(self.animace, (self.poloha_x, self.poloha_y))
+    def zjev_se(self, screen):
+        screen.blit(self.animace(), (self.poloha_x, self.poloha_y))
         
     
     

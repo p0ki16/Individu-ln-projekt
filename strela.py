@@ -1,6 +1,6 @@
 import pygame
 import math
-
+import random
 class Strela:
     
     def __init__ (self, strela_x, strela_y, angle_kanon, zasazeni):
@@ -10,7 +10,8 @@ class Strela:
         self.zasazeni = zasazeni
         self.spawn = 20  # Přidání atributu spawn jako atribut instance
         self.zasazeni_letadla = False
-        
+        self.vybuch_x=0
+        self.zmena=0
         
     def move(self, pohyb_země):
         if self.strela_y > 1080 - 20:  # 20 ke velikost výbuchu
@@ -21,8 +22,9 @@ class Strela:
         elif self.zasazeni == True:
             self.spawn -= 1# Použití atributu instance
             
+            
             if self.zasazeni_letadla == True:
-                self.strela_x += pohyb_země-5
+                self.strela_x -= pohyb_země-5
             else:
                 self.strela_x -= pohyb_země
             
@@ -39,7 +41,7 @@ class Strela:
                 surface.blit(image_vybuch, (self.strela_x, self.strela_y - 40))
                 
             if self.zasazeni == True:
-                surface.blit(vybuch, (self.strela_x, self.strela_y))
+                surface.blit(vybuch, (self.strela_x + random.randint(0,10), self.strela_y + random.randint(0,10)))
                 
             else:
                 surface.blit(image_strela, (self.strela_x, self.strela_y))

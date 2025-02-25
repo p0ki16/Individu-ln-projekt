@@ -1,5 +1,6 @@
 import random
 from strela import Strela
+import pygame
 class Nepritel_zem:
     
     def __init__(self, rychlost_pozadi, poloha_x, poloha_y, šířka, výška, vystrel,zivoty_self,surface,zivoty):
@@ -76,11 +77,14 @@ class Nepritel_vzduch:
         self.poloha_x = polohax
         self.poloha_y = polohay + random.randint(0, 5)
         self.zivoty_self = zivoty
-        self.vzhled_list = [vzhled12, vzhled22]
-        
+        self.vzhled12 = vzhled12
+        self.vzhled22 = vzhled22
+        self.delay = 100
         self.pohyb1 = 0.1
         self.zmena = 0
         self.pohupovani = 0
+        self.uhel = 0
+        self.smrt = False 
         
     def pohyb(self,pohyb_pozadí):
         self.poloha_x -= pohyb_pozadí - 5
@@ -90,6 +94,7 @@ class Nepritel_vzduch:
             self.pohyb1 *= -1
             
     def animace(self):
+        self.vzhled_list = [pygame.transform.rotate(self.vzhled12,self.uhel), pygame.transform.rotate(self.vzhled22,self.uhel)]
         self.zmena -= 3
         if self.zmena > 10:
             self.animace1 = 0
@@ -100,7 +105,22 @@ class Nepritel_vzduch:
         return self.vzhled_list[self.animace1]
         
     def zjev_se(self, screen):
+        
         screen.blit(self.animace(), (self.poloha_x, self.poloha_y))
+        
+    def znic_se(self):
+        if self.zivoty_self <0:
+            
+            if self.poloha_y > 100 or self.smrt == True:
+                self.poloha_y += 5
+                self.poloha_x -= 1
+                if self.uhel > -30:
+                    self.uhel -=0.5
+            else:
+                self.delay-=1
+                
+                if self.delay<0:
+                    self.smrt = True
         
     
     

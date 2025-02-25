@@ -30,7 +30,7 @@ výška, šířka = 1080, 1920
 hrac_x = šířka * 1 / 5
 hrac_y = výška / 2
 
-zivoty = 5
+zivoty = 9999999
 zivoty_nepritel = 20
 uhel = 1
 
@@ -192,10 +192,10 @@ play=False
 
 
 #y Vytvoření instancí tříd
-letadlo = Letadlo(hrac_x, hrac_y, šířka, výška, zivoty, uhel, smrt, 0, 0, vystrel, angle_kanon)
+letadlo = Letadlo(hrac_x, hrac_y, šířka, výška, 999999, uhel, smrt, 0, 0, vystrel, angle_kanon)
 nepritel = Nepritel_zem(rychlost_pozadi, poloha_x, poloha_y, šířka, výška, vystrel, zivoty_nepritel, obrazovka, zivoty)
 Obchod = Shop(main_buttony,shop_image)
-vznepritel = Nepritel_vzduch(nep_vz_x,nep_vz_y,10,bomber11,bomber12)
+vznepritel = Nepritel_vzduch(nep_vz_x,nep_vz_y,30,bomber11,bomber12)
 while True:
     gained_money=letadlo.skore/10
     Obchod.peníze+=gained_money
@@ -368,7 +368,7 @@ while True:
         nepritel.nabíjení(obrazovka, kanon13, kanon23, kanon33 , kanon43, beam3l3,kanon_destroyed)
         vznepritel.pohyb(nepritel.rychlost_pozadi)
         vznepritel.zjev_se(obrazovka)
-        
+        vznepritel.znic_se()
         for strela in vystreleni:
             
             if strela.zasazeni == False :

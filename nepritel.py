@@ -48,7 +48,7 @@ class Nepritel_zem:
                     self.zivoty -= 1
                 self.odecti1=True
                 
-            elif self.poloha_x < 0 and self.poloha_x > -100:
+            elif self.poloha_x < 0 and self.poloha_x > -50 :
                  self.test = 0
                  self.odecti1=False
             elif self.poloha_x < -200: 
@@ -87,11 +87,14 @@ class Nepritel_vzduch:
         self.smrt = False 
         
     def pohyb(self,pohyb_pozadí):
-        self.poloha_x -= pohyb_pozadí - 5
-        self.pohupovani += self.pohyb1
-        self.poloha_y += self.pohyb1
-        if self.pohupovani > 10 or self.pohupovani < 0:
-            self.pohyb1 *= -1
+        if self.smrt == False:
+            self.poloha_x -= pohyb_pozadí - 5
+            self.pohupovani += self.pohyb1
+            self.poloha_y += self.pohyb1
+            if self.pohupovani > 10 or self.pohupovani < 0:
+                self.pohyb1 *= -1
+        else:
+            self.poloha_x -= pohyb_pozadí
             
     def animace(self):
         self.vzhled_list = [pygame.transform.rotate(self.vzhled12,self.uhel), pygame.transform.rotate(self.vzhled22,self.uhel)]
@@ -111,16 +114,14 @@ class Nepritel_vzduch:
     def znic_se(self):
         if self.zivoty_self <0:
             
-            if self.poloha_y > 100 or self.smrt == True:
-                self.poloha_y += 5
-                self.poloha_x -= 1
-                if self.uhel > -30:
-                    self.uhel -=0.5
+            if self.poloha_y < 920:
+                self.poloha_y += 3
+                self.poloha_x -= 2
+                if self.uhel > -20:
+                    self.uhel -=0.3
+            
             else:
-                self.delay-=1
-                
-                if self.delay<0:
-                    self.smrt = True
+                self.smrt = True
         
     
     

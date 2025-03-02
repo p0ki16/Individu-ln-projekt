@@ -20,7 +20,7 @@ class Shop:
         self.value_zmenena=False
         self.obratnost = 2.5
         self.presnost=6
-        self.peníze = 0
+        self.peníze = 10000
         self.letadlo_owned =0
         self.raketa_owned =0
         

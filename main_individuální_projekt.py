@@ -57,7 +57,7 @@ pygame.display.flip()
 
 
 # Načtení obrázků
-
+ #___________________________________________________________________________________________________________________________________________________________________________________________________________________
 Raketa_image = pygame.image.load('Raketa.png')
 
 
@@ -136,7 +136,10 @@ button_raketa3 =pygame.image.load("Button_shop_raketa3.png")
 bomber11 =pygame.image.load("bomber12.png")
 bomber12 =pygame.image.load("bomber22.png")
 
+powerup_image = pygame.image.load("powerup.png")
+shield = pygame.image.load("štít.png")
 
+ #___________________________________________________________________________________________________________________________________________________________________________________________________________________
 
 
 
@@ -216,18 +219,18 @@ while True:
                if pozice_play.collidepoint(udalost.pos):  # Kontrola, zda kliknutí bylo na obrázku tlačítka
                    Lobby = False
                    play=True
-                   letadlo.reset(nepritel)
+                   letadlo.reset(nepritel,vznepritel)
                    
                     
                if pozice_shop.collidepoint(udalost.pos):  # Kontrola, zda kliknutí bylo na obrázku tlačítka
                     Lobby = False
                     shop = True
-                    letadlo.reset(nepritel)
+                    letadlo.reset(nepritel,vznepritel)
                     
                if pozice_infinity.collidepoint(udalost.pos):  # Kontrola, zda kliknutí bylo na obrázku tlačítka
                     Lobby = False
                     Infinite_mode = True
-                    letadlo.reset(nepritel)
+                    letadlo.reset(nepritel,vznepritel)
             
             
         
@@ -264,6 +267,8 @@ while True:
         
         # Nastavení FPS
         clock.tick(60)
+        
+        #___________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
     while play:
         text = f" skóre: {letadlo.skore} počet raket :{letadlo.pocet_raket} životy:{nepritel.zivoty} "
         text_surface = font.render(text, True, text_color)
@@ -339,7 +344,7 @@ while True:
             letadlo.znic_se(Lobby,Infinite_mode)
             if  letadlo.znic_se(Lobby,Infinite_mode):
                 Lobby = True
-                Infinite_mode = False 
+                play = False 
                 
             
         
@@ -401,13 +406,15 @@ while True:
         
         rect = otočená_stíhačka.get_rect(center=(letadlo.x, letadlo.y))
         
+        
         obrazovka.blit(otočená_stíhačka, rect.topleft)
         obrazovka.blit(text_surface, text_rect)
+        obrazovka.blit(shield,(letadlo.x-200, letadlo.y-200))
         
         letadlo.neutíkej()
         pygame.display.flip()
         clock.tick(60)
-        
+         #___________________________________________________________________________________________________________________________________________________________________________________________________________________
     while shop:
         
         for udalost in pygame.event.get():
@@ -436,7 +443,7 @@ while True:
         
         
 
-        
+        #___________________________________________________________________________________________________________________________________________________________________________________________________________________ 
     while Infinite_mode:
         
         text = f" skóre: {letadlo.skore} počet raket :{letadlo.pocet_raket} životy:{nepritel.zivoty} "

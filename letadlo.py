@@ -76,7 +76,9 @@ class Letadlo:
         self.skore=0
         
         
-    
+    class Powerup:
+        def __init__(self,balicky):
+           šance_na_spawn = False  
             
     
      

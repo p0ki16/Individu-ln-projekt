@@ -274,8 +274,7 @@ while True:
         text = f" skóre: {letadlo.skore} počet raket :{letadlo.pocet_raket} životy:{nepritel.zivoty} "
         text_surface = font.render(text, True, text_color)
         text_rect = text_surface.get_rect(center=(500, 50))
-        
-        
+        powerup.touch(letadlo,shield,obrazovka)        
         for i in range(vystrel):
             strela_x = letadlo.x + 17
             strela_y = letadlo.y + 17
@@ -289,8 +288,7 @@ while True:
             zasazeni = False
             raketa = Raketa(Raketa_x, Raketa_y, zasazeni)
             raketa_vystrel.append(raketa)
-            
-            
+                        
         for udalost in pygame.event.get():
                 if udalost.type == pygame.QUIT:
                     pygame.quit()
@@ -298,16 +296,11 @@ while True:
         if letadlo.y > 1080:
             nepritel.zivoty=0
             
-        
+        nepritel.zivoty  +=  powerup.zivoty
         
         if nepritel.zivoty >= 1:
                 
-         
-        
-        
-        
-            
-           
+
             keys = pygame.key.get_pressed()
             if keys[pygame.K_DOWN]:
                 letadlo.pohyb_dolu(Obchod.obratnost)
@@ -322,7 +315,7 @@ while True:
                 
             vystrel = 0    
             if keys[pygame.K_SPACE] and firerate == 0:
-                firerate = Obchod.firerate  # Nastavení hodnoty delay
+                firerate = Obchod.firerate * powerup.firerate  # Nastavení hodnoty delay
                 vystrel = 1
                 
             raketa_vystrelena = 0
@@ -338,35 +331,19 @@ while True:
             
                
             nepritel.rychlost_pozadi =-nepritel.rychlost_pozadi * math.sin(math.radians(letadlo.uhel-90))#90je zde k pootočení osy
-            
-            
-                
+                           
         else:
             letadlo.znic_se(Lobby,Infinite_mode)
             if  letadlo.znic_se(Lobby,Infinite_mode):
                 Lobby = True
                 play = False 
-                
-            
-        
-        
-            
-            
+                   
         if letadlo.smrt == False:  # Kontrola jestli letadlo žije
             nepritel.pohyb_kanonu()
             pohyb_pozadí -= nepritel.rychlost_pozadi
             umisteni_pozadi1 = pohyb_pozadí % rozdil_pozadi
             umisteni_pozadi2 = (pohyb_pozadí % rozdil_pozadi) - rozdil_pozadi
-       
-            
-            
-            
-            
         
-            
-        
-       
-       
         obrazovka.fill(pozadi_barva)
         obrazovka.blit(Pohyblive_pozadi, (umisteni_pozadi1, výška - 100))
         obrazovka.blit(Pohyblive_pozadi, (umisteni_pozadi2, výška - 100))
@@ -396,11 +373,9 @@ while True:
             pricteni =True
             
         if nepritel.zivoty_self < 0 and pricteni ==True:
-            letadlo.skore+=1000
+            letadlo.skore+=1000 * powerup.bonus_ke_skore
             pricteni =False
-                
-            
-                
+                             
         powerup.pohyb(nepritel.rychlost_pozadi)
         powerup.spawn(obrazovka)
         
@@ -411,7 +386,7 @@ while True:
         
         obrazovka.blit(otočená_stíhačka, rect.topleft)
         obrazovka.blit(text_surface, text_rect)
-        obrazovka.blit(shield,(letadlo.x-200, letadlo.y-200))
+        
         
         letadlo.neutíkej()
         pygame.display.flip()

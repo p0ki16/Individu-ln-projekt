@@ -1,4 +1,5 @@
 import math
+import random
 
 
 class Letadlo:
@@ -78,20 +79,29 @@ class Letadlo:
         
 class Powerup:
     def __init__(self,balicky):
-       self.image_powerupu = balicky
-       self.cekani_na_spawn = 1
-       self.poloha_x = 0
-       self.poloha_y = 0
-       self.smrt = False
-       self.pohyb1 = 0.1
-       self.pohupovani = 0
+        self.image_powerupu = balicky
+        self.cekani_na_spawn = 1
+        self.poloha_x = 0
+        self.poloha_y = 0
+        self.smrt = False
+        self.pohyb1 = 1
+        self.pohupovani = 0
+        self.firerate=1
+        self.odpočet =0
+        self.bonus_ke_skore = 1
+        self.co_padlo = 0
+        self.zivoty = 0
        
     def spawn(self,surface):
-        self.cekani_na_spawn +=1 
+        
+        self.cekani_na_spawn +=1
+        
         if self.cekani_na_spawn >1000:
             self.poloha_x =1200
-            self.poloha_y =0
+            self.poloha_y =-80
             self.cekani_na_spawn =0
+            self.zivoty = 0
+            self.smrt = False
             
         if self.smrt == False:
             surface.blit(self.image_powerupu, (self.poloha_x, self.poloha_y ))
@@ -100,10 +110,44 @@ class Powerup:
     def pohyb(self,pohyb_pozadí):
         if self.smrt == False:
             self.poloha_x -= pohyb_pozadí
-            print(pohyb_pozadí)
+            self.pohupovani += self.pohyb1
+            self.poloha_x += self.pohyb1
+            if self.pohupovani > 25 or self.pohupovani < 0:
+                self.pohyb1 *= -1
+            
             
         
             self.poloha_y += 1
+    def touch(self,letadlo,shield,screen):
+    
+        if letadlo.x<self.poloha_x + 254 and self.poloha_x +131<letadlo.x  and \
+           letadlo.y<self.poloha_y + 74 and self.poloha_y +20 < letadlo.y :
+            
+            if self.smrt == False:
+                self.co_padlo = random.randint(1,3)
+                self.odpočet = 300
+                self.smrt = True
+                
+        if self.co_padlo == 1 :
+            self.zivoty = 0.1
+            screen.blit(shield,(letadlo.x-200, letadlo.y-200))
+            
+        elif self.co_padlo == 2:
+            self.firerate = 0
+             
+        elif self.co_padlo == 3:
+            self.odpočet +=0.9
+            self.bonus_ke_skore = 2
+            
+        self.odpočet-=1
+        
+        if self.odpočet < 0:
+            self.zivoty = 0
+            self.firerate=1
+            self.odpočet =0
+            self.bonus_ke_skore = 1 
+           
+        
     
                 
             

@@ -76,9 +76,36 @@ class Letadlo:
         self.skore=0
         
         
-    class Powerup:
-        def __init__(self,balicky):
-           šance_na_spawn = False  
+class Powerup:
+    def __init__(self,balicky):
+       self.image_powerupu = balicky
+       self.cekani_na_spawn = 1
+       self.poloha_x = 0
+       self.poloha_y = 0
+       self.smrt = False
+       self.pohyb1 = 0.1
+       self.pohupovani = 0
+       
+    def spawn(self,surface):
+        self.cekani_na_spawn +=1 
+        if self.cekani_na_spawn >1000:
+            self.poloha_x =1200
+            self.poloha_y =0
+            self.cekani_na_spawn =0
+            
+        if self.smrt == False:
+            surface.blit(self.image_powerupu, (self.poloha_x, self.poloha_y ))
+            
+            
+    def pohyb(self,pohyb_pozadí):
+        if self.smrt == False:
+            self.poloha_x -= pohyb_pozadí
+            print(pohyb_pozadí)
+            
+        
+            self.poloha_y += 1
+    
+                
             
     
      

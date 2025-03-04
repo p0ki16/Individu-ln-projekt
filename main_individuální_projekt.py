@@ -5,7 +5,7 @@ import sys
 import math
 
 from strela import Strela,Raketa
-from letadlo import Letadlo
+from letadlo import Letadlo,Powerup
 from nepritel import Nepritel_zem,Nepritel_vzduch
 from Shop import Shop    
 
@@ -199,6 +199,7 @@ letadlo = Letadlo(hrac_x, hrac_y, šířka, výška, 999999, uhel, smrt, 0, 0, v
 nepritel = Nepritel_zem(rychlost_pozadi, poloha_x, poloha_y, šířka, výška, vystrel, zivoty_nepritel, obrazovka, zivoty)
 Obchod = Shop(main_buttony,shop_image)
 vznepritel = Nepritel_vzduch(nep_vz_x,nep_vz_y,30,bomber11,bomber12)
+powerup = Powerup(powerup_image)
 while True:
     gained_money=letadlo.skore/10
     Obchod.peníze+=gained_money
@@ -365,7 +366,7 @@ while True:
             
         
        
-
+       
         obrazovka.fill(pozadi_barva)
         obrazovka.blit(Pohyblive_pozadi, (umisteni_pozadi1, výška - 100))
         obrazovka.blit(Pohyblive_pozadi, (umisteni_pozadi2, výška - 100))
@@ -400,7 +401,8 @@ while True:
                 
             
                 
-        
+        powerup.pohyb(nepritel.rychlost_pozadi)
+        powerup.spawn(obrazovka)
         
         otočená_stíhačka = pygame.transform.rotate(Obchod.animace(fockerfox_animace,f_animace,myg_animace,1), letadlo.uhel)
         
@@ -549,15 +551,15 @@ while True:
         for strela in vystreleni:
             
             if strela.zasazeni == False :
-                
-                strela.zasah(nepritel)
+                strela.zasah(nepritel,150,100,2)
+                strela.zasah(vznepritel,200,200,1) 
             strela.move(nepritel.rychlost_pozadi)
             strela.draw(obrazovka, strela_image, vybuch_image,vybuch)
             
         for raketa in raketa_vystrel:
             
             if raketa.zasazeni == False:
-                raketa.zasah(nepritel,150,100)
+                raketa.zasah(nepritel,150,100,1)
             raketa.navádění(nepritel,obrazovka,Obchod.animace(Raketa_image,raketa3,raketa2,2),výška,nepritel.rychlost_pozadi,Obchod.presnost)
             raketa.draw(obrazovka, Obchod.animace(Raketa_image,raketa3,raketa2,2), vybuch_image,vybuch, nepritel.rychlost_pozadi)
             

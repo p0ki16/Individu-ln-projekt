@@ -79,6 +79,7 @@ class Letadlo:
         
 class Powerup:
     def __init__(self,balicky):
+        
         self.image_powerupu = balicky
         self.cekani_na_spawn = 1
         self.poloha_x = 0
@@ -91,7 +92,7 @@ class Powerup:
         self.bonus_ke_skore = 1
         self.co_padlo = 0
         self.zivoty = 0
-       
+        self.rect_powerupu = balicky.get_rect(topleft=(self.poloha_x,self.poloha_y))
     def spawn(self,surface):
         
         self.cekani_na_spawn +=1
@@ -118,18 +119,18 @@ class Powerup:
             
         
             self.poloha_y += 1
-    def touch(self,letadlo,shield,screen):
-    
-        if letadlo.x<self.poloha_x + 254 and self.poloha_x +131<letadlo.x  and \
-           letadlo.y<self.poloha_y + 74 and self.poloha_y +20 < letadlo.y :
+    def touch(self,letadlo,shield,screen,letadlo_rect):
+        self.rect_powerupu.topleft = (self.poloha_x, self.poloha_y)
+        if  self.rect_powerupu.colliderect(letadlo_rect):
+            
             
             if self.smrt == False:
-                self.co_padlo = random.randint(1,3)
+                self.co_padlo = random.randint(1,4)
                 self.odpočet = 300
                 self.smrt = True
                 
-        if self.co_padlo == 1 :
-            self.zivoty = 0.1
+        if self.co_padlo == 1 and self.odpočet >0:
+            self.zivoty = 5
             screen.blit(shield,(letadlo.x-200, letadlo.y-200))
             
         elif self.co_padlo == 2:
@@ -138,6 +139,9 @@ class Powerup:
         elif self.co_padlo == 3:
             self.odpočet +=0.9
             self.bonus_ke_skore = 2
+            
+        elif self.co_padlo == 4 and self.odpočet >0:
+            self.zivoty = 1
             
         self.odpočet-=1
         

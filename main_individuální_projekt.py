@@ -16,7 +16,7 @@ font = pygame.font.SysFont('Arial', 48)
 
 
 text_color = (0, 0, 0)
-
+kdo_vystrelil=1
 
 
 firerate = 0
@@ -200,6 +200,7 @@ nepritel = Nepritel_zem(rychlost_pozadi, poloha_x, poloha_y, šířka, výška, 
 Obchod = Shop(main_buttony,shop_image)
 vznepritel = Nepritel_vzduch(nep_vz_x,nep_vz_y,30,bomber11,bomber12)
 powerup = Powerup(powerup_image)
+
 while True:
     gained_money=letadlo.skore/10
     Obchod.peníze+=gained_money
@@ -269,19 +270,30 @@ while True:
         # Nastavení FPS
         clock.tick(60)
         
-        #___________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+#___________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
     while play:
         text = f" skóre: {letadlo.skore} počet raket :{letadlo.pocet_raket} životy:{nepritel.zivoty} "
         text_surface = font.render(text, True, text_color)
         text_rect = text_surface.get_rect(center=(500, 50))
-        powerup.touch(letadlo,shield,obrazovka)        
+        print(kdo_vystrelil)
+        print(vystrel)
+        print("--------")
+        
         for i in range(vystrel):
             strela_x = letadlo.x + 17
             strela_y = letadlo.y + 17
             zasazeni = False
-            strela = Strela(strela_x, strela_y, letadlo.uhel, zasazeni)
+            if kdo_vystrelil == 1:
+                strela = Strela(strela_x, strela_y, letadlo.uhel, zasazeni)
+            elif kdo_vystrelil==2:
+                strela = Strela(vznepritel.poloha_x-30, vznepritel.poloha_y+60, 180, zasazeni)
+            elif kdo_vystrelil==3:
+                strela = Strela(strela_x, strela_y, letadlo.uhel, zasazeni)
+                vystreleni.append(strela)
+                strela = Strela(vznepritel.poloha_x-30, vznepritel.poloha_y+60, 180, zasazeni)
             vystreleni.append(strela)
-            
+       
+        
         for j in range(raketa_vystrelena):
             Raketa_x = letadlo.x
             Raketa_y = letadlo.y
@@ -296,7 +308,9 @@ while True:
         if letadlo.y > 1080:
             nepritel.zivoty=0
             
-        nepritel.zivoty  +=  powerup.zivoty
+        if powerup.odpočet >0 and powerup.zivoty !=0:
+            
+            nepritel.zivoty  =powerup.zivoty
         
         if nepritel.zivoty >= 1:
                 
@@ -316,6 +330,7 @@ while True:
             vystrel = 0    
             if keys[pygame.K_SPACE] and firerate == 0:
                 firerate = Obchod.firerate * powerup.firerate  # Nastavení hodnoty delay
+                kdo_vystrelil = 1
                 vystrel = 1
                 
             raketa_vystrelena = 0
@@ -349,6 +364,11 @@ while True:
         obrazovka.blit(Pohyblive_pozadi, (umisteni_pozadi2, výška - 100))
         
         nepritel.nabíjení(obrazovka, kanon13, kanon23, kanon33 , kanon43, beam3l3,kanon_destroyed)
+        vznepritel.odpocet_do_vystrelu(vystrel)
+        if vznepritel.vystrel  == 1:
+            vystrel  = vznepritel.vystrel
+        kdo_vystrelil  = +vznepritel.kdo_vystrelil
+        
         vznepritel.pohyb(nepritel.rychlost_pozadi)
         vznepritel.zjev_se(obrazovka)
         vznepritel.znic_se()
@@ -376,16 +396,18 @@ while True:
             letadlo.skore+=1000 * powerup.bonus_ke_skore
             pricteni =False
                              
-        powerup.pohyb(nepritel.rychlost_pozadi)
-        powerup.spawn(obrazovka)
+        
         
         otočená_stíhačka = pygame.transform.rotate(Obchod.animace(fockerfox_animace,f_animace,myg_animace,1), letadlo.uhel)
         
         rect = otočená_stíhačka.get_rect(center=(letadlo.x, letadlo.y))
-        
+        powerup.touch(letadlo,shield,obrazovka,rect)
+        powerup.pohyb(nepritel.rychlost_pozadi)
+        powerup.spawn(obrazovka)
         
         obrazovka.blit(otočená_stíhačka, rect.topleft)
         obrazovka.blit(text_surface, text_rect)
+        
         
         
         letadlo.neutíkej()

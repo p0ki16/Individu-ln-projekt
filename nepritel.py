@@ -85,6 +85,8 @@ class Nepritel_vzduch:
         self.pohupovani = 0
         self.uhel = 0
         self.smrt = False 
+        self.odpocet = 0
+        self.strileni=False
         
     def pohyb(self,pohyb_pozadí):
         if self.smrt == False:
@@ -122,6 +124,29 @@ class Nepritel_vzduch:
             
             else:
                 self.smrt = True
+                
+    def odpocet_do_vystrelu(self,vystrel):
+        
+        if self.strileni==False:
+            self.odpocet+=1
+            
+        if self.odpocet >10:
+            self.strileni = True
+            
+        if self.strileni:
+            if self.odpocet == 3:
+                self.vystrel = 1
+            if self.odpocet == 6:
+                self.vystrel = 1
+            if self.odpocet == 9:
+               self.vystrel = 1
+            self.odpocet -=1
+            self.kdo_vystrelil =2
+        else:    
+            self.vystrel = 0    
+            self.kdo_vystrelil =1
+        if self.odpocet < 0:
+            self.strileni = False
         
     
     

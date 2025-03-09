@@ -452,7 +452,7 @@ while True:
             strela_x = letadlo.x + 17
             strela_y = letadlo.y + 17
             zasazeni = False
-            strela = Strela(strela_x, strela_y, letadlo.uhel, zasazeni)
+            strela = Strela(strela_x, strela_y, letadlo.uhel, zasazeni,strela_image,20)
             vystreleni.append(strela)
             
         for j in range(raketa_vystrelena):
@@ -542,12 +542,16 @@ while True:
         obrazovka.blit(Pohyblive_pozadi, (umisteni_pozadi2, výška - 100))
         
         nepritel.nabíjení(obrazovka, kanon13, kanon23, kanon33 , kanon43, beam3l3,kanon_destroyed)
-       
+
+        otočená_stíhačka = pygame.transform.rotate(Obchod.animace(fockerfox_animace,f_animace,myg_animace,1), letadlo.uhel)
+        
+        rect = otočená_stíhačka.get_rect(center=(letadlo.x, letadlo.y))
+        
         for strela in vystreleni:
             
             if strela.zasazeni == False :
-                strela.zasah(nepritel,150,100,2)
-                strela.zasah(vznepritel,200,200,1) 
+                strela.zasah(nepritel,150,100,2,rect)
+                strela.zasah(vznepritel,200,200,1,rect) 
             strela.move(nepritel.rychlost_pozadi)
             strela.draw(obrazovka, strela_image, vybuch_image,vybuch)
             
@@ -569,10 +573,7 @@ while True:
                 
         
         
-        otočená_stíhačka = pygame.transform.rotate(Obchod.animace(fockerfox_animace,f_animace,myg_animace,1), letadlo.uhel)
-        
-        rect = otočená_stíhačka.get_rect(center=(letadlo.x, letadlo.y))
-        
+       
         obrazovka.blit(otočená_stíhačka, rect.topleft)
         obrazovka.blit(text_surface, text_rect)
         

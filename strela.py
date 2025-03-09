@@ -3,7 +3,7 @@ import math
 import random
 class Strela:
     
-    def __init__ (self, strela_x, strela_y, angle_kanon, zasazeni):
+    def __init__ (self, strela_x, strela_y, angle_kanon, zasazeni,image_strela):
         self.strela_x = strela_x
         self.strela_y = strela_y
         self.angle_kanon = angle_kanon
@@ -12,7 +12,7 @@ class Strela:
         self.zasazeni_letadla = False
         self.vybuch_x=0
         self.zmena=0
-        
+        self.Strela_rect = image_strela.get_rect(topleft=( self.strela_x,self.strela_y))
     def move(self, pohyb_země):
         if self.strela_y > 1080 - 20:  # 20 ke velikost výbuchu
             self.strela_y = 1080
@@ -36,6 +36,7 @@ class Strela:
             
     
     def draw(self, surface, image_strela, image_vybuch, vybuch):
+        
         if self.spawn > 0:  # Použití atributu instance
             if self.strela_y > 1080 - 20:
                 surface.blit(image_vybuch, (self.strela_x, self.strela_y - 40))
@@ -45,10 +46,11 @@ class Strela:
                 
             else:
                 surface.blit(image_strela, (self.strela_x, self.strela_y))
+               
                 
                 
-                
-    def zasah(self, nepritel,rozmer_y,rozmer_x,cojsem_trefil):#1-bomber 2-kanon
+    def zasah(self, nepritel,rozmer_y,rozmer_x,cojsem_trefil,enemy_rect):#1-bomber 2-kanon
+        
         if nepritel.poloha_x < self.strela_x < nepritel.poloha_x + rozmer_x and \
            nepritel.poloha_y < self.strela_y < nepritel.poloha_y + rozmer_y:  # hitbox
             
@@ -57,6 +59,12 @@ class Strela:
             self.zasazeni_letadla = False
             if cojsem_trefil ==1:
                 self.zasazeni_letadla = True
+
+        if self.Strela_rect.colliderect(enemy_rect):
+            if cojsem_trefil == 3:
+                nepritel.zivoty-=1
+                self.zasazeni = True
+            
             
             
 

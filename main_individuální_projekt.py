@@ -1,4 +1,4 @@
-# Importy a inicializace
+     # Importy a inicializace
 import pygame
 import sys
 
@@ -16,7 +16,7 @@ font = pygame.font.SysFont('Arial', 48)
 
 
 text_color = (0, 0, 0)
-kdo_vystrelil=1
+
 
 
 firerate = 0
@@ -275,7 +275,7 @@ while True:
         text = f" skóre: {letadlo.skore} počet raket :{letadlo.pocet_raket} životy:{nepritel.zivoty} "
         text_surface = font.render(text, True, text_color)
         text_rect = text_surface.get_rect(center=(500, 50))
-        print(kdo_vystrelil)
+        
         print(vystrel)
         print("--------")
         
@@ -283,17 +283,11 @@ while True:
             strela_x = letadlo.x + 17
             strela_y = letadlo.y + 17
             zasazeni = False
-            if kdo_vystrelil == 1:
-                strela = Strela(strela_x, strela_y, letadlo.uhel, zasazeni)
-            elif kdo_vystrelil==2:
-                strela = Strela(vznepritel.poloha_x-30, vznepritel.poloha_y+60, 180, zasazeni)
-            elif kdo_vystrelil==3:
-                strela = Strela(strela_x, strela_y, letadlo.uhel, zasazeni)
-                vystreleni.append(strela)
-                strela = Strela(vznepritel.poloha_x-30, vznepritel.poloha_y+60, 180, zasazeni)
+            strela = Strela(strela_x, strela_y, letadlo.uhel, zasazeni,strela_image)    
             vystreleni.append(strela)
-       
-        
+        vystrel = 0 
+          
+        #
         for j in range(raketa_vystrelena):
             Raketa_x = letadlo.x
             Raketa_y = letadlo.y
@@ -327,10 +321,9 @@ while True:
             if firerate_rakety > 0:  # Delay mezi raketami
                 firerate_rakety -= 1
                 
-            vystrel = 0    
+             
             if keys[pygame.K_SPACE] and firerate == 0:
                 firerate = Obchod.firerate * powerup.firerate  # Nastavení hodnoty delay
-                kdo_vystrelil = 1
                 vystrel = 1
                 
             raketa_vystrelena = 0
@@ -366,17 +359,22 @@ while True:
         nepritel.nabíjení(obrazovka, kanon13, kanon23, kanon33 , kanon43, beam3l3,kanon_destroyed)
         vznepritel.odpocet_do_vystrelu(vystrel)
         if vznepritel.vystrel  == 1:
-            vystrel  = vznepritel.vystrel
-        kdo_vystrelil  = +vznepritel.kdo_vystrelil
-        
+           zasazeni = False
+           strela = Strela(vznepritel.poloha_x-30, vznepritel.poloha_y+60, 180, zasazeni,strela_image)
+           vystreleni.append(strela) 
+
         vznepritel.pohyb(nepritel.rychlost_pozadi)
         vznepritel.zjev_se(obrazovka)
         vznepritel.znic_se()
+        otočená_stíhačka = pygame.transform.rotate(Obchod.animace(fockerfox_animace,f_animace,myg_animace,1), letadlo.uhel)
+        
+        rect = otočená_stíhačka.get_rect(center=(letadlo.x, letadlo.y))
         for strela in vystreleni:
             
             if strela.zasazeni == False :
-                strela.zasah(nepritel,150,100,2)
-                strela.zasah(vznepritel,200,200,1) 
+                strela.zasah(nepritel,150,100,2,rect)
+                strela.zasah(vznepritel,200,200,1,rect)
+                strela.zasah(vznepritel,200,200,3,rect)
                 
             strela.move(nepritel.rychlost_pozadi)
             strela.draw(obrazovka, strela_image, vybuch_image,vybuch)
@@ -398,9 +396,7 @@ while True:
                              
         
         
-        otočená_stíhačka = pygame.transform.rotate(Obchod.animace(fockerfox_animace,f_animace,myg_animace,1), letadlo.uhel)
         
-        rect = otočená_stíhačka.get_rect(center=(letadlo.x, letadlo.y))
         powerup.touch(letadlo,shield,obrazovka,rect)
         powerup.pohyb(nepritel.rychlost_pozadi)
         powerup.spawn(obrazovka)

@@ -3,7 +3,7 @@ import math
 import random
 class Strela:
     
-    def __init__ (self, strela_x, strela_y, angle_kanon, zasazeni,image_strela):
+    def __init__ (self, strela_x, strela_y, angle_kanon, zasazeni,image_strela,just_spawned):
         self.strela_x = strela_x
         self.strela_y = strela_y
         self.angle_kanon = angle_kanon
@@ -13,6 +13,7 @@ class Strela:
         self.vybuch_x=0
         self.zmena=0
         self.Strela_rect = image_strela.get_rect(topleft=( self.strela_x,self.strela_y))
+        self.just_spawned = just_spawned
     def move(self, pohyb_země):
         if self.strela_y > 1080 - 20:  # 20 ke velikost výbuchu
             self.strela_y = 1080
@@ -36,7 +37,7 @@ class Strela:
             
     
     def draw(self, surface, image_strela, image_vybuch, vybuch):
-        
+        self.Strela_rect = image_strela.get_rect(topleft=( self.strela_x,self.strela_y))
         if self.spawn > 0:  # Použití atributu instance
             if self.strela_y > 1080 - 20:
                 surface.blit(image_vybuch, (self.strela_x, self.strela_y - 40))

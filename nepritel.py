@@ -131,12 +131,20 @@ class Nepritel_vzduch:
         if self.strileni==False:
             self.odpocet+=1
             
-        if self.odpocet >10:
+        if self.odpocet >30:
             self.strileni = True
             
         if self.strileni:
-            if self.odpocet == 3:
+            self.vystrel = 0
+            if self.odpocet == 30:
                 self.vystrel = 1
+                self.odpocet -=3
+            if self.odpocet == 20:
+                self.vystrel = 1
+                self.odpocet -=3
+            if self.odpocet == 10:
+                self.vystrel = 1
+                self.odpocet -=3
             self.odpocet -=1
             self.kdo_vystrelil =2
         else:

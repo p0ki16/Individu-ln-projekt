@@ -283,7 +283,7 @@ while True:
             strela_x = letadlo.x + 17
             strela_y = letadlo.y + 17
             zasazeni = False
-            strela = Strela(strela_x, strela_y, letadlo.uhel, zasazeni,strela_image)    
+            strela = Strela(strela_x, strela_y, letadlo.uhel, zasazeni,strela_image,20)    
             vystreleni.append(strela)
         vystrel = 0 
           
@@ -345,7 +345,7 @@ while True:
             if  letadlo.znic_se(Lobby,Infinite_mode):
                 Lobby = True
                 play = False 
-                   
+                vystreleni=[]   
         if letadlo.smrt == False:  # Kontrola jestli letadlo žije
             nepritel.pohyb_kanonu()
             pohyb_pozadí -= nepritel.rychlost_pozadi
@@ -358,9 +358,10 @@ while True:
         
         nepritel.nabíjení(obrazovka, kanon13, kanon23, kanon33 , kanon43, beam3l3,kanon_destroyed)
         vznepritel.odpocet_do_vystrelu(vystrel)
+
         if vznepritel.vystrel  == 1:
            zasazeni = False
-           strela = Strela(vznepritel.poloha_x-30, vznepritel.poloha_y+60, 180, zasazeni,strela_image)
+           strela = Strela(vznepritel.poloha_x-1, vznepritel.poloha_y+110, 180, zasazeni,strela_image,0)
            vystreleni.append(strela) 
 
         vznepritel.pohyb(nepritel.rychlost_pozadi)
@@ -370,11 +371,12 @@ while True:
         
         rect = otočená_stíhačka.get_rect(center=(letadlo.x, letadlo.y))
         for strela in vystreleni:
-            
-            if strela.zasazeni == False :
+            strela.just_spawned-=1
+            if strela.zasazeni == False and strela.just_spawned<0 :
+                strela.zasah(nepritel,200,200,3,rect)
+            if strela.zasazeni == False:
                 strela.zasah(nepritel,150,100,2,rect)
                 strela.zasah(vznepritel,200,200,1,rect)
-                strela.zasah(vznepritel,200,200,3,rect)
                 
             strela.move(nepritel.rychlost_pozadi)
             strela.draw(obrazovka, strela_image, vybuch_image,vybuch)

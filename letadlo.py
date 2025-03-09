@@ -61,18 +61,27 @@ class Letadlo:
         if self.y < -500:
             self.uhel = 360-self.uhel
             
-    def reset(self,nepritel,nepritel_vzduch):
+    def reset(self,nepritel,nepritel_vzduch1,nepritel_vzduch2):
         self.x = self.sirka * 1 / 4
         self.y = self.vyska / 2
         nepritel.zivoty = 5
-        nepritel_vzduch.zivoty_self = 30
+        nepritel_vzduch1.zivoty_self = 30
+        nepritel_vzduch2.zivoty_self = 30
         self.smrt = False
         self.uhel =0
-        nepritel_vzduch.smrt = False
-        nepritel_vzduch.uhel =0
-        nepritel_vzduch.poloha_x = 1920
+
+        nepritel_vzduch1.smrt = False
+        nepritel_vzduch1.uhel =0
+        nepritel_vzduch1.poloha_x = 1920
+        nepritel_vzduch1.poloha_y=500
+        
+        nepritel_vzduch2.smrt = False
+        nepritel_vzduch2.uhel =0
+        nepritel_vzduch2.poloha_x = 2000
+        nepritel_vzduch2.poloha_y=300
+
         nepritel.poloha_x=1920
-        nepritel_vzduch.poloha_y=500
+        
         self.pocet_raket =12
         self.skore=0
         

@@ -198,7 +198,8 @@ play=False
 letadlo = Letadlo(hrac_x, hrac_y, šířka, výška, 999999, uhel, smrt, 0, 0, vystrel, angle_kanon)
 nepritel = Nepritel_zem(rychlost_pozadi, poloha_x, poloha_y, šířka, výška, vystrel, zivoty_nepritel, obrazovka, zivoty)
 Obchod = Shop(main_buttony,shop_image)
-vznepritel = Nepritel_vzduch(nep_vz_x,nep_vz_y,30,bomber11,bomber12)
+vznepritel1 = Nepritel_vzduch(600,500,30,bomber11,bomber12)
+vznepritel2 = Nepritel_vzduch(300,500,30,bomber11,bomber12)
 powerup = Powerup(powerup_image)
 
 while True:
@@ -221,19 +222,20 @@ while True:
                if pozice_play.collidepoint(udalost.pos):  # Kontrola, zda kliknutí bylo na obrázku tlačítka
                    Lobby = False
                    play=True
-                   letadlo.reset(nepritel,vznepritel)
+                   letadlo.reset(nepritel,vznepritel1,vznepritel2)
+                   
                    
                     
                if pozice_shop.collidepoint(udalost.pos):  # Kontrola, zda kliknutí bylo na obrázku tlačítka
                     Lobby = False
                     shop = True
-                    letadlo.reset(nepritel,vznepritel)
+                    letadlo.reset(nepritel,vznepritel1,vznepritel2)
                     
                if pozice_infinity.collidepoint(udalost.pos):  # Kontrola, zda kliknutí bylo na obrázku tlačítka
                     Lobby = False
                     Infinite_mode = True
-                    letadlo.reset(nepritel,vznepritel)
-            
+                    letadlo.reset(nepritel,vznepritel1,vznepritel2)
+                    
             
         
         
@@ -276,8 +278,7 @@ while True:
         text_surface = font.render(text, True, text_color)
         text_rect = text_surface.get_rect(center=(500, 50))
         
-        print(vystrel)
-        print("--------")
+        
         
         for i in range(vystrel):
             strela_x = letadlo.x + 17
@@ -357,16 +358,32 @@ while True:
         obrazovka.blit(Pohyblive_pozadi, (umisteni_pozadi2, výška - 100))
         
         nepritel.nabíjení(obrazovka, kanon13, kanon23, kanon33 , kanon43, beam3l3,kanon_destroyed)
-        vznepritel.odpocet_do_vystrelu(vystrel)
+        vznepritel1.odpocet_do_vystrelu(vystrel)
+        vznepritel2.odpocet_do_vystrelu(vystrel)
 
-        if vznepritel.vystrel  == 1:
+        if vznepritel1.vystrel  == 1:
            zasazeni = False
-           strela = Strela(vznepritel.poloha_x-1, vznepritel.poloha_y+110, 180, zasazeni,strela_image,0)
+           strela = Strela(vznepritel1.poloha_x-1, vznepritel1.poloha_y+110, 180, zasazeni,strela_image,0)
            vystreleni.append(strela) 
 
-        vznepritel.pohyb(nepritel.rychlost_pozadi)
-        vznepritel.zjev_se(obrazovka)
-        vznepritel.znic_se()
+        vznepritel1.pohyb(nepritel.rychlost_pozadi)
+        vznepritel1.zjev_se(obrazovka)
+        vznepritel1.znic_se()
+
+        if vznepritel2.vystrel  == 1:
+           zasazeni = False
+           strela = Strela(vznepritel2.poloha_x-1, vznepritel2.poloha_y+110, 180, zasazeni,strela_image,0)
+           vystreleni.append(strela) 
+
+        vznepritel2.pohyb(nepritel.rychlost_pozadi)
+        vznepritel2.zjev_se(obrazovka)
+        vznepritel2.znic_se()
+        print(vznepritel2.poloha_x)
+        print(vznepritel2.poloha_y)
+        print("----------------------2")
+        print(vznepritel1.poloha_x)
+        print(vznepritel1.poloha_y)
+        print("----------------------1")
         otočená_stíhačka = pygame.transform.rotate(Obchod.animace(fockerfox_animace,f_animace,myg_animace,1), letadlo.uhel)
         
         rect = otočená_stíhačka.get_rect(center=(letadlo.x, letadlo.y))
@@ -376,7 +393,8 @@ while True:
                 strela.zasah(nepritel,200,200,3,rect)
             if strela.zasazeni == False:
                 strela.zasah(nepritel,150,100,2,rect)
-                strela.zasah(vznepritel,200,200,1,rect)
+                strela.zasah(vznepritel1,200,200,1,rect)
+                strela.zasah(vznepritel2,200,200,1,rect)
                 
             strela.move(nepritel.rychlost_pozadi)
             strela.draw(obrazovka, strela_image, vybuch_image,vybuch)
@@ -385,7 +403,8 @@ while True:
             
             if raketa.zasazeni == False:
                 raketa.zasah(nepritel,150,100,2)
-                raketa.zasah(vznepritel,200,200,1) 
+                raketa.zasah(vznepritel1,200,200,1) 
+                raketa.zasah(vznepritel2,200,200,1) 
             raketa.navádění(nepritel,obrazovka,Obchod.animace(Raketa_image,raketa3,raketa2,2),výška,nepritel.rychlost_pozadi,Obchod.presnost)
             raketa.draw(obrazovka, Obchod.animace(Raketa_image,raketa3,raketa2,2), vybuch_image,vybuch, nepritel.rychlost_pozadi)
             
@@ -551,7 +570,8 @@ while True:
             
             if strela.zasazeni == False :
                 strela.zasah(nepritel,150,100,2,rect)
-                strela.zasah(vznepritel,200,200,1,rect) 
+                strela.zasah(vznepritel1,200,200,1,rect)
+                strela.zasah(vznepritel2,200,200,1,rect) 
             strela.move(nepritel.rychlost_pozadi)
             strela.draw(obrazovka, strela_image, vybuch_image,vybuch)
             

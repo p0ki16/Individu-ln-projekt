@@ -136,13 +136,13 @@ class Nepritel_vzduch:
             
         if self.strileni:
             self.vystrel = 0
-            if self.odpocet == random.randint(1,10):
+            if self.odpocet == 3:
                 self.vystrel = 1
                 self.odpocet -=3
-            if self.odpocet == random.randint(6,20):
+            if self.odpocet == 6:
                 self.vystrel = 1
                 self.odpocet -=3
-            if self.odpocet == random.randint(9,30):
+            if self.odpocet == 9:
                 self.vystrel = 1
                 self.odpocet -=3
             self.odpocet -=1

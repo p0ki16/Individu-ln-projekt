@@ -64,7 +64,7 @@ class Letadlo:
     def reset(self,nepritel,nepritel_vzduch1,nepritel_vzduch2):
         self.x = self.sirka * 1 / 4
         self.y = self.vyska / 2
-        nepritel.zivoty = 5
+        nepritel.zivoty = 10
         nepritel_vzduch1.zivoty_self = 30
         nepritel_vzduch2.zivoty_self = 30
         self.smrt = False
@@ -134,7 +134,7 @@ class Powerup:
             
             
             if self.smrt == False:
-                self.co_padlo = random.randint(1,4)
+                self.co_padlo = random.randint(1,3)
                 self.odpočet = 300
                 self.smrt = True
                 
@@ -143,7 +143,7 @@ class Powerup:
             screen.blit(shield,(letadlo.x-200, letadlo.y-200))
             
         elif self.co_padlo == 2:
-            self.firerate = 0
+            self.firerate = 0.5
              
         elif self.co_padlo == 3:
             self.odpočet +=0.9

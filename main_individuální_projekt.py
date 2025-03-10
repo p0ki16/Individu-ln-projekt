@@ -378,12 +378,7 @@ while True:
         vznepritel2.pohyb(nepritel.rychlost_pozadi)
         vznepritel2.zjev_se(obrazovka)
         vznepritel2.znic_se()
-        print(vznepritel2.poloha_x)
-        print(vznepritel2.poloha_y)
-        print("----------------------2")
-        print(vznepritel1.poloha_x)
-        print(vznepritel1.poloha_y)
-        print("----------------------1")
+        
         otočená_stíhačka = pygame.transform.rotate(Obchod.animace(fockerfox_animace,f_animace,myg_animace,1), letadlo.uhel)
         
         rect = otočená_stíhačka.get_rect(center=(letadlo.x, letadlo.y))
@@ -393,8 +388,10 @@ while True:
                 strela.zasah(nepritel,200,200,3,rect)
             if strela.zasazeni == False:
                 strela.zasah(nepritel,150,100,2,rect)
-                strela.zasah(vznepritel1,200,200,1,rect)
-                strela.zasah(vznepritel2,200,200,1,rect)
+                strela.zasah(vznepritel1,100,173,1,rect)
+                strela.zasah(vznepritel1,100,578,1,rect)
+                strela.zasah(vznepritel2,100,173,1,rect)
+                strela.zasah(vznepritel2,100,578,1,rect)
                 
             strela.move(nepritel.rychlost_pozadi)
             strela.draw(obrazovka, strela_image, vybuch_image,vybuch)
@@ -403,8 +400,11 @@ while True:
             
             if raketa.zasazeni == False:
                 raketa.zasah(nepritel,150,100,2)
-                raketa.zasah(vznepritel1,200,200,1) 
-                raketa.zasah(vznepritel2,200,200,1) 
+                
+                raketa.zasah(vznepritel1,173,578,1)
+                
+                raketa.zasah(vznepritel2,173,578,1) 
+               
             raketa.navádění(nepritel,obrazovka,Obchod.animace(Raketa_image,raketa3,raketa2,2),výška,nepritel.rychlost_pozadi,Obchod.presnost)
             raketa.draw(obrazovka, Obchod.animace(Raketa_image,raketa3,raketa2,2), vybuch_image,vybuch, nepritel.rychlost_pozadi)
             

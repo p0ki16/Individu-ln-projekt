@@ -91,7 +91,7 @@ class Nepritel_vzduch:
         self.kdo_vystrelil = 1
     def pohyb(self,pohyb_pozadí):
         if self.smrt == False:
-            self.poloha_x -= pohyb_pozadí - 1
+            self.poloha_x -= pohyb_pozadí - 8
             self.pohupovani += self.pohyb1
             self.poloha_y += self.pohyb1
             if self.pohupovani > 10 or self.pohupovani < 0:

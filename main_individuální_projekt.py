@@ -80,6 +80,7 @@ Lobby_image = pygame.image.load("Lobby.png")
 
 Button_leave = pygame.image.load("Button_back.png")
 
+bar =pygame.image.load("bar.png")
 
 button_play = pygame.image.load("button_play.png")  
 pozice_play = button_play.get_rect(topleft=(600, 100))
@@ -256,7 +257,8 @@ while True:
         # Poté vyplníme pozadí
 
         obrazovka.fill(pozadi_barva)
-        obrazovka.blit(pozadí,(0,0))
+        obrazovka.blit(pozadí,(0,558))
+        
         obrazovka.blit(Pohyblive_pozadi, (umisteni_pozadi1, výška - 100))
         obrazovka.blit(Pohyblive_pozadi, (umisteni_pozadi2, výška - 100))
         
@@ -339,7 +341,7 @@ while True:
             
             if keys[pygame.K_UP]:
                 letadlo.pohyb_nahoru(Obchod.obratnost)
-            nepritel.rychlost_pozadi =6   #počítání pohybu pod úhlem
+            nepritel.rychlost_pozadi =10   #počítání pohybu pod úhlem
             
                
             nepritel.rychlost_pozadi =-nepritel.rychlost_pozadi * math.sin(math.radians(letadlo.uhel-90))#90je zde k pootočení osy
@@ -356,8 +358,10 @@ while True:
             umisteni_pozadi1 = pohyb_pozadí % rozdil_pozadi
             umisteni_pozadi2 = (pohyb_pozadí % rozdil_pozadi) - rozdil_pozadi
         
+        
         obrazovka.fill(pozadi_barva)
         obrazovka.blit(pozadí,(0,558))
+        obrazovka.blit(bar,(abs(pohyb_pozadí)/50,0))
         obrazovka.blit(Pohyblive_pozadi, (umisteni_pozadi1, výška - 100))
         obrazovka.blit(Pohyblive_pozadi, (umisteni_pozadi2, výška - 100))
         
@@ -559,6 +563,7 @@ while True:
        
 
         obrazovka.fill(pozadi_barva)
+        obrazovka.blit(pozadí,(0,558))
         obrazovka.blit(Pohyblive_pozadi, (umisteni_pozadi1, výška - 100))
         obrazovka.blit(Pohyblive_pozadi, (umisteni_pozadi2, výška - 100))
         

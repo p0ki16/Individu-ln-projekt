@@ -72,12 +72,13 @@ class Letadlo:
 
         nepritel_vzduch1.smrt = False
         nepritel_vzduch1.uhel =0
-        nepritel_vzduch1.poloha_x = 1920
+        nepritel_vzduch1.poloha_x = 2500
         nepritel_vzduch1.poloha_y=500
         
         nepritel_vzduch2.smrt = False
         nepritel_vzduch2.uhel =0
-        nepritel_vzduch2.poloha_x = 2000
+        nepritel_vzduch2.poloha_x = 1920
+
         nepritel_vzduch2.poloha_y=300
 
         nepritel.poloha_x=1920

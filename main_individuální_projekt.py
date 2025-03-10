@@ -49,7 +49,7 @@ raketa_vystrel =[]
 # Inicializace Pygame
 obrazovka = pygame.display.set_mode((šířka, výška))
 pygame.display.set_caption("zkouška")
-pozadi_barva = (100, 100, 255)
+pozadi_barva = (20, 150, 255)
 loading_screen = pygame.image.load("loading_screen.png")
 obrazovka.blit(loading_screen,(0,0))
 
@@ -60,7 +60,7 @@ pygame.display.flip()
  #___________________________________________________________________________________________________________________________________________________________________________________________________________________
 Raketa_image = pygame.image.load('Raketa.png')
 
-
+pozadí = pygame.image.load("pozadí.png")
 Pohyblive_pozadi = pygame.image.load("Pozadí_pohyblivé.png")
 
 kanon13 = pygame.image.load("kanon_1l3.png")
@@ -207,6 +207,7 @@ while True:
     Obchod.peníze+=gained_money
     
     while Lobby:
+       
         text = f" money: {Obchod.peníze} "
         text_surface = font.render(text, True, text_color)
         text_rect = text_surface.get_rect(center=(500, 50))
@@ -253,7 +254,9 @@ while True:
         
         
         # Poté vyplníme pozadí
+
         obrazovka.fill(pozadi_barva)
+        obrazovka.blit(pozadí,(0,0))
         obrazovka.blit(Pohyblive_pozadi, (umisteni_pozadi1, výška - 100))
         obrazovka.blit(Pohyblive_pozadi, (umisteni_pozadi2, výška - 100))
         
@@ -354,6 +357,7 @@ while True:
             umisteni_pozadi2 = (pohyb_pozadí % rozdil_pozadi) - rozdil_pozadi
         
         obrazovka.fill(pozadi_barva)
+        obrazovka.blit(pozadí,(0,558))
         obrazovka.blit(Pohyblive_pozadi, (umisteni_pozadi1, výška - 100))
         obrazovka.blit(Pohyblive_pozadi, (umisteni_pozadi2, výška - 100))
         
@@ -388,10 +392,8 @@ while True:
                 strela.zasah(nepritel,200,200,3,rect)
             if strela.zasazeni == False:
                 strela.zasah(nepritel,150,100,2,rect)
-                strela.zasah(vznepritel1,100,173,1,rect)
-                strela.zasah(vznepritel1,100,578,1,rect)
-                strela.zasah(vznepritel2,100,173,1,rect)
-                strela.zasah(vznepritel2,100,578,1,rect)
+                strela.zasah(vznepritel1,173,578,1,rect)
+                strela.zasah(vznepritel2,173,578,1,rect)
                 
             strela.move(nepritel.rychlost_pozadi)
             strela.draw(obrazovka, strela_image, vybuch_image,vybuch)
@@ -401,9 +403,9 @@ while True:
             if raketa.zasazeni == False:
                 raketa.zasah(nepritel,150,100,2)
                 
-                raketa.zasah(vznepritel1,173,578,1)
+                raketa.zasah(vznepritel1,150,578,1)
                 
-                raketa.zasah(vznepritel2,173,578,1) 
+                raketa.zasah(vznepritel2,150,578,1) 
                
             raketa.navádění(nepritel,obrazovka,Obchod.animace(Raketa_image,raketa3,raketa2,2),výška,nepritel.rychlost_pozadi,Obchod.presnost)
             raketa.draw(obrazovka, Obchod.animace(Raketa_image,raketa3,raketa2,2), vybuch_image,vybuch, nepritel.rychlost_pozadi)

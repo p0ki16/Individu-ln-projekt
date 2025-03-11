@@ -1,6 +1,7 @@
 import random
 from strela import Strela
 import pygame
+import math
 class Nepritel_zem:
     
     def __init__(self, rychlost_pozadi, poloha_x, poloha_y, šířka, výška, vystrel,zivoty_self,surface,zivoty):
@@ -98,7 +99,17 @@ class Nepritel_vzduch:
                 self.pohyb1 *= -1
         else:
             self.poloha_x -= pohyb_pozadí
-            
+
+    def aiming(self,letadlo_ploha_y,letadlo_ploha_x):
+        strana_A = abs(letadlo_ploha_x-5 - self.poloha_x+50)
+        strana_B = abs(letadlo_ploha_y+110 - self.poloha_y)
+        
+        if self.poloha_y >=letadlo_ploha_y:
+            self.uhel_strely =  90+math.degrees(math.atan(strana_A/strana_B)) 
+
+        if self.poloha_y < letadlo_ploha_y:
+            self.uhel_strely = 90- math.degrees(math.atan(strana_A/strana_B))   
+
     def animace(self):
         self.vzhled_list = [pygame.transform.rotate(self.vzhled12,self.uhel), pygame.transform.rotate(self.vzhled22,self.uhel)]
         self.zmena -= 3

@@ -369,20 +369,24 @@ while True:
         vznepritel1.odpocet_do_vystrelu(vystrel)
         vznepritel2.odpocet_do_vystrelu(vystrel)
 
+        vznepritel1.aiming(letadlo.y,letadlo.x)
+
         if vznepritel1.vystrel  == 1:
            zasazeni = False
-           strela = Strela(vznepritel1.poloha_x-5, vznepritel1.poloha_y+110, 180, zasazeni,strela_image,0)
+           strela = Strela(vznepritel1.poloha_x-5, vznepritel1.poloha_y+110, vznepritel1.uhel_strely, zasazeni,strela_image,30)
            vystreleni.append(strela) 
 
         vznepritel1.pohyb(nepritel.rychlost_pozadi)
         vznepritel1.zjev_se(obrazovka)
         vznepritel1.znic_se()
 
+        vznepritel2.aiming(letadlo.y,letadlo.x)
+
         if vznepritel2.vystrel  == 1:
            zasazeni = False
-           strela = Strela(vznepritel2.poloha_x-5, vznepritel2.poloha_y+110, 180, zasazeni,strela_image,0)
+           strela = Strela(vznepritel2.poloha_x-5, vznepritel2.poloha_y+110, vznepritel2.uhel_strely, zasazeni,strela_image,30)
            vystreleni.append(strela) 
-
+        
         vznepritel2.pohyb(nepritel.rychlost_pozadi)
         vznepritel2.zjev_se(obrazovka)
         vznepritel2.znic_se()
@@ -394,7 +398,7 @@ while True:
             strela.just_spawned-=1
             if strela.zasazeni == False and strela.just_spawned<0 :
                 strela.zasah(nepritel,200,200,3,rect)
-            if strela.zasazeni == False:
+            
                 strela.zasah(nepritel,150,100,2,rect)
                 strela.zasah(vznepritel1,173,578,1,rect)
                 strela.zasah(vznepritel2,173,578,1,rect)
@@ -416,11 +420,21 @@ while True:
             raketa.draw(obrazovka, Obchod.animace(Raketa_image,raketa3,raketa2,2), vybuch_image,vybuch, nepritel.rychlost_pozadi)
             
         if nepritel.zivoty_self > 0:
-            pricteni =True
-            
+            pricteni1 =True
+        if vznepritel1.zivoty_self > 0:
+            pricteni2 =True
+        if vznepritel2.zivoty_self > 0:
+            pricteni3 =True
+
         if nepritel.zivoty_self < 0 and pricteni ==True:
             letadlo.skore+=1000 * powerup.bonus_ke_skore
             pricteni =False
+        if vznepritel1.zivoty_self < 0 and pricteni2 ==True:
+            letadlo.skore+=1000 * powerup.bonus_ke_skore
+            pricteni2 =False
+        if vznepritel2.zivoty_self < 0 and pricteni3 ==True:
+            letadlo.skore+=1000 * powerup.bonus_ke_skore
+            pricteni3 =False
                              
         
         

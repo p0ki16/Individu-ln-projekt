@@ -361,7 +361,7 @@ while True:
         
         obrazovka.fill(pozadi_barva)
         obrazovka.blit(pozadí,(0,558))
-        obrazovka.blit(bar,(abs(pohyb_pozadí)/50,0))
+        obrazovka.blit(bar,(abs(pohyb_pozadí)/30,0))
         obrazovka.blit(Pohyblive_pozadi, (umisteni_pozadi1, výška - 100))
         obrazovka.blit(Pohyblive_pozadi, (umisteni_pozadi2, výška - 100))
         
@@ -405,11 +405,12 @@ while True:
         for raketa in raketa_vystrel:
             
             if raketa.zasazeni == False:
-                raketa.zasah(nepritel,150,100,2)
+                
                 
                 raketa.zasah(vznepritel1,150,578,1)
                 
                 raketa.zasah(vznepritel2,150,578,1) 
+                raketa.zasah(nepritel,150,100,2)
                
             raketa.navádění(nepritel,obrazovka,Obchod.animace(Raketa_image,raketa3,raketa2,2),výška,nepritel.rychlost_pozadi,Obchod.presnost)
             raketa.draw(obrazovka, Obchod.animace(Raketa_image,raketa3,raketa2,2), vybuch_image,vybuch, nepritel.rychlost_pozadi)

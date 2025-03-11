@@ -25,7 +25,7 @@ class Strela:
             
             
             if self.zasazeni_letadla == True:
-                self.strela_x -= pohyb_země-5
+                self.strela_x -= pohyb_země-9
             else:
                 self.strela_x -= pohyb_země
             
@@ -58,6 +58,7 @@ class Strela:
             nepritel.zivoty_self -= 1
             self.zasazeni = True
             self.zasazeni_letadla = False
+
             if cojsem_trefil ==1:
                 self.zasazeni_letadla = True
 
@@ -77,16 +78,21 @@ class Raketa:
         self.délka_navádění = 100
         self.angle = 0
         self.spawn = 20
-    
+        self.zasazeni_letadla = False
     def move(self, pohyb_země,nepritel,výška,presnost):
         if self.raketa_y > 1080 - 20:  # 20 ke velikost výbuchu
             self.raketa_y = 1080
             self.spawn -= 1  # Použití atributu instance
-            self.raketa_x -= pohyb_země
+
             
         elif self.zasazeni == True:
-            self.spawn -= 1  # Použití atributu instance
-            self.raketa_x -= pohyb_země
+            self.spawn -= 1# Použití atributu instance
+            
+            
+            if self.zasazeni_letadla == True:
+                self.raketa_x -= pohyb_země-9
+            else:
+                self.raketa_x -= pohyb_země
             
         else:
             if self.délka_navádění > 0:
@@ -126,7 +132,12 @@ class Raketa:
             
                   
     def zasah(self, nepritel,rozmer_y,rozmer_x,cojsem_trefil):
+        
+
         if nepritel.poloha_x < self.raketa_x < nepritel.poloha_x + rozmer_x and \
            nepritel.poloha_y < self.raketa_y < nepritel.poloha_y + rozmer_y:  # hitbox
             nepritel.zivoty_self -= 10
             self.zasazeni = True
+            self.zasazeni_letadla = False
+            if cojsem_trefil == 1:
+                self.zasazeni_letadla = True

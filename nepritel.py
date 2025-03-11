@@ -122,7 +122,12 @@ class Nepritel_vzduch:
                 self.poloha_x -= 2
                 if self.uhel > -20:
                     self.uhel -=0.3
-            
+            elif self.smrt == True and self.poloha_x < -700:
+                self.smrt = False
+                self.poloha_x = 2000
+                self.poloha_y = random.randint(200,900)
+                self.uhel = 0
+                self.zivoty_self = 30
             else:
                 self.smrt = True
                 

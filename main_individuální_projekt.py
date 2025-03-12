@@ -373,7 +373,7 @@ while True:
 
         if vznepritel1.vystrel  == 1:
            zasazeni = False
-           strela = Strela(vznepritel1.poloha_x-5, vznepritel1.poloha_y+110, vznepritel1.uhel_strely, zasazeni,strela_image,30)
+           strela = Strela(vznepritel1.poloha_x-5, vznepritel1.poloha_y+110, vznepritel1.uhel_strely, zasazeni,strela_image,999)
            vystreleni.append(strela) 
 
         vznepritel1.pohyb(nepritel.rychlost_pozadi)
@@ -384,7 +384,7 @@ while True:
 
         if vznepritel2.vystrel  == 1:
            zasazeni = False
-           strela = Strela(vznepritel2.poloha_x-5, vznepritel2.poloha_y+110, vznepritel2.uhel_strely, zasazeni,strela_image,30)
+           strela = Strela(vznepritel2.poloha_x-5, vznepritel2.poloha_y+110, vznepritel2.uhel_strely, zasazeni,strela_image,999)
            vystreleni.append(strela) 
         
         vznepritel2.pohyb(nepritel.rychlost_pozadi)

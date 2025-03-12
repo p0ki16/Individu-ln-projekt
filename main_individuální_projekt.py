@@ -369,11 +369,11 @@ while True:
         
         if mise ==1:#rozlišení misí
             nepritel.nabíjení(obrazovka, kanon13, kanon23, kanon33 , kanon43, beam3l3,kanon_destroyed)
-            if nepritel.zivoty_self > 0:
-                pricteni1 =True
-            if nepritel.zivoty_self < 0 and pricteni1 ==True:
+            
+                
+            if nepritel.zivoty_self <= 0 and nepritel.pricti ==True:
                 letadlo.skore+=1000 * powerup.bonus_ke_skore
-                pricteni =False
+                nepritel.pricti = False
         else:    
             vznepritel1.odpocet_do_vystrelu(vystrel)
             vznepritel2.odpocet_do_vystrelu(vystrel)

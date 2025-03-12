@@ -15,7 +15,7 @@ class Nepritel_zem:
         self.test = 500
         self.zivoty = zivoty
         self.odecti1 = False
-
+        self.pricti = False
     def pohyb_kanonu(self):
         self.poloha_x -= self.rychlost_pozadi
         
@@ -71,6 +71,7 @@ class Nepritel_zem:
             self.respawn()
             self.test = 0
             self.odecti1=False
+            self.pricti = True
             
 class Nepritel_vzduch:
     

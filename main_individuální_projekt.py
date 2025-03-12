@@ -139,7 +139,7 @@ bomber12 =pygame.image.load("bomber22.png")
 
 powerup_image = pygame.image.load("powerup.png")
 shield = pygame.image.load("štít.png")
-
+enemy_base = pygame.image.load("enemy_base.png")
  #___________________________________________________________________________________________________________________________________________________________________________________________________________________
 
 
@@ -227,7 +227,7 @@ while True:
                    letadlo.reset(nepritel,vznepritel1,vznepritel2)
                    pohyb_pozadí=0
                    mise= random.randint(1,2)
-                   
+                   base_x = 3000
                     
                if pozice_shop.collidepoint(udalost.pos):  # Kontrola, zda kliknutí bylo na obrázku tlačítka
                     Lobby = False
@@ -374,6 +374,10 @@ while True:
             if nepritel.zivoty_self <= 0 and nepritel.pricti ==True:
                 letadlo.skore+=1000 * powerup.bonus_ke_skore
                 nepritel.pricti = False
+            if pohyb_pozadí < -38400:
+                base_x-=nepritel.rychlost_pozadi
+                obrazovka.blit(enemy_base,(base_x,0))
+
         else:    
             vznepritel1.odpocet_do_vystrelu(vystrel)
             vznepritel2.odpocet_do_vystrelu(vystrel)

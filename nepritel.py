@@ -101,14 +101,14 @@ class Nepritel_vzduch:
             self.poloha_x -= pohyb_pozadí
 
     def aiming(self,letadlo_ploha_y,letadlo_ploha_x):
-        strana_A = abs(letadlo_ploha_x-5 - self.poloha_x+200)
-        strana_B = abs(letadlo_ploha_y-110 - self.poloha_y+100)
+        strana_A = letadlo_ploha_x-5 - self.poloha_x
+        strana_B = letadlo_ploha_y-110 - self.poloha_y
         
         if self.poloha_y >=letadlo_ploha_y:
-            self.uhel_strely =  -1*90+math.degrees(math.atan(strana_A/strana_B)) 
+            self.uhel_strely =  90+math.degrees(math.atan(strana_A/strana_B)) 
 
         if self.poloha_y < letadlo_ploha_y:
-            self.uhel_strely = -1*90- math.degrees(math.atan(strana_A/strana_B))   
+            self.uhel_strely = -1*90+ math.degrees(math.atan(strana_A/strana_B))   
 
     def animace(self):
         self.vzhled_list = [pygame.transform.rotate(self.vzhled12,self.uhel), pygame.transform.rotate(self.vzhled22,self.uhel)]
@@ -150,7 +150,7 @@ class Nepritel_vzduch:
         if self.odpocet >30:
             self.strileni = True
             
-        if self.strileni:
+        if self.strileni and self.zivoty_self >0:
             self.vystrel = 0
             if self.odpocet == 3:
                 self.vystrel = 1
@@ -158,11 +158,11 @@ class Nepritel_vzduch:
             if self.odpocet == 6:
                 self.vystrel = 1
                 self.odpocet -=3
-            self.vystrel = 1
+            
             self.odpocet -=1
             self.kdo_vystrelil =2
         else:
-            self.vystrel = 1
+            self.vystrel = 0
 
             
         if self.odpocet < 0:

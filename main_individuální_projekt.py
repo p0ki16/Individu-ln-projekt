@@ -373,7 +373,7 @@ while True:
 
         if vznepritel1.vystrel  == 1:
            zasazeni = False
-           strela = Strela(vznepritel1.poloha_x-5, vznepritel1.poloha_y+110, vznepritel1.uhel_strely, zasazeni,strela_image,999)
+           strela = Strela(vznepritel1.poloha_x-5, vznepritel1.poloha_y+110, vznepritel1.uhel_strely, zasazeni,strela_image,10)
            vystreleni.append(strela) 
 
         vznepritel1.pohyb(nepritel.rychlost_pozadi)
@@ -384,7 +384,7 @@ while True:
 
         if vznepritel2.vystrel  == 1:
            zasazeni = False
-           strela = Strela(vznepritel2.poloha_x-5, vznepritel2.poloha_y+110, vznepritel2.uhel_strely, zasazeni,strela_image,999)
+           strela = Strela(vznepritel2.poloha_x-5, vznepritel2.poloha_y+110, vznepritel2.uhel_strely, zasazeni,strela_image,10)
            vystreleni.append(strela) 
         
         vznepritel2.pohyb(nepritel.rychlost_pozadi)
@@ -426,7 +426,7 @@ while True:
         if vznepritel2.zivoty_self > 0:
             pricteni3 =True
 
-        if nepritel.zivoty_self < 0 and pricteni ==True:
+        if nepritel.zivoty_self < 0 and pricteni1 ==True:
             letadlo.skore+=1000 * powerup.bonus_ke_skore
             pricteni =False
         if vznepritel1.zivoty_self < 0 and pricteni2 ==True:

@@ -62,7 +62,7 @@ Raketa_image = pygame.image.load('Raketa.png')
 
 pozadí = pygame.image.load("pozadí.png")
 Pohyblive_pozadi = pygame.image.load("Pozadí_pohyblivé.png")
-
+bomba_image = pygame.image.load("bomba.png")
 kanon13 = pygame.image.load("kanon_1l3.png")
 kanon23 = pygame.image.load("kanon_2l3.png")
 kanon33 = pygame.image.load("kanon_3l3.png")
@@ -228,6 +228,7 @@ while True:
                    pohyb_pozadí=0
                    mise= random.randint(1,2)
                    base_x = 3000
+                   bomba = 0
                     
                if pozice_shop.collidepoint(udalost.pos):  # Kontrola, zda kliknutí bylo na obrázku tlačítka
                     Lobby = False
@@ -240,7 +241,8 @@ while True:
                     Infinite_mode = True
                     letadlo.reset(nepritel,vznepritel1,vznepritel2)
                     pohyb_pozadí=0
-            
+                    base_x = 3000
+                    bomba = 0
         
         
                    
@@ -333,6 +335,7 @@ while True:
             if keys[pygame.K_SPACE] and firerate == 0:
                 firerate = Obchod.firerate * powerup.firerate  # Nastavení hodnoty delay
                 vystrel = 1
+
                 
             raketa_vystrelena = 0
             
@@ -343,7 +346,7 @@ while True:
             
             if keys[pygame.K_UP]:
                 letadlo.pohyb_nahoru(Obchod.obratnost)
-            nepritel.rychlost_pozadi =10   #počítání pohybu pod úhlem
+            nepritel.rychlost_pozadi =30  #počítání pohybu pod úhlem
             
                
             nepritel.rychlost_pozadi =-nepritel.rychlost_pozadi * math.sin(math.radians(letadlo.uhel-90))#90je zde k pootočení osy
@@ -367,17 +370,26 @@ while True:
         obrazovka.blit(Pohyblive_pozadi, (umisteni_pozadi1, výška - 100))
         obrazovka.blit(Pohyblive_pozadi, (umisteni_pozadi2, výška - 100))
         
-        if mise ==1:#rozlišení misí
+        if mise ==1 and pohyb_pozadí > -38400:#rozlišení misí
             nepritel.nabíjení(obrazovka, kanon13, kanon23, kanon33 , kanon43, beam3l3,kanon_destroyed)
             
                 
             if nepritel.zivoty_self <= 0 and nepritel.pricti ==True:
                 letadlo.skore+=1000 * powerup.bonus_ke_skore
                 nepritel.pricti = False
-            if pohyb_pozadí < -38400:
-                base_x-=nepritel.rychlost_pozadi
-                obrazovka.blit(enemy_base,(base_x,0))
 
+        elif pohyb_pozadí < -38400:
+            base_x-=nepritel.rychlost_pozadi
+            obrazovka.blit(enemy_base,(base_x,0))
+            if vystrel == 1 and bomba == 0 :
+                bomba = 1
+                bomba_x= letadlo.x -nepritel.rychlost_pozadi
+                bomba_y= letadlo.y -5
+            if bomba ==1:
+                bomba_x-=nepritel.rychlost_pozadi
+                bomba_y+= 5
+
+                obrazovka.blit(bomba_image, (bomba_x, bomba_y))
         else:    
             vznepritel1.odpocet_do_vystrelu(vystrel)
             vznepritel2.odpocet_do_vystrelu(vystrel)
@@ -392,7 +404,7 @@ while True:
             vznepritel1.pohyb(nepritel.rychlost_pozadi)
             vznepritel1.zjev_se(obrazovka)
             vznepritel1.znic_se()
-
+            
             vznepritel2.aiming(letadlo.y,letadlo.x)
 
             if vznepritel2.vystrel  == 1:

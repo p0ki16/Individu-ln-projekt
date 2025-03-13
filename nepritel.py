@@ -148,7 +148,7 @@ class Nepritel_vzduch:
         if self.strileni==False:
             self.odpocet+=1
             
-        if self.odpocet >30:
+        if self.odpocet >25:
             self.strileni = True
             
         if self.strileni and self.zivoty_self >0:

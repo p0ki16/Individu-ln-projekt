@@ -103,7 +103,7 @@ class Nepritel_vzduch:
 
     def aiming(self,letadlo_ploha_y,letadlo_ploha_x):
         strana_A = letadlo_ploha_x-5 - self.poloha_x
-        strana_B = letadlo_ploha_y-110 - self.poloha_y+50
+        strana_B = letadlo_ploha_y-110 - self.poloha_y+75
         
         if self.poloha_y >=letadlo_ploha_y:
             self.uhel_strely = 90+math.degrees(math.atan(strana_A/strana_B)) 

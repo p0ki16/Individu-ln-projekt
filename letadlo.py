@@ -64,7 +64,7 @@ class Letadlo:
     def reset(self,nepritel,nepritel_vzduch1,nepritel_vzduch2):
         self.x = self.sirka * 1 / 4
         self.y = self.vyska / 2
-        nepritel.zivoty = 9999
+        nepritel.zivoty = 19
         nepritel_vzduch1.zivoty_self = 30
         nepritel_vzduch2.zivoty_self = 30
         self.smrt = False

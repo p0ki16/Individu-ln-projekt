@@ -13,12 +13,13 @@ from Shop import Shop
 pygame.font.init()
 clock = pygame.time.Clock()
 font = pygame.font.SysFont('Arial', 48)
-
-
+barva =0
+delay_do_konce=1
 text_color = (0, 0, 0)
 
-
-
+obrazek_y=0
+obrazek_x=620
+bomba_y = 0
 firerate = 0
 
 
@@ -59,7 +60,7 @@ pygame.display.flip()
 # Načtení obrázků
  #___________________________________________________________________________________________________________________________________________________________________________________________________________________
 Raketa_image = pygame.image.load('Raketa.png')
-
+atom = pygame.image.load('atom_výbuch.png')
 pozadí = pygame.image.load("pozadí.png")
 Pohyblive_pozadi = pygame.image.load("Pozadí_pohyblivé.png")
 bomba_image = pygame.image.load("bomba.png")
@@ -77,6 +78,7 @@ beam3l3 = pygame.image.load("beam.png")
 vybuch = pygame.image.load("výbuch.png")
 
 Lobby_image = pygame.image.load("Lobby.png")
+wintext = pygame.image.load("win_text.png")
 
 Button_leave = pygame.image.load("Button_back.png")
 
@@ -140,6 +142,7 @@ bomber12 =pygame.image.load("bomber22.png")
 powerup_image = pygame.image.load("powerup.png")
 shield = pygame.image.load("štít.png")
 enemy_base = pygame.image.load("enemy_base.png")
+atom = pygame.image.load("atom_výbuch.png")
  #___________________________________________________________________________________________________________________________________________________________________________________________________________________
 
 
@@ -181,7 +184,6 @@ main_buttony = {
     
 
     }
-
 
 
 
@@ -229,7 +231,8 @@ while True:
                    mise= random.randint(1,2)
                    base_x = 3000
                    bomba = 0
-                    
+                   bomba_y =0  
+                   delay_do_konce=1
                if pozice_shop.collidepoint(udalost.pos):  # Kontrola, zda kliknutí bylo na obrázku tlačítka
                     Lobby = False
                     shop = True
@@ -243,6 +246,7 @@ while True:
                     pohyb_pozadí=0
                     base_x = 3000
                     bomba = 0
+                    delay_do_konce=1
         
         
                    
@@ -293,7 +297,7 @@ while True:
             strela_x = letadlo.x + 17
             strela_y = letadlo.y + 17
             zasazeni = False
-            strela = Strela(strela_x, strela_y, letadlo.uhel, zasazeni,strela_image,20)    
+            strela = Strela(strela_x, strela_y, letadlo.uhel, zasazeni,strela_image,10)    
             vystreleni.append(strela)
         vystrel = 0 
           
@@ -346,7 +350,7 @@ while True:
             
             if keys[pygame.K_UP]:
                 letadlo.pohyb_nahoru(Obchod.obratnost)
-            nepritel.rychlost_pozadi =30  #počítání pohybu pod úhlem
+            nepritel.rychlost_pozadi =10  #počítání pohybu pod úhlem
             
                
             nepritel.rychlost_pozadi =-nepritel.rychlost_pozadi * math.sin(math.radians(letadlo.uhel-90))#90je zde k pootočení osy
@@ -386,16 +390,23 @@ while True:
                 bomba_x= letadlo.x -nepritel.rychlost_pozadi
                 bomba_y= letadlo.y -5
             if bomba ==1:
-                bomba_x-=nepritel.rychlost_pozadi
+                bomba_x-=nepritel.rychlost_pozadi-4
                 bomba_y+= 5
 
                 obrazovka.blit(bomba_image, (bomba_x, bomba_y))
+
+       
+    
         else:    
             vznepritel1.odpocet_do_vystrelu(vystrel)
             vznepritel2.odpocet_do_vystrelu(vystrel)
 
             vznepritel1.aiming(letadlo.y,letadlo.x)
-
+        
+        
+             
+            
+    
             if vznepritel1.vystrel  == 1:
                 zasazeni = False
                 strela = Strela(vznepritel1.poloha_x-5, vznepritel1.poloha_y+110, vznepritel1.uhel_strely, zasazeni,strela_image,10)
@@ -456,20 +467,38 @@ while True:
                
             raketa.navádění(nepritel,obrazovka,Obchod.animace(Raketa_image,raketa3,raketa2,2),výška,nepritel.rychlost_pozadi,Obchod.presnost)
             raketa.draw(obrazovka, Obchod.animace(Raketa_image,raketa3,raketa2,2), vybuch_image,vybuch, nepritel.rychlost_pozadi)
+        
+        if bomba_y > 900:
+             letadlo.uhel = 0
+             obrazovka.fill((barva,barva,barva))
+             if barva<255:
+                barva+=3
+                  
 
+             if obrazek_y<620:
+                obrazek_y+=5
+                y_pos = výška - obrazek_y   
+             delay_do_konce+=1      
+             atom1=pygame.transform.scale(atom,(obrazek_x,obrazek_y))
+             obrazovka.blit(atom1, (540, y_pos))
+             obrazovka.blit(wintext, (491, 110))
+
+             if delay_do_konce == 300:
+                 play = False
+                 Lobby = True
+        else:
+    
+    
+                            
+    
+    
+        
+            powerup.touch(letadlo,shield,obrazovka,rect)
+            powerup.pohyb(nepritel.rychlost_pozadi)
+            powerup.spawn(obrazovka)
             
-        
-       
-                             
-        
-        
-        
-        powerup.touch(letadlo,shield,obrazovka,rect)
-        powerup.pohyb(nepritel.rychlost_pozadi)
-        powerup.spawn(obrazovka)
-        
-        obrazovka.blit(otočená_stíhačka, rect.topleft)
-        obrazovka.blit(text_surface, text_rect)
+            obrazovka.blit(otočená_stíhačka, rect.topleft)
+            obrazovka.blit(text_surface, text_rect)
         
         
         

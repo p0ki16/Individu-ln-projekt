@@ -350,7 +350,7 @@ while True:
             
             if keys[pygame.K_UP]:
                 letadlo.pohyb_nahoru(Obchod.obratnost)
-            nepritel.rychlost_pozadi =10  #počítání pohybu pod úhlem
+            nepritel.rychlost_pozadi =50  #počítání pohybu pod úhlem
             
                
             nepritel.rychlost_pozadi =-nepritel.rychlost_pozadi * math.sin(math.radians(letadlo.uhel-90))#90je zde k pootočení osy
@@ -382,10 +382,10 @@ while True:
                 letadlo.skore+=1000 * powerup.bonus_ke_skore
                 nepritel.pricti = False
 
-        elif pohyb_pozadí < -39500:
+        elif pohyb_pozadí < -38000:
             base_x-=nepritel.rychlost_pozadi
             obrazovka.blit(enemy_base,(base_x,0))
-            if vystrel == 1 and bomba == 0 and pohyb_pozadí <41000:
+            if vystrel == 1 and bomba == 0 and pohyb_pozadí <-41000  :
                 bomba = 1
                 bomba_x= letadlo.x -nepritel.rychlost_pozadi
                 bomba_y= letadlo.y -5

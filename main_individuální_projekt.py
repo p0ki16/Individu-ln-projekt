@@ -376,13 +376,13 @@ while True:
         
         if mise ==1 and pohyb_pozadí > -38400:#rozlišení misí
             nepritel.nabíjení(obrazovka, kanon13, kanon23, kanon33 , kanon43, beam3l3,kanon_destroyed)
-            
+            zaměření_na=nepritel
                 
             if nepritel.zivoty_self <= 0 and nepritel.pricti ==True:
                 letadlo.skore+=1000 * powerup.bonus_ke_skore
                 nepritel.pricti = False
 
-        elif pohyb_pozadí < -38400:
+        elif pohyb_pozadí < -39500:
             base_x-=nepritel.rychlost_pozadi
             obrazovka.blit(enemy_base,(base_x,0))
             if vystrel == 1 and bomba == 0 :
@@ -397,7 +397,7 @@ while True:
 
        
     
-        else:    
+        else:    #mise 2 
             vznepritel1.odpocet_do_vystrelu(vystrel)
             vznepritel2.odpocet_do_vystrelu(vystrel)
 
@@ -439,7 +439,12 @@ while True:
             if vznepritel2.zivoty_self < 0 and pricteni3 ==True:
                 letadlo.skore+=1000 * powerup.bonus_ke_skore
                 pricteni3 =False
-        
+
+            if vznepritel1.poloha_x < vznepritel2.poloha_x:
+                zaměření_na = vznepritel1
+            else:
+                zaměření_na = vznepritel2
+
         otočená_stíhačka = pygame.transform.rotate(Obchod.animace(fockerfox_animace,f_animace,myg_animace,1), letadlo.uhel)
         
         rect = otočená_stíhačka.get_rect(center=(letadlo.x, letadlo.y))
@@ -465,7 +470,7 @@ while True:
                 raketa.zasah(vznepritel2,150,578,1) 
                 raketa.zasah(nepritel,150,100,2)
                
-            raketa.navádění(nepritel,obrazovka,Obchod.animace(Raketa_image,raketa3,raketa2,2),výška,nepritel.rychlost_pozadi,Obchod.presnost)
+            raketa.navádění(zaměření_na,obrazovka,Obchod.animace(Raketa_image,raketa3,raketa2,2),výška,nepritel.rychlost_pozadi,Obchod.presnost)
             raketa.draw(obrazovka, Obchod.animace(Raketa_image,raketa3,raketa2,2), vybuch_image,vybuch, nepritel.rychlost_pozadi)
         
         if bomba_y > 900:

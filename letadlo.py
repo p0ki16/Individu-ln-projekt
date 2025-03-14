@@ -135,12 +135,12 @@ class Powerup:
             
             
             if self.smrt == False:
-                self.co_padlo = random.randint(1,3)
+                self.co_padlo = random.randint(1,4)
                 self.odpočet = 300
                 self.smrt = True
                 
         if self.co_padlo == 1 and self.odpočet >0:
-            self.zivoty = 5
+            self.zivoty = 18
             screen.blit(shield,(letadlo.x-200, letadlo.y-200))
             
         elif self.co_padlo == 2:
@@ -151,7 +151,7 @@ class Powerup:
             self.bonus_ke_skore = 2
             
         elif self.co_padlo == 4 and self.odpočet >0:
-            self.zivoty = 1
+            self.zivoty = 18
             
         self.odpočet-=1
         

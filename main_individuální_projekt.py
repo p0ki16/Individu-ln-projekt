@@ -385,7 +385,7 @@ while True:
         elif pohyb_pozadí < -39500:
             base_x-=nepritel.rychlost_pozadi
             obrazovka.blit(enemy_base,(base_x,0))
-            if vystrel == 1 and bomba == 0 :
+            if vystrel == 1 and bomba == 0 and pohyb_pozadí <41000:
                 bomba = 1
                 bomba_x= letadlo.x -nepritel.rychlost_pozadi
                 bomba_y= letadlo.y -5

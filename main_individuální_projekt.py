@@ -682,8 +682,8 @@ while True:
             
             if raketa.zasazeni == False:
                 raketa.zasah(nepritel,150,100,2)
-            raketa.navádění(nepritel,obrazovka,Obchod.animace(Raketa_image,raketa3,raketa2,2),výška,nepritel.rychlost_pozadi,Obchod.presnost)
-            raketa.draw(obrazovka, Obchod.animace(Raketa_image,raketa3,raketa2,2), vybuch_image,vybuch, nepritel.rychlost_pozadi)
+            raketa.navádění(zaměření_na,obrazovka,Obchod.animace(Raketa1,Raketa2,Raketa3,2),výška,nepritel.rychlost_pozadi,Obchod.presnost)
+            raketa.draw(obrazovka, Obchod.animace(Raketa1,Raketa2,Raketa3,2), vybuch_image,vybuch, nepritel.rychlost_pozadi)
             
         if nepritel.zivoty_self > 0:
             pricteni =True

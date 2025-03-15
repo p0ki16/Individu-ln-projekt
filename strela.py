@@ -115,7 +115,7 @@ class Raketa:
             self.raketa_x += math.cos(self.angle) * 6
             self.raketa_y += math.sin(self.angle) * presnost
             self.raketa_x-= pohyb_země
-            self.raketa_x+=7 # aby raketa necouvala a to + 7  je něco jako šance  kterou má raketa trefit cíl
+            self.raketa_x+=15 # aby raketa necouvala a to + 7  je něco jako šance  kterou má raketa trefit cíl
 
     def navádění(self, nepritel, screen, raketa, výška, pohyb_země,presnost):
         self.move(pohyb_země,nepritel,výška,presnost)

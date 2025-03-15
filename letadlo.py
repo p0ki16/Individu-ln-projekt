@@ -135,7 +135,7 @@ class Powerup:
             
             
             if self.smrt == False:
-                self.co_padlo = 2
+                self.co_padlo = random.randint(1,3)
                 self.odpočet = 300
                 self.smrt = True
                 

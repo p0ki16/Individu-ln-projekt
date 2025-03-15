@@ -135,7 +135,7 @@ class Powerup:
             
             
             if self.smrt == False:
-                self.co_padlo = random.randint(1,4)
+                self.co_padlo = 2
                 self.odpočet = 300
                 self.smrt = True
                 
@@ -150,8 +150,7 @@ class Powerup:
             self.odpočet +=0.9
             self.bonus_ke_skore = 2
             
-        elif self.co_padlo == 4 and self.odpočet >0:
-            self.zivoty = 18
+        
             
         self.odpočet-=1
         
@@ -160,6 +159,7 @@ class Powerup:
             self.firerate=1
             self.odpočet =0
             self.bonus_ke_skore = 1 
+            self.co_padlo = 0
            
         
     

@@ -24,7 +24,7 @@ class Shop:
         self.letadlo_owned =0
         self.raketa_owned =0
         
-        
+        self.rychlost = 10
         self.firerate = 20
         self.zivoty = 5
         
@@ -34,7 +34,7 @@ class Shop:
         screen.blit(self.image,(0,0))
         screen.blit(self.main_buttony["letadla"],self.main_buttony["pozice_letadla"])
         screen.blit(self.main_buttony["rakety"],self.main_buttony["pozice_rakety"])
-        screen.blit(self.main_buttony["upgrady"],self.main_buttony["pozice_upgrady"])
+        
         
         
     def choose(self,event,screen):
@@ -62,7 +62,7 @@ class Shop:
                         self.obratnost = 4
                         self.firerate = 10
                         self.zivoty = 7
-                        
+                        self.rychlost = 20
                     elif self.peníze >= 2000:
                         self.peníze-=2000
                         self.chosen_letadlo = 2
@@ -76,7 +76,7 @@ class Shop:
                         self.obratnost = 3
                         self.firerate = 16
                         self.zivoty = 6
-                        
+                        self.rychlost = 15
                     elif self.peníze >= 1000:
                         self.peníze-=1000
                         self.chosen_letadlo = 1
@@ -88,7 +88,7 @@ class Shop:
                     self.obratnost = 2.5
                     self.firerate = 20
                     self.zivoty = 5
-                    
+                    self.rychlost = 10
             if self.letadlo_owned < self.chosen_letadlo: # funkce pro vlastnění letadlo čím nižší číslo tím více toho vlastním
                 self.letadlo_owned = self.chosen_letadlo
                
@@ -136,22 +136,7 @@ class Shop:
                     
                 
                
-            if self.main_buttony["pozice_upgrady"].collidepoint(event.pos):
-                self.option1 = self.main_buttony["f_button"]
-                self.option2 = self.main_buttony["myg_button"]
-                self.option3 = self.main_buttony["fockerfox_button"]
-                self.moznost = 3
-                
-            if self.moznost == 3:
-                
-                if self.main_buttony["pozice_buttonu1"].collidepoint(event.pos) :                
-                    self.chosen_letadlo = 2
-                    
-                elif self.main_buttony["pozice_buttonu2"].collidepoint(event.pos):
-                    self.chosen_letadlo = 1            
-                    
-                elif  self.main_buttony["pozice_buttonu3"].collidepoint(event.pos) :
-                    self.chosen_letadlo = 0
+            
          
                 
         screen.blit(self.option1,self.main_buttony["pozice_buttonu1"])
@@ -178,7 +163,7 @@ class Shop:
             return  self.list_animací[self.chosen_letadlo][self.animace1]
         
         if wanted == 2:   
-            return  self.list_animací[self.chosen_raketa]
+            return  self.list_animací[self.chosen_raketa][self.animace1]
         
     def opustit_shop(self,screen,back_button,event):
         

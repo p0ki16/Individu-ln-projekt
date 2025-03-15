@@ -3,7 +3,7 @@ import math
 import random
 class Strela:
     
-    def __init__ (self, strela_x, strela_y, angle_kanon, zasazeni,image_strela,just_spawned):
+    def __init__ (self, strela_x, strela_y, angle_kanon, zasazeni,image_strela,just_spawned,damage):
         self.strela_x = strela_x
         self.strela_y = strela_y
         self.angle_kanon = angle_kanon
@@ -12,8 +12,10 @@ class Strela:
         self.zasazeni_letadla = False
         self.vybuch_x=0
         self.zmena=0
+        self.vzhled = image_strela
         self.Strela_rect = image_strela.get_rect(topleft=( self.strela_x,self.strela_y))
         self.just_spawned = just_spawned
+        self.damage = damage
     def move(self, pohyb_země):
         if self.strela_y > 1080 - 20:  # 20 ke velikost výbuchu
             self.strela_y = 1080
@@ -55,7 +57,7 @@ class Strela:
         if nepritel.poloha_x < self.strela_x < nepritel.poloha_x + rozmer_x and \
            nepritel.poloha_y < self.strela_y < nepritel.poloha_y + rozmer_y:  # hitbox
             
-            nepritel.zivoty_self -= 1
+            nepritel.zivoty_self -= self.damage
             self.zasazeni = True
             self.zasazeni_letadla = False
 
@@ -64,7 +66,7 @@ class Strela:
 
         if self.Strela_rect.colliderect(enemy_rect):
             if cojsem_trefil == 3:
-                nepritel.zivoty-=1
+                nepritel.zivoty-= self.damage
                 self.zasazeni = True
             
             

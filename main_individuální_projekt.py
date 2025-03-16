@@ -222,7 +222,7 @@ play=False
 
 
 #y Vytvoření instancí tříd
-letadlo = Letadlo(hrac_x, hrac_y, šířka, výška, 999999, uhel, smrt, 0, 0, vystrel, angle_kanon)
+letadlo = Letadlo(hrac_x, hrac_y, šířka, výška, 6, uhel, smrt, 0, 0, vystrel, angle_kanon)
 nepritel = Nepritel_zem(rychlost_pozadi, poloha_x, poloha_y, šířka, výška, vystrel, zivoty_nepritel, obrazovka, zivoty)
 Obchod = Shop(main_buttony,shop_image)
 vznepritel1 = Nepritel_vzduch(600,500,30,bomber11,bomber12)
@@ -267,7 +267,7 @@ while True:
                if pozice_infinity.collidepoint(udalost.pos):  # Kontrola, zda kliknutí bylo na obrázku tlačítka
                     Lobby = False
                     Infinite_mode = True
-                    letadlo.reset(nepritel,vznepritel1,vznepritel2)
+                    letadlo.reset(nepritel,vznepritel1,vznepritel2,nepritel.zivoty)
                     pohyb_pozadí=0
                     base_x = 3000
                     bomba = 0
@@ -590,7 +590,8 @@ while True:
             strela_x = letadlo.x + 17
             strela_y = letadlo.y + 17
             zasazeni = False
-            strela = Strela(strela_x, strela_y, letadlo.uhel, zasazeni,strela_image,20)
+            strela = Strela(strela_x, strela_y, letadlo.uhel, zasazeni,strela_image,20,1)
+            
             vystreleni.append(strela)
             
         for j in range(raketa_vystrelena):
@@ -674,7 +675,7 @@ while True:
             
         
        
-
+        zaměření_na=nepritel     
         obrazovka.fill(pozadi_barva)
         obrazovka.blit(pozadí,(0,558))
         obrazovka.blit(Pohyblive_pozadi, (umisteni_pozadi1, výška - 100))

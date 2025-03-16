@@ -104,11 +104,11 @@ class Powerup:
         self.zivoty = 0
         self.zmena =0
         self.rect_powerupu = balicky.get_rect(topleft=(self.poloha_x,self.poloha_y))
-    def spawn(self,surface):
+    def spawn(self,surface,cekani_na_spawn):
         
         self.cekani_na_spawn +=1
         
-        if self.cekani_na_spawn >1000:
+        if self.cekani_na_spawn >cekani_na_spawn:
             self.poloha_x =1200
             self.poloha_y =-80
             self.cekani_na_spawn =0

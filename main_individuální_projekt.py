@@ -32,7 +32,7 @@ výška, šířka = 1080, 1920
 hrac_x = šířka * 1 / 5
 hrac_y = výška / 2
 
-zivoty = 9999999
+zivoty = 6
 zivoty_nepritel = 20
 uhel = 1
 
@@ -539,7 +539,7 @@ while True:
         
             powerup.touch(letadlo,shield,obrazovka,rect,nepritel.zivoty,xskóre,health_power_up,firerate_boom1,firerate_boom2)
             powerup.pohyb(nepritel.rychlost_pozadi)
-            powerup.spawn(obrazovka)
+            powerup.spawn(obrazovka,1000)
             
             obrazovka.blit(otočená_stíhačka, rect.topleft)
             obrazovka.blit(text_surface, text_rect)
@@ -580,43 +580,49 @@ while True:
 
         #___________________________________________________________________________________________________________________________________________________________________________________________________________________ 
     while Infinite_mode:
-        
-        text = f" skóre: {letadlo.skore} počet raket :{letadlo.pocet_raket} životy:{nepritel.zivoty} "
+        mise = 1
+        text = f" SKÓRE: {letadlo.skore}                            :{letadlo.pocet_raket} "
         text_surface = font.render(text, True, text_color)
-        text_rect = text_surface.get_rect(center=(500, 50))
+        text_rect = text_surface.get_rect(center=(300, 110))
+        
         
         
         for i in range(vystrel):
             strela_x = letadlo.x + 17
             strela_y = letadlo.y + 17
             zasazeni = False
-            strela = Strela(strela_x, strela_y, letadlo.uhel, zasazeni,strela_image,20,1)
+            strela = Strela(strela_x, strela_y, letadlo.uhel, zasazeni,strela_image,25,1)
             
+            if powerup.co_padlo == 2:
+                   
+                     
+                    strela = 0
+                    strela = Strela(strela_x, strela_y, letadlo.uhel, zasazeni,strela_image2,25,5)
             vystreleni.append(strela)
-            
+        vystrel = 0 
+          
+        #
         for j in range(raketa_vystrelena):
             Raketa_x = letadlo.x
             Raketa_y = letadlo.y
             zasazeni = False
             raketa = Raketa(Raketa_x, Raketa_y, zasazeni)
             raketa_vystrel.append(raketa)
-            
-            
+                        
         for udalost in pygame.event.get():
                 if udalost.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
         if letadlo.y > 1080:
             nepritel.zivoty=0
-          
+            
+        if powerup.odpočet >0 and powerup.zivoty !=0:
+            
+            nepritel.zivoty  =powerup.zivoty
         
         if nepritel.zivoty >= 1:
                 
-         
-        
-            
-            
-           
+
             keys = pygame.key.get_pressed()
             if keys[pygame.K_DOWN]:
                 letadlo.pohyb_dolu(Obchod.obratnost)
@@ -629,10 +635,11 @@ while True:
             if firerate_rakety > 0:  # Delay mezi raketami
                 firerate_rakety -= 1
                 
-            vystrel = 0    
+             
             if keys[pygame.K_SPACE] and firerate == 0:
-                firerate = Obchod.firerate  # Nastavení hodnoty delay
+                firerate = Obchod.firerate * powerup.firerate  # Nastavení hodnoty delay
                 vystrel = 1
+
                 
             raketa_vystrelena = 0
             
@@ -643,79 +650,107 @@ while True:
             
             if keys[pygame.K_UP]:
                 letadlo.pohyb_nahoru(Obchod.obratnost)
-            nepritel.rychlost_pozadi =6   #počítání pohybu pod úhlem
+            nepritel.rychlost_pozadi =Obchod.rychlost #očítání pohybu pod úhlem
             
                
             nepritel.rychlost_pozadi =-nepritel.rychlost_pozadi * math.sin(math.radians(letadlo.uhel-90))#90je zde k pootočení osy
-            
-            
-                
+                           
         else:
             letadlo.znic_se(Lobby,Infinite_mode)
             if  letadlo.znic_se(Lobby,Infinite_mode):
                 Lobby = True
-                Infinite_mode = False 
-                
-            
-        
-        
-            
-            
+                play = False 
+                vystreleni=[]   
         if letadlo.smrt == False:  # Kontrola jestli letadlo žije
             nepritel.pohyb_kanonu()
             pohyb_pozadí -= nepritel.rychlost_pozadi
             umisteni_pozadi1 = pohyb_pozadí % rozdil_pozadi
             umisteni_pozadi2 = (pohyb_pozadí % rozdil_pozadi) - rozdil_pozadi
-       
-            
-            
-            
-            
         
-            
         
-       
-        zaměření_na=nepritel     
         obrazovka.fill(pozadi_barva)
         obrazovka.blit(pozadí,(0,558))
+        
+        obrazovka.blit(health_bar2,(health_bar2x,health_bar2y))
+        obrazovka.blit(health_bar,(nepritel.zivoty*100-1920,0))
+        if nepritel.zivoty*100-1920 < health_bar2x:
+            health_bar2x-=3
+        
         obrazovka.blit(Pohyblive_pozadi, (umisteni_pozadi1, výška - 100))
         obrazovka.blit(Pohyblive_pozadi, (umisteni_pozadi2, výška - 100))
-        
+       
         nepritel.nabíjení(obrazovka, kanon13, kanon23, kanon33 , kanon43, beam3l3,kanon_destroyed)
+        zaměření_na=nepritel
+            
+        if nepritel.zivoty_self <= 0 and nepritel.pricti ==True:
+            letadlo.skore+=1000 * powerup.bonus_ke_skore
+            nepritel.pricti = False
+
+        
 
         otočená_stíhačka = pygame.transform.rotate(Obchod.animace(fockerfox_animace,f_animace,myg_animace,1), letadlo.uhel)
         
         rect = otočená_stíhačka.get_rect(center=(letadlo.x, letadlo.y))
-        
         for strela in vystreleni:
+            strela.just_spawned-=1
+            if strela.zasazeni == False and strela.just_spawned<0 :
+                strela.zasah(nepritel,200,200,3,rect)
             
-            if strela.zasazeni == False :
                 strela.zasah(nepritel,150,100,2,rect)
                 
+                strela.zasah(vznepritel1,173,578,1,rect)
+                strela.zasah(vznepritel2,173,578,1,rect)
+
+            strela.draw(obrazovka, strela.vzhled, vybuch_image,vybuch)    
             strela.move(nepritel.rychlost_pozadi)
-            strela.draw(obrazovka, strela_image, vybuch_image,vybuch)
+            strela.draw(obrazovka, strela.vzhled, vybuch_image,vybuch)
             
         for raketa in raketa_vystrel:
             
             if raketa.zasazeni == False:
+                
+                
+                raketa.zasah(vznepritel1,150,578,1)
+                
+                raketa.zasah(vznepritel2,150,578,1) 
                 raketa.zasah(nepritel,150,100,2)
+               
             raketa.navádění(zaměření_na,obrazovka,Obchod.animace(Raketa1,Raketa2,Raketa3,2),výška,nepritel.rychlost_pozadi,Obchod.presnost)
             raketa.draw(obrazovka, Obchod.animace(Raketa1,Raketa2,Raketa3,2), vybuch_image,vybuch, nepritel.rychlost_pozadi)
-            
-        if nepritel.zivoty_self > 0:
-            pricteni =True
-            
-        if nepritel.zivoty_self < 0 and pricteni ==True:
-            letadlo.skore+=1000
-            pricteni =False
-                
-            
-                
         
+        if bomba_y > 900:
+             letadlo.uhel = 0
+             obrazovka.fill((barva,barva,barva))
+             if barva<255:
+                barva+=3
+                  
+
+             if obrazek_y<620:
+                obrazek_y+=5
+                y_pos = výška - obrazek_y   
+             delay_do_konce+=1      
+             atom1=pygame.transform.scale(atom,(obrazek_x,obrazek_y))
+             obrazovka.blit(atom1, (540, y_pos))
+             obrazovka.blit(wintext, (491, 110))
+
+             if delay_do_konce == 300:
+                 Infinite_mode = False
+                 Lobby = True
+        else:
+    
+    
+                            
+    
+    
         
-       
-        obrazovka.blit(otočená_stíhačka, rect.topleft)
-        obrazovka.blit(text_surface, text_rect)
+            powerup.touch(letadlo,shield,obrazovka,rect,nepritel.zivoty,xskóre,health_power_up,firerate_boom1,firerate_boom2)
+            powerup.pohyb(nepritel.rychlost_pozadi)
+            powerup.spawn(obrazovka,1000)
+            
+            obrazovka.blit(otočená_stíhačka, rect.topleft)
+            obrazovka.blit(text_surface, text_rect)
+            obrazovka.blit(bar_raketa, (350,95))
+        
         
         letadlo.neutíkej()
         pygame.display.flip()

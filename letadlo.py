@@ -61,10 +61,10 @@ class Letadlo:
         if self.y < -500:
             self.uhel = 360-self.uhel
             
-    def reset(self,nepritel,nepritel_vzduch1,nepritel_vzduch2):
+    def reset(self,nepritel,nepritel_vzduch1,nepritel_vzduch2,zivoty):
         self.x = self.sirka * 1 / 4
         self.y = self.vyska / 2
-        nepritel.zivoty = 19
+        nepritel.zivoty = zivoty
         nepritel_vzduch1.zivoty_self = 30
         nepritel_vzduch2.zivoty_self = 30
         self.smrt = False
@@ -102,6 +102,7 @@ class Powerup:
         self.bonus_ke_skore = 1
         self.co_padlo = 0
         self.zivoty = 0
+        self.zmena =0
         self.rect_powerupu = balicky.get_rect(topleft=(self.poloha_x,self.poloha_y))
     def spawn(self,surface):
         
@@ -129,30 +130,49 @@ class Powerup:
             
         
             self.poloha_y += 1
-    def touch(self,letadlo,shield,screen,letadlo_rect):
+    def touch(self,letadlo,shield,screen,letadlo_rect,zivoty,skoredoubler,srdce,insane1,insane2):
         self.rect_powerupu.topleft = (self.poloha_x, self.poloha_y)
         if  self.rect_powerupu.colliderect(letadlo_rect):
             
             
             if self.smrt == False:
-                self.co_padlo = random.randint(1,3)
+                self.co_padlo = random.randint(1,4)
+                self.idk =zivoty
                 self.odpočet = 300
                 self.smrt = True
                 
         if self.co_padlo == 1 and self.odpočet >0:
-            self.zivoty = 18
+            self.zivoty = self.idk 
             screen.blit(shield,(letadlo.x-200, letadlo.y-200))
+            self.odpočet -=1
             
         elif self.co_padlo == 2:
             self.firerate = 0.5
+
+            self.zmena -=1
+        
+            if self.zmena>5:
+                screen.blit(insane1,(letadlo.x-200, letadlo.y-200))
+            else:
+                screen.blit(insane2,(letadlo.x-200, letadlo.y-200))
+            if self.zmena <0:
+                self.zmena =10
+            self.odpočet -=1
+
              
         elif self.co_padlo == 3:
-            self.odpočet +=0.9
+            self.odpočet -=0.1
             self.bonus_ke_skore = 2
+            screen.blit(skoredoubler,(letadlo.x-200, letadlo.y-200))
+
+        elif self.co_padlo == 4 and self.odpočet >0:
+             self.zivoty = self.idk+1 
+             screen.blit(srdce,(letadlo.x-200, letadlo.y-200))
+             self.odpočet-=50
             
         
             
-        self.odpočet-=1
+        
         
         if self.odpočet < 0:
             self.zivoty = 0

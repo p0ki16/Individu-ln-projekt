@@ -1,4 +1,5 @@
      # Importy a inicializace
+# health bar zvírasznění powerupů!
 import pygame
 import sys
 import random
@@ -88,7 +89,8 @@ wintext = pygame.image.load("win_text.png")
 Button_leave = pygame.image.load("Button_back.png")
 
 bar =pygame.image.load("bar.png")
-
+health_bar =pygame.image.load("health_bar.png")
+bar_raketa = pygame.image.load("Raketa.png")
 button_play = pygame.image.load("button_play.png")  
 pozice_play = button_play.get_rect(topleft=(600, 100))
 
@@ -150,7 +152,13 @@ bomber12 =pygame.image.load("bomber22.png")
 powerup_image = pygame.image.load("powerup.png")
 shield = pygame.image.load("štít.png")
 enemy_base = pygame.image.load("enemy_base.png")
-atom = pygame.image.load("atom_výbuch.png")
+xskóre = pygame.image.load("2xskóre.png")
+firerate_boom1 = pygame.image.load("firerate_boom1.png")
+firerate_boom2 = pygame.image.load("firerate_boom2.png")
+health_power_up = pygame.image.load("health_power_up.png")
+health_bar2 = pygame.image.load("health_bar2.png")
+health_bar2x = -1000
+health_bar2y = 0
  #___________________________________________________________________________________________________________________________________________________________________________________________________________________
 
 
@@ -242,17 +250,18 @@ while True:
                if pozice_play.collidepoint(udalost.pos):  # Kontrola, zda kliknutí bylo na obrázku tlačítka
                    Lobby = False
                    play=True
-                   letadlo.reset(nepritel,vznepritel1,vznepritel2)
+                   letadlo.reset(nepritel,vznepritel1,vznepritel2,Obchod.zivoty)
                    pohyb_pozadí=0
                    mise= random.randint(1,2)
                    base_x = 3000
                    bomba = 0
                    bomba_y =0  
                    delay_do_konce=1
+                   health_bar2x = -1000
                if pozice_shop.collidepoint(udalost.pos):  # Kontrola, zda kliknutí bylo na obrázku tlačítka
                     Lobby = False
                     shop = True
-                    letadlo.reset(nepritel,vznepritel1,vznepritel2)
+                    letadlo.reset(nepritel,vznepritel1,vznepritel2,Obchod.zivoty)
                     pohyb_pozadí=0
             
                if pozice_infinity.collidepoint(udalost.pos):  # Kontrola, zda kliknutí bylo na obrázku tlačítka
@@ -263,6 +272,7 @@ while True:
                     base_x = 3000
                     bomba = 0
                     delay_do_konce=1
+                    health_bar2x = -1000
         
         
                    
@@ -303,9 +313,9 @@ while True:
         
 #___________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
     while play:
-        text = f" skóre: {letadlo.skore} počet raket :{letadlo.pocet_raket} životy:{nepritel.zivoty} "
+        text = f" SKÓRE: {letadlo.skore}                            :{letadlo.pocet_raket} "
         text_surface = font.render(text, True, text_color)
-        text_rect = text_surface.get_rect(center=(500, 50))
+        text_rect = text_surface.get_rect(center=(300, 110))
         
         
         
@@ -313,13 +323,13 @@ while True:
             strela_x = letadlo.x + 17
             strela_y = letadlo.y + 17
             zasazeni = False
-            strela = Strela(strela_x, strela_y, letadlo.uhel, zasazeni,strela_image,10,1)
+            strela = Strela(strela_x, strela_y, letadlo.uhel, zasazeni,strela_image,25,1)
             
             if powerup.co_padlo == 2:
-                    print(powerup.co_padlo)
+                   
                      
                     strela = 0
-                    strela = Strela(strela_x, strela_y, letadlo.uhel, zasazeni,strela_image2,10,5)
+                    strela = Strela(strela_x, strela_y, letadlo.uhel, zasazeni,strela_image2,25,5)
             vystreleni.append(strela)
         vystrel = 0 
           
@@ -392,7 +402,12 @@ while True:
         
         obrazovka.fill(pozadi_barva)
         obrazovka.blit(pozadí,(0,558))
-        obrazovka.blit(bar,(abs(pohyb_pozadí)/25,0))
+        obrazovka.blit(bar,(abs(pohyb_pozadí)/25,50))
+        obrazovka.blit(health_bar2,(health_bar2x,health_bar2y))
+        obrazovka.blit(health_bar,(nepritel.zivoty*100-1920,0))
+        if nepritel.zivoty*100-1920 < health_bar2x:
+            health_bar2x-=3
+        
         obrazovka.blit(Pohyblive_pozadi, (umisteni_pozadi1, výška - 100))
         obrazovka.blit(Pohyblive_pozadi, (umisteni_pozadi2, výška - 100))
         
@@ -431,7 +446,7 @@ while True:
     
             if vznepritel1.vystrel  == 1:
                 zasazeni = False
-                strela = Strela(vznepritel1.poloha_x-5, vznepritel1.poloha_y+110, vznepritel1.uhel_strely + random.randint(-5,5), zasazeni,strela_image,10,1)
+                strela = Strela(vznepritel1.poloha_x-5, vznepritel1.poloha_y+110, vznepritel1.uhel_strely + random.randint(-10,10), zasazeni,strela_image,10,1)
                 vystreleni.append(strela) 
 
             vznepritel1.pohyb(nepritel.rychlost_pozadi)
@@ -476,6 +491,7 @@ while True:
                 strela.zasah(nepritel,200,200,3,rect)
             
                 strela.zasah(nepritel,150,100,2,rect)
+                
                 strela.zasah(vznepritel1,173,578,1,rect)
                 strela.zasah(vznepritel2,173,578,1,rect)
 
@@ -521,13 +537,13 @@ while True:
     
     
         
-            powerup.touch(letadlo,shield,obrazovka,rect)
+            powerup.touch(letadlo,shield,obrazovka,rect,nepritel.zivoty,xskóre,health_power_up,firerate_boom1,firerate_boom2)
             powerup.pohyb(nepritel.rychlost_pozadi)
             powerup.spawn(obrazovka)
             
             obrazovka.blit(otočená_stíhačka, rect.topleft)
             obrazovka.blit(text_surface, text_rect)
-        
+            obrazovka.blit(bar_raketa, (350,95))
         
         
         letadlo.neutíkej()

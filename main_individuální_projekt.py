@@ -422,7 +422,7 @@ while True:
         elif pohyb_pozadí < -23000:
             base_x-=nepritel.rychlost_pozadi
             obrazovka.blit(enemy_base,(base_x,0))
-            if vystrel == 1 and bomba == 0 and pohyb_pozadí <-41000  :
+            if vystrel == 1 and bomba == 0 and pohyb_pozadí <-24000  :
                 bomba = 1
                 bomba_x= letadlo.x -nepritel.rychlost_pozadi
                 bomba_y= letadlo.y -5
@@ -521,7 +521,7 @@ while True:
                 barva+=3
                   
 
-             if obrazek_y<620:
+             if obrazek_y<800:
                 obrazek_y+=5
                 y_pos = výška - obrazek_y   
              delay_do_konce+=1      

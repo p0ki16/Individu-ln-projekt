@@ -61,7 +61,7 @@ class Shop:
                         self.chosen_letadlo = 2
                         self.obratnost = 4
                         self.firerate = 10
-                        self.zivoty = 7
+                        self.zivoty =10
                         self.rychlost = 20
                     elif self.peníze >= 2000:
                         self.peníze-=2000
@@ -75,7 +75,7 @@ class Shop:
                         
                         self.obratnost = 3
                         self.firerate = 16
-                        self.zivoty = 6
+                        self.zivoty = 8
                         self.rychlost = 15
                     elif self.peníze >= 1000:
                         self.peníze-=1000
@@ -87,7 +87,7 @@ class Shop:
                     
                     self.obratnost = 2.5
                     self.firerate = 20
-                    self.zivoty = 5
+                    self.zivoty = 6
                     self.rychlost = 10
             if self.letadlo_owned < self.chosen_letadlo: # funkce pro vlastnění letadlo čím nižší číslo tím více toho vlastním
                 self.letadlo_owned = self.chosen_letadlo

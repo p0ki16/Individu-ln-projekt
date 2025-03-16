@@ -20,7 +20,7 @@ class Strela:
         if self.strela_y > 1080 - 20:  # 20 ke velikost výbuchu
             self.strela_y = 1080
             self.spawn -= 1  # Použití atributu instance
-            self.strela_x -= pohyb_země
+            
             
         elif self.zasazeni == True:
             self.spawn -= 1# Použití atributu instance

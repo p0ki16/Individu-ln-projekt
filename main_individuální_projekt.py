@@ -32,7 +32,7 @@ výška, šířka = 1080, 1920
 hrac_x = šířka * 1 / 5
 hrac_y = výška / 2
 
-zivoty = 6
+zivoty =5
 zivoty_nepritel = 20
 uhel = 1
 
@@ -267,7 +267,7 @@ while True:
                if pozice_infinity.collidepoint(udalost.pos):  # Kontrola, zda kliknutí bylo na obrázku tlačítka
                     Lobby = False
                     Infinite_mode = True
-                    letadlo.reset(nepritel,vznepritel1,vznepritel2,nepritel.zivoty)
+                    letadlo.reset(nepritel,vznepritel1,vznepritel2,Obchod.zivoty)
                     pohyb_pozadí=0
                     base_x = 3000
                     bomba = 0
@@ -402,7 +402,7 @@ while True:
         
         obrazovka.fill(pozadi_barva)
         obrazovka.blit(pozadí,(0,558))
-        obrazovka.blit(bar,(abs(pohyb_pozadí)/25,50))
+        obrazovka.blit(bar,(abs(pohyb_pozadí)/10,50))
         obrazovka.blit(health_bar2,(health_bar2x,health_bar2y))
         obrazovka.blit(health_bar,(nepritel.zivoty*100-1920,0))
         if nepritel.zivoty*100-1920 < health_bar2x:
@@ -411,7 +411,7 @@ while True:
         obrazovka.blit(Pohyblive_pozadi, (umisteni_pozadi1, výška - 100))
         obrazovka.blit(Pohyblive_pozadi, (umisteni_pozadi2, výška - 100))
         
-        if mise ==1 and pohyb_pozadí > -38400:#rozlišení misí
+        if mise ==1 and pohyb_pozadí > -23400:#rozlišení misí
             nepritel.nabíjení(obrazovka, kanon13, kanon23, kanon33 , kanon43, beam3l3,kanon_destroyed)
             zaměření_na=nepritel
                 
@@ -419,7 +419,7 @@ while True:
                 letadlo.skore+=1000 * powerup.bonus_ke_skore
                 nepritel.pricti = False
 
-        elif pohyb_pozadí < -38000:
+        elif pohyb_pozadí < -23000:
             base_x-=nepritel.rychlost_pozadi
             obrazovka.blit(enemy_base,(base_x,0))
             if vystrel == 1 and bomba == 0 and pohyb_pozadí <-41000  :
@@ -446,7 +446,7 @@ while True:
     
             if vznepritel1.vystrel  == 1:
                 zasazeni = False
-                strela = Strela(vznepritel1.poloha_x-5, vznepritel1.poloha_y+110, vznepritel1.uhel_strely + random.randint(-10,10), zasazeni,strela_image,10,1)
+                strela = Strela(vznepritel1.poloha_x-5, vznepritel1.poloha_y+110, vznepritel1.uhel_strely , zasazeni,strela_image,20,1)
                 vystreleni.append(strela) 
 
             vznepritel1.pohyb(nepritel.rychlost_pozadi)
@@ -457,7 +457,7 @@ while True:
 
             if vznepritel2.vystrel  == 1:
                 zasazeni = False
-                strela = Strela(vznepritel2.poloha_x-5, vznepritel2.poloha_y+110, vznepritel2.uhel_strely+ random.randint(-5,5), zasazeni,strela_image,10,1)
+                strela = Strela(vznepritel2.poloha_x-5, vznepritel2.poloha_y+110, vznepritel2.uhel_strely+ random.randint(-5,5), zasazeni,strela_image,20,1)
                 vystreleni.append(strela) 
             
             vznepritel2.pohyb(nepritel.rychlost_pozadi)
@@ -488,12 +488,14 @@ while True:
         for strela in vystreleni:
             strela.just_spawned-=1
             if strela.zasazeni == False and strela.just_spawned<0 :
-                strela.zasah(nepritel,200,200,3,rect)
-            
+                strela.zasah(nepritel,150,200,3,rect)
                 strela.zasah(nepritel,150,100,2,rect)
-                
                 strela.zasah(vznepritel1,173,578,1,rect)
+            if strela.zasazeni == False:
+                
                 strela.zasah(vznepritel2,173,578,1,rect)
+                
+               
 
             strela.draw(obrazovka, strela.vzhled, vybuch_image,vybuch)    
             strela.move(nepritel.rychlost_pozadi)
@@ -659,7 +661,7 @@ while True:
             letadlo.znic_se(Lobby,Infinite_mode)
             if  letadlo.znic_se(Lobby,Infinite_mode):
                 Lobby = True
-                play = False 
+                Infinite_mode = False 
                 vystreleni=[]   
         if letadlo.smrt == False:  # Kontrola jestli letadlo žije
             nepritel.pohyb_kanonu()

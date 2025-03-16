@@ -10,7 +10,7 @@ from letadlo import Letadlo,Powerup
 from nepritel import Nepritel_zem,Nepritel_vzduch
 from Shop import Shop    
 
-
+odpočet_do_přidání=1
 pygame.font.init()
 clock = pygame.time.Clock()
 font = pygame.font.SysFont('Arial', 48)
@@ -323,7 +323,7 @@ while True:
             strela_x = letadlo.x + 17
             strela_y = letadlo.y + 17
             zasazeni = False
-            strela = Strela(strela_x, strela_y, letadlo.uhel, zasazeni,strela_image,25,1)
+            strela = Strela(strela_x, strela_y, letadlo.uhel, zasazeni,strela_image,15,1)
             
             if powerup.co_padlo == 2:
                    
@@ -602,8 +602,10 @@ while True:
                     strela = Strela(strela_x, strela_y, letadlo.uhel, zasazeni,strela_image2,25,5)
             vystreleni.append(strela)
         vystrel = 0 
-          
-        #
+        if  odpočet_do_přidání < 0:
+            letadlo.skore+=1000
+            odpočet_do_přidání=500
+        odpočet_do_přidání-=1
         for j in range(raketa_vystrelena):
             Raketa_x = letadlo.x
             Raketa_y = letadlo.y
@@ -720,24 +722,7 @@ while True:
             raketa.navádění(zaměření_na,obrazovka,Obchod.animace(Raketa1,Raketa2,Raketa3,2),výška,nepritel.rychlost_pozadi,Obchod.presnost)
             raketa.draw(obrazovka, Obchod.animace(Raketa1,Raketa2,Raketa3,2), vybuch_image,vybuch, nepritel.rychlost_pozadi)
         
-        if bomba_y > 900:
-             letadlo.uhel = 0
-             obrazovka.fill((barva,barva,barva))
-             if barva<255:
-                barva+=3
-                  
-
-             if obrazek_y<620:
-                obrazek_y+=5
-                y_pos = výška - obrazek_y   
-             delay_do_konce+=1      
-             atom1=pygame.transform.scale(atom,(obrazek_x,obrazek_y))
-             obrazovka.blit(atom1, (540, y_pos))
-             obrazovka.blit(wintext, (491, 110))
-
-             if delay_do_konce == 300:
-                 Infinite_mode = False
-                 Lobby = True
+        
         else:
     
     

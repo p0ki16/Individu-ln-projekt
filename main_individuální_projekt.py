@@ -64,99 +64,106 @@ raketa_image11 = pygame.image.load('Raketa11.png')
 raketa_image12 = pygame.image.load('Raketa12.png')
 
 
-atom = pygame.image.load('atom_výbuch.png')
-pozadí = pygame.image.load("pozadí.png")
-Pohyblive_pozadi = pygame.image.load("Pozadí_pohyblivé.png")
-bomba_image = pygame.image.load("bomba.png")
-kanon13 = pygame.image.load("kanon_1l3.png")
-kanon23 = pygame.image.load("kanon_2l3.png")
-kanon33 = pygame.image.load("kanon_3l3.png")
-kanon43 = pygame.image.load("kanon_4l3.png")
+atom = pygame.image.load('atom_výbuch.png').convert_alpha()
+pozadí = pygame.image.load("pozadí.png").convert_alpha()
+Pohyblive_pozadi = pygame.image.load("Pozadí_pohyblivé.png").convert_alpha()
+bomba_image = pygame.image.load("bomba.png").convert_alpha()
+kanon13 = pygame.image.load("kanon_1l3.png").convert_alpha()
+kanon23 = pygame.image.load("kanon_2l3.png").convert_alpha()
+kanon33 = pygame.image.load("kanon_3l3.png").convert_alpha()
+kanon43 = pygame.image.load("kanon_4l3.png").convert_alpha()
 
-kanon_destroyed = pygame.image.load("kanon_destroyed.png")
+kanon_destroyed = pygame.image.load("kanon_destroyed.png").convert_alpha()
 
-strela_image = pygame.image.load("strela.png")
-strela_image2 = pygame.image.load("strela2.png")
+strela_image = pygame.image.load("strela.png").convert_alpha()
+strela_image2 = pygame.image.load("strela2.png").convert_alpha()
 
-vybuch_image = pygame.image.load("výbuch_strely.png")
+vybuch_image = pygame.image.load("výbuch_strely.png").convert_alpha()
 
-beam3l3 = pygame.image.load("beam.png")
-vybuch = pygame.image.load("výbuch.png")
+beam3l3 = pygame.image.load("beam.png").convert_alpha()
+vybuch = pygame.image.load("výbuch.png").convert_alpha()
 
-Lobby_image = pygame.image.load("Lobby.png")
-wintext = pygame.image.load("win_text.png")
+Lobby_image = pygame.image.load("Lobby.png").convert_alpha()
+wintext = pygame.image.load("win_text.png").convert_alpha()
 
-Button_leave = pygame.image.load("Button_back.png")
+Button_leave = pygame.image.load("Button_back.png").convert_alpha()
 
-bar =pygame.image.load("bar.png")
-health_bar =pygame.image.load("health_bar.png")
-bar_raketa = pygame.image.load("Raketa.png")
-button_play = pygame.image.load("button_play.png")  
+bar =pygame.image.load("bar.png").convert_alpha()
+health_bar =pygame.image.load("health_bar.png").convert_alpha()
+bar_raketa = pygame.image.load("Raketa.png").convert_alpha()
+button_play = pygame.image.load("button_play.png").convert_alpha()
 pozice_play = button_play.get_rect(topleft=(600, 100))
 
-button_shop = pygame.image.load("button_shop.png")  
+button_shop = pygame.image.load("button_shop.png").convert_alpha()
 pozice_shop= button_shop.get_rect(topleft=(600, 200))
 
-button_infinity = pygame.image.load("button_infinity.png")  
+button_infinity = pygame.image.load("button_infinity.png").convert_alpha()  
 pozice_infinity = button_infinity.get_rect(topleft=(600, 300))
 
-button_rockets = pygame.image.load("Shop_Button_Rockets.png")  
+button_rockets = pygame.image.load("Shop_Button_Rockets.png").convert_alpha()
 pozice_rockets = button_rockets.get_rect(topleft=(1250, 50))
 
-button_planes = pygame.image.load("Shop_Button_planes.png")  
+button_planes = pygame.image.load("Shop_Button_planes.png").convert_alpha()
 pozice_planes= button_planes.get_rect(topleft=(1250, 200))
 
-button_upgrades = pygame.image.load("Shop_Button_upgrades.png")  
+button_upgrades = pygame.image.load("Shop_Button_upgrades.png").convert_alpha()
 pozice_upgrades = button_upgrades.get_rect(topleft=(1250, 350))
 
-shop_image = pygame.image.load("Shop.png")
+shop_image = pygame.image.load("Shop.png").convert_alpha()
 
-fockerfox = pygame.image.load("Fockerfox.png")
-fockerfox13=pygame.image.load("Fockerfox13.png")
-fockerfox23=pygame.image.load("Fockerfox23.png")
-fockerfox33=pygame.image.load("Fockerfox33.png")
-fockerfox_button=pygame.image.load("Button_Fockerfox.png")
+fockerfox = pygame.image.load("Fockerfox.png").convert_alpha()
+fockerfox13=pygame.image.load("Fockerfox13.png").convert_alpha()
+fockerfox23=pygame.image.load("Fockerfox23.png").convert_alpha()
+fockerfox33=pygame.image.load("Fockerfox33.png").convert_alpha()
+fockerfox_button=pygame.image.load("Button_Fockerfox.png").convert_alpha()
 pozice1 =  fockerfox_button.get_rect(topleft=(200, 878))
 
-myg = pygame.image.load("MYG-15.png")
-myg13 = pygame.image.load("myg13.png")
-myg23=pygame.image.load("myg23.png")
-myg33=pygame.image.load("myg33.png")
-myg_button=pygame.image.load("Button_Myg.png")
+myg = pygame.image.load("MYG-15.png").convert_alpha()
+myg13 = pygame.image.load("myg13.png").convert_alpha()
+myg23=pygame.image.load("myg23.png").convert_alpha()
+myg33=pygame.image.load("myg33.png").convert_alpha()
+myg_button=pygame.image.load("Button_Myg.png").convert_alpha()
 pozice2 =  myg_button.get_rect(topleft=(200, 744))
 
-f=pygame.image.load("E-23.png")
-f13=pygame.image.load("f13.png")
-f23=pygame.image.load("f23.png")
-f33=pygame.image.load("f33.png")
-fbutton = pygame.image.load("Button_F23.png")
+f=pygame.image.load("E-23.png").convert_alpha()
+f13=pygame.image.load("f13.png").convert_alpha()
+f23=pygame.image.load("f23.png").convert_alpha()
+f33=pygame.image.load("f33.png").convert_alpha()
+fbutton = pygame.image.load("Button_F23.png").convert_alpha()
 pozice3 =  fbutton.get_rect(topleft=(200, 615))
 
-raketa21 = pygame.image.load("Raketa21.png")
-raketa22 = pygame.image.load("Raketa22.png")
+raketa21 = pygame.image.load("Raketa21.png").convert_alpha()
+raketa22 = pygame.image.load("Raketa22.png").convert_alpha()
 
-raketa31 = pygame.image.load("Raketa31.png")
-raketa32 = pygame.image.load("Raketa32.png")
+raketa31 = pygame.image.load("Raketa31.png").convert_alpha()
+raketa32 = pygame.image.load("Raketa32.png").convert_alpha()
 
-raketa_shop1=pygame.image.load("Raketa_shop.png")
-raketa_shop2=pygame.image.load("Raketa3_shop.png")
-raketa_shop3=pygame.image.load("Shop_Shark.png")
+raketa_shop1=pygame.image.load("Raketa_shop.png").convert_alpha()
+raketa_shop2=pygame.image.load("Raketa3_shop.png").convert_alpha()
+raketa_shop3=pygame.image.load("Shop_Shark.png").convert_alpha()
 
-button_raketa1 =pygame.image.load("Button_shop_raketa1.png")
-button_raketa2 =pygame.image.load("Button_shop_raketa3.png")
-button_raketa3 =pygame.image.load("Button_Shark.png")
+button_raketa1 =pygame.image.load("Button_shop_raketa1.png").convert_alpha()
+button_raketa2 =pygame.image.load("Button_shop_raketa3.png").convert_alpha()
+button_raketa3 =pygame.image.load("Button_Shark.png").convert_alpha()
 
-bomber11 =pygame.image.load("bomber12.png")
-bomber12 =pygame.image.load("bomber22.png")
+bomber11 =pygame.image.load("bomber12.png").convert_alpha()
+bomber12 =pygame.image.load("bomber22.png").convert_alpha()
 
-powerup_image = pygame.image.load("powerup.png")
-shield = pygame.image.load("štít.png")
-enemy_base = pygame.image.load("enemy_base.png")
-xskóre = pygame.image.load("2xskóre.png")
-firerate_boom1 = pygame.image.load("firerate_boom1.png")
-firerate_boom2 = pygame.image.load("firerate_boom2.png")
-health_power_up = pygame.image.load("health_power_up.png")
-health_bar2 = pygame.image.load("health_bar2.png")
+powerup_image = pygame.image.load("powerup.png").convert_alpha()
+
+shield = pygame.image.load("štít.png").convert_alpha()
+enemy_base = pygame.image.load("enemy_base.png").convert_alpha()
+
+xskóre = pygame.image.load("2xskóre.png").convert_alpha()
+
+firerate_boom1 = pygame.image.load("firerate_boom1.png").convert_alpha()
+
+firerate_boom2 = pygame.image.load("firerate_boom2.png").convert_alpha()
+
+health_power_up = pygame.image.load("health_power_up.png").convert_alpha()
+
+health_bar2 = pygame.image.load("health_bar2.png").convert_alpha()
+
 health_bar2x = -1000
 health_bar2y = 0
  #___________________________________________________________________________________________________________________________________________________________________________________________________________________
